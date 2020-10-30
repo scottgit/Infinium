@@ -1,3 +1,6 @@
+# Infinium
+A copy of the website Medium with a speculative fiction themed twist
+
 # Express Project Skeleton
 
 Use this project skeleton as a starting point for structuring your app. Things to note
