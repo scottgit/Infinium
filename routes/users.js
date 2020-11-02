@@ -12,6 +12,7 @@ const {csrfProtection, asyncHandler} = require('./utils')
 router.get('/register', csrfProtection, (req, res) => {
   const user = db.User.build();
   res.render('sign-up', {
+    title: 'Sign-up',
     user,
     token: req.csrfToken()
   })
@@ -41,6 +42,7 @@ router.post('/register', csrfProtection, userRegValidators, asyncHandler(async (
   } else {
     const errors = validateErrors.array().map(error => error.msg);
     res.render('sign-up', {
+      title: 'Sign-up',
       user,
       errors,
       token: req.csrfToken(),
@@ -51,6 +53,7 @@ router.post('/register', csrfProtection, userRegValidators, asyncHandler(async (
 /* GET user log-in. */
 router.get('/login', csrfProtection, (req, res) => {
   res.render('log-in', {
+    title: 'Log-in',
     token: req.csrfToken()
   })
 })
@@ -63,31 +66,26 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
   const validatorErrors = validationResult(req);
 
   if (validatorErrors.isEmpty()) {
+    let user;
     if (usernameOrEmail.includes('@')) {
-      const user = await db.User.findOne({ where: { email } })
-      if (user !== null) {
-        const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-        if (passwordMatch) {
-          loginUser(req, res, user)
-          return res.redirect('/')
-        }
-      }
-      errors.push('Login failed')
+      user = await db.User.findOne({ where: { email } })
     } else {
-      const user = await db.User.findOne({ where: { username } })
-      if (user !== null) {
-        const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
-        if (passwordMatch) {
-          loginUser(req, res, user)
-          return res.redirect('/')
-        }
+      user = await db.User.findOne({ where: { username } })
+    }
+    if (user !== null) {
+      const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
+      if (passwordMatch) {
+        loginUser(req, res, user)
+        return res.redirect('/')
       }
     }
+    errors.push('Login failed')
   } else {
     errors = validatorErrors.array().map(error => error.msg);
   }
 
   res.render('log-in', {
+    title: 'Log-in',
     usernameOrEmail,
     errors,
     token: req.csrfToken()
