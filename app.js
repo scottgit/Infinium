@@ -3,9 +3,14 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session')
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
 
+const {restoreUser} = require('./auth')
+const {sessionSecret} = require('./config')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const { sequelize } = require('./db/models');
 
 const app = express();
 
@@ -15,9 +20,19 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(sessionSecret));
 app.use(express.static(path.join(__dirname, 'public')));
-
+const store = new SequelizeStore({
+  db: sequelize,
+})
+app.use(
+  session({
+    secret: sessionSecret,
+    store,
+    resave: false,
+  }))
+store.sync()
+app.use(restoreUser);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
