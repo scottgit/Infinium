@@ -48,14 +48,8 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.status(err.status || 500);
   const isProduction = environment === "production";
-  res.json({
-    title: err.title || "Server Error",
-    message: err.message,
-    errors: err.errors,
-    stack: isProduction ? null : err.stack,
-  });
-
-  // res.render('errors');
+  const stack = isProduction ? null : err.stack
+  res.render('error', {message: err.message, status: err.status, stack: stack});
 });
 
 module.exports = app;
