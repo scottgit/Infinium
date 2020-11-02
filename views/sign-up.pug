@@ -3,26 +3,24 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="stylesheet", href="../../stylesheets/sign-up.css")
         title Account Registration
     body
         div(class="sign-up_container")
-            h1 Create Account
             form(class="sign-up_form" method="post")
+                h1 Create Account
                 input(type="hidden" name="_csrf" value=token)
-                div(class="sign-up_input")
-                    label Email
-                    input(type="email" name="email" required)
-                div(class="sign-up_input")
-                    label Username
-                    input(type="text" name="username" required)
-                div(class="sign-up_input")
-                    label Password
-                    input(type="text" name="password" required)
-                div(class="sign-up_input")
-                    label Confirm Password
-                    input(type="text" name="confirmPassword" required)
-                div(class="sign-up_input")
+                div
+                    input(class="sign-up_input" type="email" name="email" placeholder="Email" required)
+                div
+                    input(class="sign-up_input" type="text" name="username" placeholder="Username" required)
+                div
+                    input(class="sign-up_input" type="text" name="password" placeholder="Password" required)
+                div
+                    input(class="sign-up_input" type="text" name="confirmPassword" placeholder="Confrim Password" required)
+                div
                     button(type="submit") Sign Up!
             div(class="log-in_button")
                 p Already have an Account?
-                    a(href="/log-in") Log In
+                    a(href="/log-in")
+                        button Log in
