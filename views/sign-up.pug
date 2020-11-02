@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Account Registration
+    body
+        div(class="sign-up_container")
+            h1 Create Account
+            form(class="sign-up_form" method="post")
+                input(type="hidden" name="_csrf" value=token)
+                div(class="sign-up_input")
+                    label Email
+                    input(type="email" name="email" required)
+                div(class="sign-up_input")
+                    label Username
+                    input(type="text" name="username" required)
+                div(class="sign-up_input")
+                    label Password
+                    input(type="text" name="password" required)
+                div(class="sign-up_input")
+                    label Confirm Password
+                    input(type="text" name="confirmPassword" required)
+                div(class="sign-up_input")
+                    button(type="submit") Sign Up!
+            div(class="log-in_button")
+                p Already have an Account?
+                    a(href="/log-in") Log In

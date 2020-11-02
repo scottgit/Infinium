@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Document
+    body
+        div(class="log-in_container")
+            h1 Login
+            form(class="log-in_form" method="post")
+                input(type="hidden" name="_csrf" value=token)
+                div(class="log-in_input")
+                    label Username or Email
+                    input(type="text" name="usernameEmail" required)
+                div(class="log-in_input")
+                    label Password
+                    input(type="text" name="password" required)
+                div(class="log-in_input")
+                    button(type="submit") Sign Up!
+            div(class="log-in_button")
+                p Don't have an Account yet?
+                    a(href="/sign-up") Sign Up
