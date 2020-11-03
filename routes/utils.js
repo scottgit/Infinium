@@ -8,6 +8,10 @@ const asyncHandler = (handler) => {
     };
 };
 
+const setHexadecimal = number => number.toString(16);
+
+const parseHexadecimal = hexString => parseInt(hexString, 16);
+
 module.exports = {
     csrfProtection,
     asyncHandler,
