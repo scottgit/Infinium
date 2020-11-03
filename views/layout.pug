@@ -3,6 +3,30 @@ html
   head
       block head
         title="Express Starter App"
-        link(rel='stylesheet' href='/stylesheets/reset.css')
+        link(rel='stylesheet' href='../../stylesheets/layout.css')
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;900&display=swap")
+        script(src="/javascripts/layout.js" type="module" defer)
   body
+    header
+      .header
+        .title
+          img(src="../../images/infinity.jpg", alt="Infinity" class="infinity_image")
+          .title_name Infinium
+          .title_greeting Live Long and Prosper
+        .icons
+          form(action="/users/login")
+            input(type="submit" value="Login" class="login")
+          .dropdown
+            img(src="../../images/dogs.jpg", alt="Doggies!" class="icons_image")
+            div(class="dropdown_content" id="myDropdown")
+              .header_mini
+                img(src="../../images/dogs.jpg", alt="Doggies!" class="icons_image")
+                .naming_info
+                  p(class="naming_info_list1") Name 
+                  p(class="naming_info_list2") @reference
+              a(href="#") New Story
+              a(href="#") Stories
+              a(href="#") Settings
     block content
