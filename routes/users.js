@@ -40,7 +40,8 @@ router.post('/register', csrfProtection, userRegValidators, asyncHandler(async (
     loginUser(req, res, user)
     res.redirect('/');
   } else {
-    const errors = validateErrors.array().map(error => error.msg);
+    const errors = validatorErrors.array().map(error => error.msg);
+    console.log(errors);
     res.render('sign-up', {
       title: 'Sign-up',
       user,
