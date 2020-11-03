@@ -30,6 +30,7 @@ app.use(
     secret: sessionSecret,
     store,
     resave: false,
+    saveUninitialized: false
   }))
 store.sync()
 app.use(restoreUser);
