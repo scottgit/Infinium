@@ -22,7 +22,7 @@ const restoreUser = async (req, res, next) => {
       next(err);
     }
   } else {
-    res.local.authenticated = false;
+    res.locals.authenticated = false;
     next();
   }
 }
