@@ -8,12 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      draft: {
-        type: Sequelize.TEXT
-      },
-      published: {
-        type: Sequelize.TEXT
-      },
       title: {
         allowNull: false,
         type: Sequelize.STRING(100)
@@ -21,16 +15,22 @@ module.exports = {
       subtitle: {
         type: Sequelize.STRING(100)
       },
+      draft: {
+        type: Sequelize.TEXT
+      },
+      published: {
+        type: Sequelize.TEXT
+      },
+      publishAfter: {
+        type: Sequelize.DATE
+      },
       imageLink: {
         type: Sequelize.STRING(255)
       },
       userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {model: Users}
-      },
-      publishAfter: {
-        type: Sequelize.DATE
+        references: {model: 'Users'}
       },
       createdAt: {
         allowNull: false,
