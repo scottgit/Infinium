@@ -1,6 +1,6 @@
-const { check, oneOf } = require('express-validator'); 
+const { check, oneOf } = require('express-validator');
 const db = require('../db/models');
-const { User } = db; 
+const { User } = db;
 
 
 const userRegValidators = [
@@ -9,14 +9,14 @@ const userRegValidators = [
         .withMessage('Please provide a value for User Name')
         .isLength({ max: 50 })
         .withMessage('User Name must not be more than 50 characters long')
-        .matches(/@/)  
+        .matches(/[^@]/)
         .withMessage('User Name cannot contain @ symbol')
         .custom(async (value) => {
             const username = await User.findOne({where: {username: value}})
             if(username) {
                 throw new Error('User Name already in use. Please choose another.')
             }
-            return true; 
+            return true;
         }),
     check('email')
         .exists({ checkFalsy: true })
@@ -28,31 +28,29 @@ const userRegValidators = [
         .custom(async (value) => {
             const email = await User.findOne({where: {email: value}})
             if(email) {
-                throw new Error('Email already in use. Please sign-in or choose another email to register.');  
+                throw new Error('Email already in use. Please sign-in or choose another email to register.');
             }
-            return true; 
+            return true;
         }),
     check('password')
-        .trill()
         .exists({ checkFalsy: true })
         .withMessage('Please provide a value for Password')
         .isLength({ min: 8, max: 50 })
         .withMessage('Password must be at least 8 characters long and not more than 50 characters long')
         .matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/)
         .withMessage('Password must contain at least one capital letter, one lower case letter, one number and one symbol'),
-    check('confirmPassword') 
-        .trill()
+    check('confirmPassword')
         .exists({ checkFalsy: true })
         .withMessage('Please provide a value for Confirm Password')
         .custom((value, {req}) => {
             if (value !== req.body.password) {
                 throw new Error('Confirm Password does not match Password');
             }
-            return true; 
+            return true;
         }),
-] 
+]
 
-const userSignInValidators = [ 
+const userSignInValidators = [
     oneOf([
         check('usernameOrEmail')
             .exists({ checkFalsy: true })
@@ -60,8 +58,8 @@ const userSignInValidators = [
         check('password')
             .exists({ checkFalsy: true })
             .isLength({ min: 8, max: 50 })
-    ], 'Please provide a value that is less than 50 characters'), 
+    ], 'Please provide a value that is less than 50 characters'),
 ]
 
 
-module.exports = {userRegValidators, userSignInValidators }; 
+module.exports = {userRegValidators, userSignInValidators };
