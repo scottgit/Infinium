@@ -24,7 +24,7 @@ app.use(cookieParser(sessionSecret));
 app.use(express.static(path.join(__dirname, 'public')));
 const store = new SequelizeStore({
   db: sequelize,
-})
+});
 app.use(
   session({
     secret: sessionSecret,
