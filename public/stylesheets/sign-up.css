@@ -7,7 +7,6 @@ body {
 }
 
 h1 {
-    align-content: center;
     margin-bottom: 10px;
     color: royalblue;
 }
@@ -15,37 +14,27 @@ h1 {
 .sign-up_container {
     background-color: white;
     height: 550px;
-    width: 370px;
-    display: flexbox;
+    width: 700px;
+    display: flex;
     position: absolute;
     box-sizing: border-box;
     border-radius: 20px;
     margin: 0 auto;
-    justify-content: center;
+}
+
+.form-holder{
+    height: 550px;
+    width: 420px;
+    display: inline-flexbox;
 }
 
 .sign-up_form {
-    display: flexbox;
+    display: inline-flexbox;
     width: 300px;
     padding: 25px;
     margin: 0 auto;
-    align-content: center;
-    justify-content: center;
+    text-align: center;
 }
-
-.log-in_button {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-content: center;
-}
-
-/* .input-container{
-    display: flexbox;
-    justify-content: left;
-    flex-wrap: wrap;
-    flex-direction: column;
-} */
 
 .sign-up_input {
     border-radius: 20px;
@@ -58,6 +47,10 @@ h1 {
     margin-right: 10px;
 }
 
+.log-in_button {
+    text-align: center;
+}
+
 button {
     border-radius: 20px;
     padding: 10px;
@@ -66,10 +59,20 @@ button {
     border: 1px solid #999999;
     outline: none;
     font-size: 13px;
-    background-color: royalblue;
+    background-color: #4c98d2;
 }
 
-a{
-    display: flexbox;
-    align-content: center;
+
+
+
+
+
+/* welcome side of form */
+.sign-up_welcome{
+    background-color: #1a8cd8;
+    height: 550px;
+    width: 280px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: inline-block;
 }
