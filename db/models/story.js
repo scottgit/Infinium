@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
     publishAfter: DataTypes.DATE
   }, {});
   Story.associate = function(models) {
-    Story.belongsTo(models.User, {foreignKey: 'userId'})
+    Story.belongsTo(models.User, {foreignKey: 'userId'}),
+    Story.hasMany(models.Comment, {foreignKey: 'storyId'})
   };
   return Story;
 };
