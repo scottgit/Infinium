@@ -10,27 +10,28 @@ const { csrfProtection,
         setHexIds,
         setHexadecimal,
         parseHexadecimal,
+        wantsJSON,
       } = require('./utils');
 
 const router = express.Router();
 
-router.get(`/`, asyncHandler((req, res, next) => {
+router.get(`/`, asyncHandler(async (req, res) => {
   const stories = await Story.findAll({
-    where: {published: {[Op.ne]: '' || null}}
+    where: {
+      published: {
+        [Op.and]: [{[Op.ne]: ''}, {[Op.ne]: null}]
+      }
+    }
   });
   if (stories) setHexIds(stories);
-  const resType = req.get('Content-Type');
-  if(/html$/.test(resType)) {
+  if(wantsJSON(req)) {
+    res.json({stories});
+  }
+  else {
     res.render('story-list', {
       title: 'Stories since the beginning of time...',
       stories
     })
-  }
-  else if(/json$/.test(resType)) {
-    res.json({stories});
-  }
-  else {
-    next();
   }
 }));
 
