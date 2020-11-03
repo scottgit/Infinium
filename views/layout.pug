@@ -3,6 +3,21 @@ html
   head
       block head
         title="Express Starter App"
-        link(rel='stylesheet' href='/stylesheets/reset.css')
+        link(rel='stylesheet' href='../public/stylesheets/layout.css')
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;900&display=swap")
   body
+    header
+      .title
+        .title_name Infinium
+        .title_greeting Live Long and Prosper
+      .icons
+        button(class="login") Login
+        .dropdown 
+          img(src="../public/images/dogs.jpg", alt="Doggies!" class="icons_image")
+          .dropdown_content
+            p New Story
+            p Stories
+            p Settings
     block content
