@@ -11,6 +11,7 @@ const {restoreUser} = require('./auth')
 const {sessionSecret, environment} = require('./config')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const { asyncHandler } = require('./routes/utils');
 const { sequelize } = require('./db/models');
 
 const app = express();
@@ -25,15 +26,17 @@ app.use(cookieParser(sessionSecret));
 app.use(express.static(path.join(__dirname, 'public')));
 const store = new SequelizeStore({
   db: sequelize,
-})
+});
 app.use(
   session({
+    name: 'ininium.sid',
     secret: sessionSecret,
     store,
     resave: false,
+    saveUninitialized: false
   }))
 store.sync()
-app.use(restoreUser);
+app.use(asyncHandler(restoreUser));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
