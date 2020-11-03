@@ -11,6 +11,7 @@ const {restoreUser} = require('./auth')
 const {sessionSecret, environment} = require('./config')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const storiesRouter = require('./routes/stories');
 const { asyncHandler } = require('./routes/utils');
 const { sequelize } = require('./db/models');
 
