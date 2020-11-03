@@ -15,7 +15,6 @@ const userRegValidators = [
             const username = await User.findOne({where: {username: value}})
             if(username) {
                 throw new Error('User Name already in use. Please choose another.')
-                return false; 
             }
             return true; 
         }),
@@ -29,8 +28,7 @@ const userRegValidators = [
         .custom(async (value) => {
             const email = await User.findOne({where: {email: value}})
             if(email) {
-                throw new Error('Email already in use. Please sign-in or choose another email to register.'); 
-                return false; 
+                throw new Error('Email already in use. Please sign-in or choose another email to register.');  
             }
             return true; 
         }),
