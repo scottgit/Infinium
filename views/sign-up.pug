@@ -7,20 +7,16 @@ html(lang="en")
         title Account Registration
     body
         div(class="sign-up_container")
-            form(class="sign-up_form" method="post")
+           form(class="sign-up_form" method="post")
                 h1 Create Account
                 input(type="hidden" name="_csrf" value=token)
-                div
-                    input(class="sign-up_input" type="email" name="email" placeholder="Email" required)
-                div
-                    input(class="sign-up_input" type="text" name="username" placeholder="Username" required)
-                div
-                    input(class="sign-up_input" type="text" name="password" placeholder="Password" required)
-                div
-                    input(class="sign-up_input" type="text" name="confirmPassword" placeholder="Confrim Password" required)
-                div
-                    button(type="submit") Sign Up!
+                input(class="sign-up_input" includes type="email" name="email" placeholder="Email" required)
+                input(class="sign-up_input" value='username' type="text" name="username" placeholder="Username" required)
+                input(class="sign-up_input" type="text" name="password" placeholder="Password" required)
+                input(class="sign-up_input" type="text" name="confirmPassword" placeholder="Confrim Password" required)
+                button(type="submit") Sign Up!
             div(class="log-in_button")
                 p Already have an Account?
-                    a(href="/log-in")
-                        button Log in
+                div
+                a(href="/log-in")
+                    button Log in
