@@ -9,13 +9,18 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       comment: {
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize.STRING(255)
       },
       storyId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER, 
+        references: {model: 'Stories'}
       },
       userId: {
-        type: Sequelize.INTEGER
+        allowNull: false,
+        type: Sequelize.INTEGER, 
+        references: {model: 'Users'}
       },
       createdAt: {
         allowNull: false,
