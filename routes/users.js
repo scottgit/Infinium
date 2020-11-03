@@ -41,7 +41,6 @@ router.post('/register', csrfProtection, userRegValidators, asyncHandler(async (
     res.redirect('/');
   } else {
     const errors = validatorErrors.array().map(error => error.msg);
-    console.log(errors);
     res.render('sign-up', {
       title: 'Sign-up',
       user,
@@ -69,9 +68,9 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
   if (validatorErrors.isEmpty()) {
     let user;
     if (usernameOrEmail.includes('@')) {
-      user = await db.User.findOne({ where: { email } })
+      user = await db.User.findOne({ where: { email: usernameOrEmail } })
     } else {
-      user = await db.User.findOne({ where: { username } })
+      user = await db.User.findOne({ where: { username: usernameOrEmail } })
     }
     if (user !== null) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
