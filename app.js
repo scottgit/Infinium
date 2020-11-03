@@ -30,7 +30,7 @@ const store = new SequelizeStore({
 });
 app.use(
   session({
-    name: 'ininium.sid',
+    name: 'infinium.sid',
     secret: sessionSecret,
     store,
     resave: false,
