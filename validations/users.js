@@ -13,9 +13,11 @@ const userRegValidators = [
         .withMessage('User Name cannot contain @ symbol')
         .custom(async (value) => {
             const username = await User.findOne({where: {username: value}})
-            if(!username) {
+            if(username) {
                 throw new Error('User Name already in use. Please choose another.')
+                return false; 
             }
+            return true; 
         }),
     check('email')
         .exists({ checkFalsy: true })
@@ -26,9 +28,11 @@ const userRegValidators = [
         .withMessage('Email is not a valid email')
         .custom(async (value) => {
             const email = await User.findOne({where: {email: value}})
-            if(!email) {
-                throw new Error('Email already in use. Please sign-in or choose another email to register.')
+            if(email) {
+                throw new Error('Email already in use. Please sign-in or choose another email to register.'); 
+                return false; 
             }
+            return true; 
         }),
     check('password')
         .trill()
@@ -42,8 +46,12 @@ const userRegValidators = [
         .trill()
         .exists({ checkFalsy: true })
         .withMessage('Please provide a value for Confirm Password')
-        .matches('password')
-        .withMessage('Passwords must match'),
+        .custom((value, {req}) => {
+            if (value !== req.body.password) {
+                throw new Error('Confirm Password does not match Password');
+            }
+            return true; 
+        }),
 ] 
 
 const userSignInValidators = [ 
@@ -53,7 +61,7 @@ const userSignInValidators = [
             .isLength({ max: 50 }),
         check('password')
             .exists({ checkFalsy: true })
-            .isLength({ max: 50 })
+            .isLength({ min: 8, max: 50 })
     ], 'Please provide a value that is less than 50 characters'), 
 ]
 
