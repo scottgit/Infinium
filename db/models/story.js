@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     publishAfter: DataTypes.DATE
   }, {});
   Story.associate = function(models) {
-    belongsTo(models.User, {foreignKey: 'userId'})
+    Story.belongsTo(models.User, {foreignKey: 'userId'})
   };
   return Story;
 };
