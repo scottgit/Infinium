@@ -36,5 +36,29 @@ router.get(`/`, asyncHandler(async (req, res) => {
 }));
 
 
+router.get(/\/recent(\/(\d+))?/, asyncHandler(async (req, res) => {
+  console.log('LIMIT', req.params[1]);
+  const limits = req.params[1] ? parseInt(req.params[1],10) : 10;
+  const countLimit = limits;
+  const stories = await Story.findAll({
+    where: {
+      published: {
+        [Op.and]: [{[Op.ne]: ''}, {[Op.ne]: null}]
+      },
+      order: ['updatedAt', DESC],
+      limit: countLimit,
+    }
+  });
+  if (stories) setHexIds(stories);
+  if(wantsJSON(req)) {
+    res.json({stories});
+  }
+  else {
+    res.render('story-list', {
+      title: `The ${countLimit} most recent stories`,
+      stories
+    })
+  }
+}));
 
 module.exports = router;
