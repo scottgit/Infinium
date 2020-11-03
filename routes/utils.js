@@ -12,6 +12,7 @@ const setHexadecimal = number => number.toString(16);
 
 const parseHexadecimal = hexString => parseInt(hexString, 16);
 
+const setHexIds = stories => stories.forEach(story => story.hexId = setHexadecimal(story.id);
 
 module.exports = {
     csrfProtection,
