@@ -4,19 +4,26 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet", href="../../stylesheets/sign-up.css")
+        link(href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet")
         title Account Registration
     body
         div(class="sign-up_container")
-            form(class="sign-up_form" method="post")
-                h1 Create Account
-                input(type="hidden" name="_csrf" value=token)
-                input(class="sign-up_input" includes type="email" name="email" placeholder="Email" required)
-                input(class="sign-up_input" value='username' type="text" name="username" placeholder="Username" required)
-                input(class="sign-up_input" type="text" name="password" placeholder="Password" required)
-                input(class="sign-up_input" type="text" name="confirmPassword" placeholder="Confrim Password" required)
-                button(type="submit") Sign Up!
-            div(class="log-in_button")
-                p Already have an Account?
-                div
-                a(href="/users/login")
-                    button Log in
+            //- div(class="sign-up_welcome")
+            //-     div(class="welcome_container")
+                    //- h2 hello world
+                    //- p this is a cool test
+            div(class="form-holder")
+                form(class="sign-up_form" method="post")
+                    h1 Create an Account
+                    p Don't have an account? No worries, signing up takes under a minute
+                    input(type="hidden" name="_csrf" value=token)
+                    input(class="sign-up_input" includes type="email" name="email" placeholder="Email" required)
+                    input(class="sign-up_input" type="text" name="username" placeholder="Username" required)
+                    input(class="sign-up_input" type="password" name="password" placeholder="Password" required)
+                    input(class="sign-up_input" type="password" name="confirmPassword" placeholder="Confirm Password" required)
+                    button(type="submit") Sign Up!
+                div(class="log-in_button")
+                    p Already have an Account?
+                    div
+                    a(href="/users/login")
+                        button Log in

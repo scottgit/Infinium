@@ -1,51 +1,57 @@
+html{
+    height: 100%;
+}
+
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: grey;
+    font-family: 'Lato', sans-serif;
+    background-color: #f2f2f2;
+    position: relative;
+    height: 100%;
     display: flex;
-    justify-content: center;
     padding-top: 50px;
+    justify-content: center;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 h1 {
-    align-content: center;
     margin-bottom: 10px;
-    color: royalblue;
+    color: black
 }
 
+p{
+    color: black;
+}
 .sign-up_container {
-    background-color: white;
+    /* background-color: white; */
     height: 550px;
-    width: 370px;
-    display: flexbox;
+    width: 420px;
+    display: flex;
     position: absolute;
     box-sizing: border-box;
     border-radius: 20px;
     margin: 0 auto;
-    justify-content: center;
+}
+
+.form-holder{
+    height: 550px;
+    width: 420px;
+    display: inline-flexbox;
+    box-shadow: 1px 1px 8px lightgrey;
+    border-radius: 20px;
+    text-align: center;
+    background-color: white;
 }
 
 .sign-up_form {
-    display: flexbox;
+    display: inline-flexbox;
     width: 300px;
     padding: 25px;
     margin: 0 auto;
-    align-content: center;
-    justify-content: center;
+    text-align: center;
 }
-
-.log-in_button {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-content: center;
-}
-
-/* .input-container{
-    display: flexbox;
-    justify-content: left;
-    flex-wrap: wrap;
-    flex-direction: column;
-} */
 
 .sign-up_input {
     border-radius: 20px;
@@ -58,18 +64,33 @@ h1 {
     margin-right: 10px;
 }
 
+.log-in_button {
+    text-align: center;
+}
+
 button {
+    font-family: 'Lato', sans-serif;
+    background: linear-gradient(-45deg, #06c5c5, #a71bca);
+    background-size: 100% 100%;
     border-radius: 20px;
     padding: 10px;
     margin: 10px 0;
-    width: 200px;
-    border: 1px solid #999999;
-    outline: none;
-    font-size: 13px;
-    background-color: royalblue;
+    width: 250px;
+    border: none;
+    font-size: 14px;
+    color: white;
+
 }
 
-a{
-    display: flexbox;
-    align-content: center;
+div > p {
+    font-size: 14px;
+    color: grey;
+    padding-top: 15px;
+    margin-bottom: 1px;
+}
+
+button:hover {
+    background: linear-gradient(-45deg, #a71bca, #06c5c5);
+    background-position: 50% 50%;
+    transition: 5s;
 }

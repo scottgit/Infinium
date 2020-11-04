@@ -1,3 +1,105 @@
 h1 {
     color: #555555;
 }
+
+.homepage-container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 600px 300px 1000px;
+    margin: 10px 50px;
+}
+
+/* top section css*/
+/* top story  */
+.homepage-top-story{
+    background-color: seagreen;
+    display: flex;
+    justify-content: center;
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+}
+
+.top-story_content img {
+    width: 100%;
+}
+
+.top-story_author {
+    font-size: 12px;
+}
+
+.top-story_content {
+    height: 80%;
+    width: 90%;
+    background-color: white;
+}
+
+/* top stories  */
+.homepage-top-stories {
+    background-color: skyblue;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+    border-right: 1px solid lightgrey;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.top-stories_article {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 60px;
+    background-color: lightgray;
+    height: 25%;
+    width: 350px;
+}
+
+.article-content {
+
+}
+
+.article-img {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+/* followers  */
+.homepage-followers {
+    background-color: slateblue;
+    box-sizing: border-box;
+    margin-bottom: 25px;
+}
+
+/* trending section css*/
+/* trending */
+.homepage-trending {
+    background-color: tomato;
+    grid-column: 1 / 4;
+    border-top: 1px solid lightgrey;
+    border-bottom: 1px solid lightgrey ;
+}
+
+/* stream section css*/
+/* stream */
+.homepage-stream {
+    background-color: wheat;
+    grid-column: 1 / 3;
+}
+
+
+/* bookmark section css */
+.homepage-bookmarks {
+    background-color: pink;
+}
+
+.bookmarks-container {
+    width: 300px;
+    height: 100px;
+    background-color: lightgray;
+}
+
+.bookmarks-container_content {
+
+}
