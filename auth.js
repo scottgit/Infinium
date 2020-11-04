@@ -29,6 +29,7 @@ const restoreUser = async (req, res, next) => {
 
 const logoutUser = (req, res) => {
   delete req.session.auth
+  // res.locals.authenticated = false;
 }
 
 const requireAuth = (req, res, next) => {
@@ -41,5 +42,6 @@ const requireAuth = (req, res, next) => {
 module.exports = {
   loginUser,
   restoreUser,
-  logoutUser
+  logoutUser,
+  requireAuth
 };
