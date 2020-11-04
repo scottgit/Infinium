@@ -3,24 +3,59 @@ extends layout
 append head
   //- add page specific styles by appending to the head
   link(rel="stylesheet" href="/stylesheets/index.css")
+  link(href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet")
   //- add page specific js
   script(src="/javascripts/index.js" type="module" defer)
 
 block content
-  h1= title
-  nav
-    div(class='nav')
-      div(class="inner_nav")
-        div(class="inner_nav-left")
-          h1 Infinium
-        div(class="inner_nav-right")
-          div(class="nav_content-login")
-            a(class="nav_content-button" href="/users/login") Log In
-          div(class="nav_content-sign-up")
-            a(class="nav_content-button" href="/users/register") Sign Up
-  main
-    div(class="homepage_title-container")
-      div(class="homepage_title-header")
-        h1 Fantesies, Fandomes, and Fans.
-      div(class="hopepage_title_subheader")
-        h3 Find your community or create your own
+  div(class="homepage-container")
+    div(class="homepage-top-story")
+      div(class="top-story_content")
+        img(src="/images/dogs.jpg" width="200" alt="")
+        div(class="top-story_author")
+          h4 Michael Jensen in App Academy
+        h2 this is a header
+        p Cool Sub header
+        div
+          p read more 5 min read
+    div(class="homepage-top-stories")
+      div(class="top-stories_article")
+        div(class="article-content")
+          div(class="article-content_author")
+            h4 Michael Jensen in Jensen Times
+          h2 Article Name
+          div(class="article-content_date")
+            h4 Nov 3rd 10 min read
+        div(class="article-img")
+          img(src="/images/logo.png" width="80%" height="73.5%" alt="")
+      div(class="top-stories_article")
+        div(class="article-content")
+          div(class="article-content_author")
+            h4 Michael Jensen in Jensen Times
+          h2 Article Name
+          div(class="article-content_date")
+            h4 Nov 3rd 10 min read
+        div(class="article-img")
+          img(src="/images/logo.png" width="80%" height="73.5%" alt="")
+      div(class="top-stories_article")
+        div(class="article-content")
+          div(class="article-content_author")
+            h4 Michael Jensen in Jensen Times
+          h2 Article Name
+          div(class="article-content_date")
+            h4 Nov 3rd 10 min read
+        div(class="article-img")
+          img(src="/images/logo.png" width="80%" height="73.5%" alt="")
+      div(class="top-stories_article")
+        div(class="article-content")
+          div(class="article-content_author")
+            h4 Michael Jensen in Jensen Times
+          h2 Article Name
+          div(class="article-content_date")
+            h4 Nov 3rd 10 min read
+        div(class="article-img")
+          img(src="/images/logo.png" width="80%" height="73.5%" alt="")
+    div(class="homepage-followers")
+    div(class="homepage-trending")
+    div(class="homepage-stream")
+    div(class="homepage-bookmarks")
