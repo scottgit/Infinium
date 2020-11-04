@@ -1,0 +1,43 @@
+h2 {
+    line-height: 24px;
+    font-weight: 500;
+    color: rgba(41, 41, 41, 1); 
+    font-size: 20px; 
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.comments-container {
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
+    background-color: white;
+    width: 414px;
+    height: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+.comments-container__new-comment {
+    padding: 0px 24px; 
+    margin-bottom: 20px; 
+    display: flex; 
+}
+
+.comments-container__new-comment-text-box {
+    min-height: 100px;    
+}
+
+.comments-container__new-comment-button-div {
+    max-height: 100px;
+    padding: 0px 14px;
+}
+
+.comments-container__new-comment-button-respond {
+    background: rgb(26, 137, 23);
+    color: rgb(255, 255, 255);
+    border-color: rgb(26, 137, 23);
+    box-sizing: border-box;
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+
