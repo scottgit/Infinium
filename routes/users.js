@@ -151,4 +151,14 @@ router.get('/:userId(\\d+)/stories', requireAuth, asyncHandler(async (req, res) 
   sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
 }));
 
+
+/* DELETE THIS ROUTE */
+
+router.get('/', csrfProtection, (req, res) => {
+  res.render('user', {
+    title: 'User',
+    token: req.csrfToken()
+  })
+})
+
 module.exports = router;
