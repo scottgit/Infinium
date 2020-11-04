@@ -6,7 +6,16 @@ const bcrypt = require('bcryptjs')
 const{loginUser, logoutUser} = require('../auth')
 
 const db = require('../db/models')
-const {csrfProtection, asyncHandler} = require('./utils')
+const { csrfProtection,
+        asyncHandler,
+        preProcessStories,
+        setHexadecimal,
+        parseHexadecimal,
+        wantsJSON,
+        isPublished,
+        isDraft,
+        getAuthor,
+      } = require('./utils');
 
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {
@@ -97,6 +106,33 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
 router.post('/logout', (req, res) => {
   logoutUser(req, res);
   res.redirect('/users/login')
-})
+});
+
+/* GET single user story to read */
+// router.get('/:userId/stories/:hexId([0-9a-f]+)$', asyncHandler(async (req, res) => {
+//   const storyId = parseHexadecimal(req.params.hexId);
+//   const userId = parseInt(req.params.userId, 10);
+
+//   const story = await Story.findByPk(storyId, {
+//     include: {model: User, where {id: userId}, attributes: ['username']}
+//   });
+//   if (story) setHexadecimal(story.id);
+
+//   const details = {
+//     title: story.title,
+//     subtitle: story.subtitle,
+//     author: user.username,
+//     date: story.updatedAt,
+//     storyBody: story.published,
+//   };
+//   if(wantsJSON(req)) {
+//     res.json(details);
+//   }
+//   else {
+//     res.render('story-detail', {
+//       ...story.toJSON()
+//     })
+//   }
+// }));
 
 module.exports = router;

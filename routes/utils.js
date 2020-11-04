@@ -1,4 +1,6 @@
 const csrf = require('csurf');
+const { User } = require('../db/models');
+const { Op } = require("sequelize");
 
 const csrfProtection = csrf({cookie: true});
 
@@ -12,10 +14,54 @@ const setHexadecimal = number => number.toString(16);
 
 const parseHexadecimal = hexString => parseInt(hexString, 16);
 
-const setHexIds = stories => stories.forEach(story => story.hexId = setHexadecimal(story.id));
+const preProcessStories = stories => {
+    processed = stories.map(story => {
+        story = story.toJSON();
+        story.hexId = setHexadecimal(story.id);
+        story.author = story.User.username;
+        delete story.User;
+        return story;
+    });
+    return processed;
+};
 
 const wantsJSON = req => {
     return /application\/json/.test(req.get('accept'));
+}
+
+const isPublished = () => {
+    return {
+        published: {
+            [Op.and]: [{[Op.ne]: ''}, {[Op.ne]: null}]
+        }
+    }
+}
+
+const isDraft = () => {
+    return {
+        draft: {
+            [Op.and]: [{[Op.ne]: ''}, {[Op.ne]: null}]
+        }
+    }
+}
+
+const getAuthor = () => {
+    return [{
+        model: User,
+        attributes: ['username']
+    }];
+}
+
+const sendStoryList = (byJSON, res, stories, title) => {
+    if(byJSON) {
+        res.json({stories});
+    }
+    else {
+        res.render('story-list', {
+            title,
+            stories
+        });
+    }
 }
 
 module.exports = {
@@ -23,6 +69,10 @@ module.exports = {
     asyncHandler,
     setHexadecimal,
     parseHexadecimal,
-    setHexIds,
+    preProcessStories,
     wantsJSON,
+    isPublished,
+    isDraft,
+    getAuthor,
+    sendStoryList,
 }
