@@ -23,13 +23,33 @@
   padding: 7px 0 0 0;
 }
 
-.login{
+.logout{
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 500;
   background-color: transparent;
   border: .1px solid lightgrey;
   padding: 4px 8px;
   margin-right: 8px;
+  border-radius: 4px;
+}
+
+.login{
+  text-decoration: none;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: black;
+  padding: 4px 8px;
+  border: .1px solid lightgrey;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.register{
+  text-decoration: none;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: black;
+  padding: 4px 8px;
+  margin-right: 8px;
+  border: .1px solid lightgrey;
   border-radius: 4px;
 }
 
