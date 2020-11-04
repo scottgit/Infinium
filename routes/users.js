@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const { userRegValidators, userSignInValidators } = require('../validations/users')
-const { validationResult } = require('express-validator')
-const bcrypt = require('bcryptjs')
-const{loginUser, logoutUser} = require('../auth')
+const { userRegValidators, userSignInValidators } = require('../validations/users');
+const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const{loginUser, logoutUser} = require('../auth');
+const { Op } = require("sequelize");
 
 const db = require('../db/models')
 const { csrfProtection,
@@ -109,30 +110,34 @@ router.post('/logout', (req, res) => {
 });
 
 /* GET single user story to read */
-// router.get('/:userId/stories/:hexId([0-9a-f]+)$', asyncHandler(async (req, res) => {
-//   const storyId = parseHexadecimal(req.params.hexId);
-//   const userId = parseInt(req.params.userId, 10);
+router.get('/:userId/stories/:hexId([0-9a-f]+)$', asyncHandler(async (req, res) => {
+  const storyId = parseHexadecimal(req.params.hexId);
+  const userId = parseInt(req.params.userId, 10);
 
-//   const story = await Story.findByPk(storyId, {
-//     include: {model: User, where {id: userId}, attributes: ['username']}
-//   });
-//   if (story) setHexadecimal(story.id);
+  const story = await Story.findOne({
+    where: {
+      id: storyId,
+      userId
+    },
+    include: getAuthor(),
+  });
+  if (story) story = preProcessStories(...story);
 
-//   const details = {
-//     title: story.title,
-//     subtitle: story.subtitle,
-//     author: user.username,
-//     date: story.updatedAt,
-//     storyBody: story.published,
-//   };
-//   if(wantsJSON(req)) {
-//     res.json(details);
-//   }
-//   else {
-//     res.render('story-detail', {
-//       ...story.toJSON()
-//     })
-//   }
-// }));
+  const details = {
+    title: story.title,
+    subtitle: story.subtitle,
+    author: story.username,
+    date: story.updatedAt,
+    storyBody: story.published,
+  };
+  if(wantsJSON(req)) {
+    res.json(details);
+  }
+  else {
+    res.render('story-detail', {
+      ...details
+    })
+  }
+}));
 
 module.exports = router;
