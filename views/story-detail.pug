@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h2
+    .story-title= title
+    .story-subtitle= subtitle
+  .story-byline
+    span.story-author Author: #{author}
+    span.story-date Posted: #{date}
+  .story-content= storyBody

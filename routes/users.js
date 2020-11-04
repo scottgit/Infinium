@@ -1,16 +1,27 @@
 const express = require('express');
 const router = express.Router();
-const { userRegValidators, userSignInValidators } = require('../validations/users')
-const { validationResult } = require('express-validator')
-const bcrypt = require('bcryptjs')
-const{loginUser, logoutUser} = require('../auth')
+const { userRegValidators, userSignInValidators } = require('../validations/users');
+const { validationResult } = require('express-validator');
+const bcrypt = require('bcryptjs');
+const{loginUser, logoutUser} = require('../auth');
+const { Op } = require("sequelize");
 
-const db = require('../db/models')
-const {csrfProtection, asyncHandler} = require('./utils')
+const { User, Story } = require('../db/models')
+const { csrfProtection,
+        asyncHandler,
+        preProcessStories,
+        setHexadecimal,
+        parseHexadecimal,
+        wantsJSON,
+        isPublished,
+        isDraft,
+        getAuthor,
+        sendStoryList,
+      } = require('./utils');
 
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {
-  const user = db.User.build();
+  const user = User.build();
   res.render('sign-up', {
     title: 'Sign-up',
     user,
@@ -26,7 +37,7 @@ router.post('/register', csrfProtection, userRegValidators, asyncHandler(async (
     password
   } = req.body;
 
-  const user = db.User.build({
+  const user = User.build({
     username,
     email
   })
@@ -68,9 +79,9 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
   if (validatorErrors.isEmpty()) {
     let user;
     if (usernameOrEmail.includes('@')) {
-      user = await db.User.findOne({ where: { email: usernameOrEmail } })
+      user = await User.findOne({ where: { email: usernameOrEmail } })
     } else {
-      user = await db.User.findOne({ where: { username: usernameOrEmail } })
+      user = await User.findOne({ where: { username: usernameOrEmail } })
     }
     if (user !== null) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
@@ -97,6 +108,47 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
 router.post('/logout', (req, res) => {
   logoutUser(req, res);
   res.redirect('/users/login')
-})
+});
+
+/* GET single user story to read */
+router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
+  const userId = parseInt(req.params[0], 10);
+  const storyId = parseHexadecimal(req.params[1]);
+
+  let story = await Story.findOne({
+    where: isPublished(userId, storyId),
+    include: getAuthor(),
+  });
+
+  if (story) [story] = preProcessStories([story]);
+
+  const details = {
+    title: story.title,
+    subtitle: story.subtitle,
+    author: story.author,
+    date: story.date,
+    storyBody: story.published,
+  };
+  if(wantsJSON(req)) {
+    res.json(details);
+  }
+  else {
+    res.render('story-detail', {
+      ...details
+    })
+  }
+}));
+
+/* GET all published stories by specific user */
+router.get('/:userId(\\d+)/stories', asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  let stories = await Story.findAll({
+    where: isPublished(userId),
+    include: getAuthor(),
+    order: [['updatedAt', 'DESC']],
+  });
+  if (stories) stories = preProcessStories(stories);
+  sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
+}));
 
 module.exports = router;
