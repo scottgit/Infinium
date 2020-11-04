@@ -93,3 +93,13 @@ h1 {
 .homepage-bookmarks {
     background-color: pink;
 }
+
+.bookmarks-container {
+    width: 300px;
+    height: 100px;
+    background-color: lightgray;
+}
+
+.bookmarks-container_content {
+
+}
