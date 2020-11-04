@@ -50,8 +50,23 @@ router.post('/', commentValidator, asyncHandler(async (req, res) => {
     }
 }));
 
-router.put('/', commentValidator, asyncHandler(async (req, res) => {
-    const commentId = 
+router.put('/:id(\\d+)', commentValidator, asyncHandler(async (req, res) => {
+    const { comment } = req.body; 
+    const id = parseInt(req.params.id, 10); 
+    const oldComment = await Comment.findByPk(id); 
+
+    const validateErrors = validationResult(req); 
+
+    if (validateErrors.isEmpty()) {
+        oldComment.comment = comment;
+        await comment.save(); 
+        res.redirect('/comments');
+    } else {
+        const errors = validateErrors.array().map(error => error.msg);  
+        res.render('comments', { 
+            errors,
+        });      
+    }
 }))
 
 router.delete()
