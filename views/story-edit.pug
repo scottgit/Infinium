@@ -4,6 +4,7 @@ block head_trailer
   link(rel='stylesheet' href='/stylesheets/story-edit.css')
 
 block content
-  form.story-edit(action=formAction, method='post')
-    input.story-edit-title(type='text', value=title, name='title', placeholder='Title')
-    textarea.story-edit-draft(name="draft", cols="30", rows="10", value=draft, placeholder='Tell your story...')
+  .story-editor
+    form.story-edit(action=formAction, method='post')
+      input.story-edit-title(type='text', value=title, name='title', placeholder='Your story\'s title', max-length=100)
+      textarea.story-edit-draft(name="draft", value=draft, placeholder='Tell your story...')

@@ -1,5 +1,55 @@
+body {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+}
+.story-editor {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 15px 100px 0;
+}
+
 .story-edit {
   display: flex;
-  height: 100%;
-  width: 100%;
+  flex-direction: column;
+  flex: 1;
+  font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+}
+
+.story-edit-title {
+  margin-bottom: 10px;
+  font-size: 1.8em;
+  border: 1px solid transparent;
+  outline: none;
+  padding: 3px 5px;
+  font-family: inherit;
+}
+
+.story-edit-draft {
+  flex: 1;
+  resize: none;
+  overflow-x: auto;
+  padding: 5px;
+  border: 1px solid transparent;
+  font-family: inherit;
+  font-size: 1.3em;
+}
+
+.story-edit-title:hover,
+.story-edit-title:focus,
+.story-edit-draft:hover,
+.story-edit-draft:focus  {
+  border-left-color: #bbb;
+  background-color: rgba(0,0,0,0.03);
+  outline: none;
+}
+
+.story-edit-title:focus,
+.story-edit-draft:focus {
+  background-color: rgba(0,0,0,0.02);
 }
