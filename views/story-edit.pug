@@ -1,5 +1,8 @@
 extends layout
 
+block head_trailer
+  link(rel='stylesheet' href='/stylesheets/story-edit.css')
+
 block content
   form.story-edit(action=formAction, method='post')
     input.story-edit-title(type='text', value=title, name='title', placeholder='Title')
