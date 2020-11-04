@@ -14,7 +14,10 @@ html
         .title
           img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
           .title_name Infinium
-          .title_greeting Live Long and Prosper
+          if contextMessage
+            .title_greeting= contextMessage
+          else
+            .title_greeting Live Long and Prosper
         .icons
           form(action="/users/login")
             input(type="submit" value="Login" class="login")

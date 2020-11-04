@@ -1,0 +1,6 @@
+extends layout
+
+block content
+  form.story-edit(action=formAction, method='post')
+    input.story-edit-title(type='text', value=title, name='title', placeholder='Title')
+    textarea.story-edit-draft(name="draft", cols="30", rows="10", value=draft, placeholder='Tell your story...')

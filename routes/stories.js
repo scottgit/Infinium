@@ -3,6 +3,7 @@ const express = require('express');
 const { storyValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
+const{requireAuth} = require('../auth');
 
 const { User, Story } = require('../db/models');
 const { csrfProtection,
@@ -41,6 +42,13 @@ router.get('/highlights', asyncHandler(async (req, res) => {
   sendStoryList(wantsJSON(req), res, stories, `Highlight stories`);
 }));
 
+/* GET new story */
+router.get('/new-story', requireAuth, asyncHandler(async (req, res) => {
+  const id = res.locals.user.id;
+  const user = await User.findByPk(id);
+  console.log(res)
+  res.render('story-edit', {userId: user.id, name: user.username, contextMessage: `Draft by ${user.username}`, formAction: res.originalUrl})
+}));
 
 
 module.exports = router;
