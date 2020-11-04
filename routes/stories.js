@@ -7,84 +7,37 @@ const { Op } = require("sequelize");
 const { User, Story } = require('../db/models');
 const { csrfProtection,
         asyncHandler,
-        preProcessStories,
-        setHexadecimal,
-        parseHexadecimal,
         wantsJSON,
-        isPublished,
-        isDraft,
-        getAuthor,
         sendStoryList,
+        getStoryList,
+        getHighlights,
+        getTrending
       } = require('./utils');
 
 const router = express.Router();
 
 /* GET all published stories */
 router.get(`/`, asyncHandler(async (req, res) => {
-  let stories = await Story.findAll({
-    where: isPublished(),
-    include: getAuthor(),
-  });
-  if (stories) stories = preProcessStories(stories);
+  const stories = await getStoryList();
   sendStoryList(wantsJSON(req), res, stories, 'Stories since the beginning of time...');
 }));
 
 /* GET all recent stories (limit 5 unless optional route indicates differently) */
 router.get(/\/recent(\/(\d+))?/, asyncHandler(async (req, res) => {
   const limits = req.params[1] ? parseInt(req.params[1],10) : 5;
-  let stories = await Story.findAll({
-    where: isPublished(),
-    include: getAuthor(),
-    limit: limits,
-    order: [['updatedAt', 'DESC']],
-  });
-  if (stories) stories = preProcessStories(stories);
+  const stories = await getStoryList({ordering: [['updatedAt', 'DESC']], limits});
   sendStoryList(wantsJSON(req), res, stories, `The ${limits} most recent stories`);
 }));
 
 /* GET all trending stories (limit 3 unless optional route indicates differently) */
 router.get(/\/trending(\/(\d+))?/, asyncHandler(async (req, res) => {
-  const limits = req.params[1] ? parseInt(req.params[1],10) : 3;
-  let stories = await Story.findAll({
-    where: isPublished(),
-    include: getAuthor(),
-  });
-  let limit = Math.min(limits, stories.length);
-
-  let trending = [];
-  if (stories) {
-    stories = preProcessStories(stories);
-    //TODO implement actual trending logic, probably in the db query
-    //Just randomly selecting trending stories
-    for(let i=0; i<limit; i++) {
-      const getIdx = Math.floor(Math.random() * stories.length);
-      trending.push(...stories.splice(getIdx, 1));
-    }
-    stories = trending;
-  }
+  const stories = await getStoryList({filter: getTrending, req});
   sendStoryList(wantsJSON(req), res, stories, `Trending stories`);
 }));
 
 /* GET highlight stories (limit 5) */
 router.get('/highlights', asyncHandler(async (req, res) => {
-  const limits = 5;
-  let stories = await Story.findAll({
-    where: isPublished(),
-    include: getAuthor(),
-  });
-  let limit = Math.min(limits, stories.length);
-
-  let highlight = [];
-  if (stories) {
-    stories = preProcessStories(stories);
-    //TODO implement actual highlight logic, probably in the db query
-    //Just randomly selecting highlight stories
-    for(let i=0; i<limit; i++) {
-      const getIdx = Math.floor(Math.random() * stories.length);
-      highlight.push(...stories.splice(getIdx, 1));
-    }
-    stories = highlight;
-  }
+  const stories = await getStoryList({filter: getHighlights});
   sendStoryList(wantsJSON(req), res, stories, `Highlight stories`);
 }));
 
