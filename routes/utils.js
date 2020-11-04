@@ -31,11 +31,26 @@ const wantsJSON = req => {
     return /application\/json/.test(req.get('accept'));
 }
 
-const isPublished = () => {
-    return {
-        published: {
-            [Op.and]: [{[Op.ne]: ''}, {[Op.ne]: null}]
+const isPublished = (userId, storyId) => {
+    const published = {
+        [Op.and]: [{[Op.ne]: ''}, {[Op.ne]: null}]
+    }
+    if (userId) {
+        if (storyId) {
+            return {
+                id: storyId,
+                userId,
+                published
+            }
         }
+
+        return {
+            userId,
+            published
+        }
+    }
+    else {
+        return {published}
     }
 }
 

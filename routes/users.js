@@ -16,6 +16,7 @@ const { csrfProtection,
         isPublished,
         isDraft,
         getAuthor,
+        sendStoryList,
       } = require('./utils');
 
 /* GET register form. */
@@ -115,10 +116,7 @@ router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
   const storyId = parseHexadecimal(req.params[1]);
 
   let story = await Story.findOne({
-    where: {
-      id: storyId,
-      userId
-    },
+    where: isPublished(userId, storyId),
     include: getAuthor(),
   });
 
@@ -139,6 +137,18 @@ router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
       ...details
     })
   }
+}));
+
+/* GET all published stories by specific user */
+router.get('/:userId(\\d+)/stories', asyncHandler(async (req, res) => {
+  const userId = req.params.userId;
+  let stories = await Story.findAll({
+    where: isPublished(userId),
+    include: getAuthor(),
+    order: [['updatedAt', 'DESC']],
+  });
+  if (stories) stories = preProcessStories(stories);
+  sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
 }));
 
 module.exports = router;
