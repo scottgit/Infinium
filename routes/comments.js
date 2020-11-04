@@ -1,22 +1,24 @@
 const express = require('express');
 const router = express.Router();
-const { validationResult } = require('express-validator'); 
+const { check, validationResult } = require('express-validator'); 
 
 const db = require('../db/models');
-const { Comment } = db; 
+const { Comment, Story } = db; 
 const { asyncHandler } = require('./utils'); 
 const commentValidator = require('../validations/comments');
 
 
 router.get('/', asyncHandler(async (req, res) => {
-    const storyId = parseInt(req.params.id, 10); 
-    const comments = await Comment.findAll({
-        where: { storyId }
+    const storyId = 3; //parseInt(req.params.id, 10); 
+    let comments = await Comment.findAll({
+        where: { storyId }, 
+        include: Story,
     });
-    const story = await Story.findOne({
-        where: { id: storyId }
-    });
-    const storyTitle = story.title; 
+    
+    const storyTitle = comments[0].Story.title; 
+    comments = comments.map(comment => {
+        return comment.comment;  
+    });   
 
     res.render('comments', {
         storyTitle,
@@ -25,10 +27,10 @@ router.get('/', asyncHandler(async (req, res) => {
 }));
 
 router.post('/', commentValidator, asyncHandler(async (req, res) => {
-    const storyId = parseInt(req.params.id, 10); 
+    const storyId = 3; //parseInt(req.params.id, 10); 
     const { comment } = req.body; 
-    // How best to interact with the Session table to 
-    // extract userId? 
+
+    const userId = 2; //res.locals.user.id; 
     const newComment =  Comment.build({
         comment, 
         storyId,
@@ -39,21 +41,19 @@ router.post('/', commentValidator, asyncHandler(async (req, res) => {
 
     if (validateErrors.isEmpty()) {
         await newComment.save(); 
-        const comments = await Comment.findAll({
-            where: { storyId }
-        });
-        const story = await Story.findOne({
-            where: { id: storyId }
-        });
-        const storyTitle = story.title; 
-
-        res.render('comments', {
-            storyTitle, 
-            comments
-        });
+        res.redirect('/comments'); 
     } else {
-        
+        const errors = validateErrors.array().map(error => error.msg);  
+        res.render('comments', { 
+            errors,
+        });      
     }
 }));
+
+router.put('/', commentValidator, asyncHandler(async (req, res) => {
+    const commentId = 
+}))
+
+router.delete()
 
 module.exports = router; 

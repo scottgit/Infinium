@@ -1,6 +1,4 @@
 const { check } = require('express-validator');
-const db = require('../db/models');
-const { Comment } = db;
 
 const commentValidator = [
     check('comment')
@@ -9,3 +7,5 @@ const commentValidator = [
         .isLength({ max: 255 })
         .withMessage('Please keep your comment under 255 characters')
 ];
+
+module.exports = commentValidator; 
