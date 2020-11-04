@@ -137,7 +137,6 @@ const getStoryList = async ({req, res, userId, storyId, limits, ordering, filter
     if(stories) stories = preProcessStories(stories);
 
     if(filter) stories = filter(stories, req, res);
-    console.log("filtered", stories)
 
     return stories;
 }
