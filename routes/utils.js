@@ -15,10 +15,12 @@ const setHexadecimal = number => number.toString(16);
 const parseHexadecimal = hexString => parseInt(hexString, 16);
 
 const preProcessStories = stories => {
-    processed = stories.map(story => {
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+    const processed = stories.map(story => {
         story = story.toJSON();
         story.hexId = setHexadecimal(story.id);
         story.author = story.User.username;
+        story.date = story.updatedAt.toLocaleDateString("en-US", dateOptions);
         delete story.User;
         return story;
     });

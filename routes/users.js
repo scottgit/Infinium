@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 const{loginUser, logoutUser} = require('../auth');
 const { Op } = require("sequelize");
 
-const db = require('../db/models')
+const { User, Story } = require('../db/models')
 const { csrfProtection,
         asyncHandler,
         preProcessStories,
@@ -20,7 +20,7 @@ const { csrfProtection,
 
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {
-  const user = db.User.build();
+  const user = User.build();
   res.render('sign-up', {
     title: 'Sign-up',
     user,
@@ -36,7 +36,7 @@ router.post('/register', csrfProtection, userRegValidators, asyncHandler(async (
     password
   } = req.body;
 
-  const user = db.User.build({
+  const user = User.build({
     username,
     email
   })
@@ -78,9 +78,9 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
   if (validatorErrors.isEmpty()) {
     let user;
     if (usernameOrEmail.includes('@')) {
-      user = await db.User.findOne({ where: { email: usernameOrEmail } })
+      user = await User.findOne({ where: { email: usernameOrEmail } })
     } else {
-      user = await db.User.findOne({ where: { username: usernameOrEmail } })
+      user = await User.findOne({ where: { username: usernameOrEmail } })
     }
     if (user !== null) {
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
@@ -110,24 +110,25 @@ router.post('/logout', (req, res) => {
 });
 
 /* GET single user story to read */
-router.get('/:userId/stories/:hexId([0-9a-f]+)$', asyncHandler(async (req, res) => {
-  const storyId = parseHexadecimal(req.params.hexId);
-  const userId = parseInt(req.params.userId, 10);
+router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
+  const userId = parseInt(req.params[0], 10);
+  const storyId = parseHexadecimal(req.params[1]);
 
-  const story = await Story.findOne({
+  let story = await Story.findOne({
     where: {
       id: storyId,
       userId
     },
     include: getAuthor(),
   });
-  if (story) story = preProcessStories(...story);
+
+  if (story) [story] = preProcessStories([story]);
 
   const details = {
     title: story.title,
     subtitle: story.subtitle,
-    author: story.username,
-    date: story.updatedAt,
+    author: story.author,
+    date: story.date,
     storyBody: story.published,
   };
   if(wantsJSON(req)) {
