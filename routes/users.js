@@ -4,19 +4,17 @@ const { userRegValidators, userSignInValidators } = require('../validations/user
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const{loginUser, logoutUser} = require('../auth');
-const { Op } = require("sequelize");
 
 const { User, Story } = require('../db/models')
 const { csrfProtection,
         asyncHandler,
         preProcessStories,
-        setHexadecimal,
         parseHexadecimal,
         wantsJSON,
         isPublished,
-        isDraft,
         getAuthor,
         sendStoryList,
+        getStoryList,
       } = require('./utils');
 
 /* GET register form. */
@@ -142,12 +140,7 @@ router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
 /* GET all published stories by specific user */
 router.get('/:userId(\\d+)/stories', asyncHandler(async (req, res) => {
   const userId = req.params.userId;
-  let stories = await Story.findAll({
-    where: isPublished(userId),
-    include: getAuthor(),
-    order: [['updatedAt', 'DESC']],
-  });
-  if (stories) stories = preProcessStories(stories);
+  const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
   sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
 }));
 
