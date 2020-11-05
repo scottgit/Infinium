@@ -16,6 +16,7 @@ block content
       +validationErrorSummary(publishErrors)
       form#story-publish.story-publish(action=`${formAction}/publish`, method='post')
         input(type='hidden' name='_csrf' value=csrfToken)
+        input.story-publish-draft(type='hidden' name='draft' value=draft)
         .image-wrapper=
           `Include a URL to a high-quality image in your story to make it more inviting to readers.`
           img.story-publish-image(src=imageLink)

@@ -8,6 +8,8 @@ if (publishButton) {
     publisherForm.classList.remove('hide');
     //Grab any title updates
     publisherForm.querySelector('.story-publish-title').value = editorForm.querySelector('.story-edit-title').value;
+    //Grab any draft updates
+    publisherForm.querySelector('.story-publish-draft').value = editorForm.querySelector('.story-edit-title').value;
   });
 
   const imageRoute = document.querySelector('.story-publish-image-path');

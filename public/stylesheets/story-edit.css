@@ -111,3 +111,12 @@ body {
   top: 1px;
   left: 1px;
 }
+
+/* Story publisher overlay */
+
+.story-publisher {
+
+}
+.story-publisher.hide {
+  display: none;
+}
