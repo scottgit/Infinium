@@ -21,7 +21,7 @@ module.exports = {
             draft: '',
             published,
             publishAfter: null,
-            imageLink: `${faker.image.imageUrl()}/any`,
+            imageLink: `${faker.image.imageUrl()}/any?dummy=${i}`,
             userId,
             createdAt,
             updatedAt,
