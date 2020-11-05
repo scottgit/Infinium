@@ -133,3 +133,13 @@ body {
 .show{
   display:block;
 }
+
+.alert-danger {
+  padding: 5px 25px 10px;
+  color: red;
+  background-color: rgb(255, 221, 221);
+}
+
+.alert-danger ul {
+  padding-left: 20px;
+}

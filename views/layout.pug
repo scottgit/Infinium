@@ -21,8 +21,10 @@ html
           else
             .title_greeting Live Long and Prosper
           if contextControls
-            if (contextControls = 'story-edit')
-              button.story-save(type='submit' form='story-edit') Save
+            if (contextControls === 'story-edit' || contextControls === 'story-edit-with-publish')
+              button.story-save(type='submit' form='story-edit' value="Save") Save
+            if (contextControls === 'story-edit-with-publish')
+              button.story-publish(type='button' value="Publish") Publish
         .icons
           if locals.authenticated
             form(action="/users/logout" method="post")
