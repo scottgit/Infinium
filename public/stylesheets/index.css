@@ -23,6 +23,7 @@ h1 {
     box-sizing: border-box;
     margin-bottom: 25px;
     grid-column: 1 / 2;
+    padding-right: 25px;
 }
 
 .top-story_content {
@@ -97,6 +98,7 @@ h1 {
     padding-bottom: 25px;
     display: flex;
     flex-direction: column;
+    padding-right: 25px;
 }
 
 .top-stories_article {
