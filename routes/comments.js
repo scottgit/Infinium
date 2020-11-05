@@ -6,12 +6,14 @@ const db = require('../db/models');
 const { Comment, Story } = db; 
 const { asyncHandler } = require('./utils'); 
 const commentValidator = require('../validations/comments');
+const { sequelize } = require('../db/models');
 
 
 router.get('/', asyncHandler(async (req, res) => {
     const storyId = 3; //parseInt(req.params.id, 10); 
     let comments = await Comment.findAll({
         where: { storyId }, 
+        order: [['createdAt', 'DESC']], 
     });
     
     comments = comments.map(comment => {
