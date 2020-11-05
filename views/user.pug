@@ -48,9 +48,13 @@ html
           p(class="question_ask") Have something to share?
           a(href="" class="question_answer") Create your own world.
       else
+        .storyholder
         each story in stories
           .recentStories
-            div= story.imageLink
-            h2= story.title
-            h= story.subtitle
-            p= story.published
+            .recentStory
+              h2(class="recentStory_title")= story.title
+              h3(class="recentStory_subtitle")= story.subtitle
+            .storyImage
+              img(src="/images/dogs.jpg", alt="doggies" class="storyImage_recent")
+            .storyBody
+              p= story.published
