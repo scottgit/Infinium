@@ -1,17 +1,20 @@
 const express = require('express');
 
-const { storyValidators } = require('../validations/stories');
+const { storyDraftValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
+const{requireAuth} = require('../auth');
 
 const { User, Story } = require('../db/models');
 const { csrfProtection,
         asyncHandler,
         wantsJSON,
+        setHexadecimal,
         sendStoryList,
         getStoryList,
         getHighlights,
-        getTrending
+        getTrending,
+        buildMissingStoryTitle,
       } = require('./utils');
 
 const router = express.Router();
@@ -41,6 +44,58 @@ router.get('/highlights', asyncHandler(async (req, res) => {
   sendStoryList(wantsJSON(req), res, stories, `Highlight stories`);
 }));
 
+/* GET new story */
+router.get('/new-story', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
+  const id = res.locals.user.id;
+  const user = await User.findByPk(id);
 
+  res.render('story-edit', {
+    userId: user.id,
+    name: user.username,
+    contextMessage: `Draft by ${user.username}`,
+    contextControls: `story-edit`,
+    formAction: req.originalUrl,
+    csrfToken: req.csrfToken(),
+  });
+}));
+
+router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res) => {
+  let {title, draft} = req.body;
+  const userId = res.locals.user.id;
+  const name = res.locals.user.username;
+
+  //If no title, build one from the body
+  if (!title && draft) {
+    buildMissingStoryTitle(draft);
+  }
+
+  let story = Story.build({
+    title,
+    draft,
+    userId,
+  });
+
+  const validatorErrors = validationResult(req);
+
+  if (validatorErrors.isEmpty()) {
+    story = await story.save();
+    const hexId = setHexadecimal(story.id);
+    res.redirect(`/users/${userId}/stories/${hexId}/draft`);
+  }
+  else {
+    const errors = validatorErrors.array().map(error => error.msg);
+    res.render('story-edit', {
+      userId,
+      name,
+      contextMessage: `Draft by ${name}`,
+      contextControls: `story-edit`,
+      formAction: req.originalUrl,
+      csrfToken: req.csrfToken(),
+      errors,
+    });
+  }
+
+
+}));
 
 module.exports = router;
