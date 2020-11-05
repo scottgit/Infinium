@@ -152,10 +152,6 @@
   color: grey;
 }
 
-.storyholder{
-  margin-top: -75px;
-}
-
 .about_me{
   margin: 50px 200px;
   display: grid;
@@ -222,24 +218,51 @@
 
 .recentStory_title{
   display: block;
-  font-size: 34px;
-  font-weight: 700;
-  text-decoration: none;
-  color: black;
-  padding: -10px 0px;
+  font-size: 38px;
+  padding: -10px;
 }
 
 .recentStory_subtitle{
   display: block;
+  height: 10px;
   font-size: 22px;
   color: grey;
   font-weight: 500;
+  margin: -20px 0 50px 0;
+}
+
+.author_info{
+  height: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 30px
+}
+
+.author_info_icon{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+.author_info_name{
+  font-size: 13px;
+  padding: 0 10px;
+  text-decoration: none;
+  color: green;
+  margin-bottom: 7px;
+}
+
+.author_info_date{
+  font-size: 13px;
+  color: grey;
+  margin-bottom: 20px;
 }
 
 .storyImage{
   margin-top: 10px;
-  width: 650px;
-  height: 500px;
+  width: 950px;
+  height: 675px;
 }
 
 .storyImage_recent{
@@ -249,7 +272,8 @@
 
 .storyBody{
   width: 650px;
-  padding: 20px 0;
+  font-size: 20px;
+  padding: 18px 0;
   border-bottom: lightgrey solid 1px;
 }
 
