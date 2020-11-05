@@ -21,7 +21,7 @@ const { csrfProtection,
         getStoryList,
         buildMissingStoryTitle,
         prepareStoryEditorDetails,
-        checkTitle,
+        checkEmpty,
       } = require('./utils');
 
 /* GET the main user page */
@@ -231,7 +231,7 @@ router.post(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection
     include: getAuthor(),
   });
   //If no title, build one from the body
-  if (checkTitle(title) && draft) {
+  if (checkEmpty(title) && !checkEmpty(draft)) {
     title = buildMissingStoryTitle(draft);
   }
 
@@ -251,6 +251,8 @@ router.post(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection
   }
   else {
     const errors = validatorErrors.array().map(error => error.msg);
+    story.title = title;
+    story.draft = draft;
     const details = prepareStoryEditorDetails(req, story);
     res.render('story-edit', {
       ...details,

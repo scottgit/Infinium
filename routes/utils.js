@@ -202,8 +202,8 @@ const prepareStoryEditorDetails = (req, story, name) => {
     return details;
 }
 
-const checkTitle = title => {
-    return !title || title.match(/^\s*$/)
+const checkEmpty = text => {
+    return !text || text.match(/^\s*$/)
 }
 
 module.exports = {
@@ -222,5 +222,5 @@ module.exports = {
     getTrending,
     buildMissingStoryTitle,
     prepareStoryEditorDetails,
-    checkTitle,
+    checkEmpty,
 }

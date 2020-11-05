@@ -16,7 +16,7 @@ const { csrfProtection,
         getTrending,
         buildMissingStoryTitle,
         prepareStoryEditorDetails,
-        checkTitle,
+        checkEmpty,
       } = require('./utils');
 
 const router = express.Router();
@@ -67,7 +67,7 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
   const name = res.locals.user.username;
 
   //If no title, build one from the body
-  if (checkTitle(title) && draft) {
+  if (checkEmpty(title) && !checkEmpty(draft)) {
     title = buildMissingStoryTitle(draft);
   }
 
