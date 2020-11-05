@@ -1,0 +1,13 @@
+extends layout
+include utils
+
+block head_trailer
+  link(rel='stylesheet' href='/stylesheets/story-edit.css')
+
+block content
+  .story-editor
+    +validationErrorSummary(errors)
+    form.story-edit(action=formAction, method='post', id='story-edit', autocomplete='off')
+      input(type="hidden" name="_csrf" value=csrfToken)
+      input.story-edit-title(type='text', value=title, name='title', placeholder='Your story\'s title (max. 100 characters)', maxlength=100)
+      textarea.story-edit-draft(name="draft", placeholder='Tell your story...') #{draft}
