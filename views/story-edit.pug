@@ -5,9 +5,21 @@ block head_trailer
   link(rel='stylesheet' href='/stylesheets/story-edit.css')
 
 block content
-  .story-editor
+  #story-editor.story-editor
     +validationErrorSummary(errors)
-    form.story-edit(action=formAction, method='post', id='story-edit', autocomplete='off')
-      input(type="hidden" name="_csrf" value=csrfToken)
+    form#story-edit.story-edit(action=formAction, method='post', autocomplete='off')
+      input(type='hidden' name='_csrf' value=csrfToken)
       input.story-edit-title(type='text', value=title, name='title', placeholder='Your story\'s title (max. 100 characters)', maxlength=100)
-      textarea.story-edit-draft(name="draft", placeholder='Tell your story...') #{draft}
+      textarea.story-edit-draft(name='draft', placeholder='Tell your story...') #{draft}
+  if (contextControls === 'story-edit-with-publish')
+    #story-publisher.story-publisher.hide
+      +validationErrorSummary(publishErrors)
+      form#story-publish.story-publish(action=`${formAction}/publish`, method='post')
+        input(type='hidden' name='_csrf' value=csrfToken)
+        .image-wrapper=
+          `Include a URL to a high-quality image in your story to make it more inviting to readers.`
+          img.story-publish-image(src=imageLink)
+        input.story-publish-image-path(type='text', value=imageLink, name='imageLink', placeholder='Optional URL to image (max. 255 characters)', maxlength=255)
+        input.story-publish-title(type='text', value=title, name='title', placeholder='Your story\'s title (max. 100 characters)', maxlength=100)
+        input.story-publish-subtitle(type='text', value=subtitle, name='subtitle', placeholder='Optional subtitle (max. 100 characters)', maxlength=100)
+        button.story-publish-now(type='submit' form='story-publish') Publish now

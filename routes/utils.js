@@ -197,6 +197,7 @@ const prepareStoryEditorDetails = (req, story, name) => {
       author: name,
       date: story.date,
       draft: story.draft,
+      imageLink: story.imageLink,
     };
 
     return details;
