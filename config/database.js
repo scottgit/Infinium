@@ -15,4 +15,10 @@ module.exports = {
     seederStorage: 'sequelize',
     dialect: "postgres",
   },
+  //This sets up production env for Heroku
+  production: {
+    use_env_variable: 'DATABASE_URL',
+    dialect: 'postgres',
+    seederStorage: 'sequelize',
+  }
 };
