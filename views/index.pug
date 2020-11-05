@@ -11,60 +11,31 @@ block content
   div(class="homepage-container")
     div(class="homepage-top-story")
       div(class="top-story_content")
-        img(src="/images/dogs.jpg" alt="")
+        img(src=topStory.imageLink alt="")
         div(class="top-story_author")
-          img(src="/images/dogs.jpg" width="20" height="20" alt="")
-          h4 Michael Jensen in App Academy
-        h2 The United States of America, cool stuff right?
-        p What is going on in our rivers across the nation?
+          img(src=topStory.imageLink width="20" height="20" alt="")
+          h4= topStory.author
+        h2
+          a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
+        p= topStory.subtitle
         div(class="top-story_readtime")
           a(href="") Read more
     div(class="homepage-top-stories")
       div(class="stories-container")
-        div(class="top-stories_article")
-          div(class="article-content")
-            div(class="article-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Michael Jensen in Jensen Times
-            h2 What are the TRUE colors of the rainbow?
-            div(class="article-content_date")
-              h4 Nov 3rd 10 min read
-          div(class="article-img")
-            img(src="/images/images.jpg" alt="")
-        div(class="top-stories_article")
-          div(class="article-content")
-            div(class="article-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Michael Jensen in Jensen Times
-            h2 Why are people turning purple? Find out here
-            div(class="article-content_date")
-              h4 Nov 3rd 10 min read
-          div(class="article-img")
-            img(src="/images/images-dog.jpg" alt="")
-        div(class="top-stories_article")
-          div(class="article-content")
-            div(class="article-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Michael Jensen in Jensen Times
-            h2 Mike is pretty cool right?
-            div(class="article-content_date")
-              h4 Nov 3rd 10 min read
-          div(class="article-img")
-            img(src="/images/records.jpg" alt="")
-        div(class="top-stories_article")
-          div(class="article-content")
-            div(class="article-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Michael Jensen in Jensen Times
-            h2 What does my dad actually think about me?
-            div(class="article-content_date")
-              h4 Nov 3rd 10 min read
-          div(class="article-img")
-            img(src="/images/moon.jpg" alt="")
+        each highlight in highlights
+          div(class="top-stories_article")
+            div(class="article-content")
+              div(class="article-content_author")
+                img(src=highlight.imageLink width="20" height="20" alt="")
+                h4= highlight.author
+              h2
+                a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
+              div(class="article-content_date")
+                h4= highlight.date
+            div(class="article-img")
+              img(src=highlight.imageLink alt="")
     div(class="homepage-followers")
     div(class="homepage-trending")
-      //- div(class="trending-header")
-      //-   h3 Trending on Infinium
       div(class="homepage-trending_container")
         div(class="trending-article")
           div(class="trending-article_content")
@@ -96,58 +67,21 @@ block content
             h4 author 6
             h2 article title
             p read time
+
     div(class="homepage-stream")
       div(class="homepage-stream_container")
-        div(class="stream-article")
-          div(class="stream-content")
-            div(class="stream-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Joe Hansen in People
-            div(class="stream-content_headers")
-              h2 Streaming is challening but is it worth it in the end?
-            p Nov 5th 2020 7 min read
-          div(class="stream-article_img")
-              img(src="/images/moon.jpg" width="100" height="100" alt="")
-        div(class="stream-article")
-          div(class="stream-content")
-            div(class="stream-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Joe Hansen in People
-            div(class="stream-content_headers")
-              h2 Can you tell the difference between Star Wars and Star Trek
-            p Nov 5th 2020 7 min read
-          div(class="stream-article_img")
-              img(src="/images/records.jpg" width="100" height="100" alt="")
-        div(class="stream-article")
-          div(class="stream-content")
-            div(class="stream-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Joe Hansen in People
-            div(class="stream-content_headers")
-              h2 How to become an expert in Pokemon trading: Tips and Tricks
-            p Nov 5th 2020 7 min read
-          div(class="stream-article_img")
-              img(src="/images/logo.png" width="100" height="100" alt="")
-        div(class="stream-article")
-          div(class="stream-content")
-            div(class="stream-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Joe Hansen in People
-            div(class="stream-content_headers")
-              h2 When is the appropriate amount of time to NOT take a shower?
-            p Nov 5th 2020 7 min read
-          div(class="stream-article_img")
-              img(src="/images/images-dog.jpg" width="100" height="100" alt="")
-        div(class="stream-article")
-          div(class="stream-content")
-            div(class="stream-content_author")
-              img(src="/images/dogs.jpg" width="20" height="20" alt="")
-              h4 Joe Hansen in People
-            div(class="stream-content_headers")
-              h2 How to quit those annoying habits related to gaming
-            p Nov 5th 2020 7 min read
-          div(class="stream-article_img")
-              img(src="/images/dogs.jpg" width="100" height="100" alt="")
+        each recent in recents
+          div(class="stream-article")
+            div(class="stream-content")
+              div(class="stream-content_author")
+                img(src=recent.imageLink width="20" height="20" alt="")
+                h4= recent.author
+              div(class="stream-content_headers")
+                h2
+                a(href=`/users/${recent.userId}/stories/${recent.hexId}`)= recent.title
+              p= recent.date
+            div(class="stream-article_img")
+                img(src=recent.imageLink width="100" height="100" alt="")
     div(class="homepage-bookmarks")
       div(class="bookmarks-container")
         div(class="bookmarks-container_content")
