@@ -3,7 +3,9 @@ const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const{loginUser, logoutUser} = require('../auth');
+const{loginUser, logoutUser, requireAuth} = require('../auth');
+const { Op } = require("sequelize");
+
 
 const { User, Story } = require('../db/models')
 const { csrfProtection,
@@ -16,6 +18,27 @@ const { csrfProtection,
         sendStoryList,
         getStoryList,
       } = require('./utils');
+
+/* GET the main user page */
+router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
+  const userId = req.params.userId
+  const user = await User.findByPk(userId, {
+    include: Story
+        })
+  const authUser = res.locals.user.id;
+  const authCompare = parseInt(authUser, 10) === parseInt(userId, 10);
+  const stories = [];
+  user.Stories.map(story => stories.push(story))
+  console.log(stories)
+  const name = user.username;
+  res.render('user', {
+    title: 'User',
+    stories,
+    authCompare,
+    userId,
+    name,
+  });
+}));
 
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {
@@ -105,11 +128,11 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
 
 router.post('/logout', (req, res) => {
   logoutUser(req, res);
-  res.redirect('/users/login')
+  res.redirect('/')
 });
 
 /* GET single user story to read */
-router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
+router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, requireAuth, asyncHandler(async (req, res) => {
   const userId = parseInt(req.params[0], 10);
   const storyId = parseHexadecimal(req.params[1]);
 
@@ -138,10 +161,11 @@ router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
 }));
 
 /* GET all published stories by specific user */
-router.get('/:userId(\\d+)/stories', asyncHandler(async (req, res) => {
+router.get('/:userId(\\d+)/stories', requireAuth, asyncHandler(async (req, res) => {
   const userId = req.params.userId;
   const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
   sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
 }));
+
 
 module.exports = router;

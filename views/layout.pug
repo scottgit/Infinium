@@ -16,17 +16,22 @@ html
           .title_name Infinium
           .title_greeting Live Long and Prosper
         .icons
-          form(action="/users/login")
-            input(type="submit" value="Login" class="login")
-          .dropdown
-            img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
-            div(class="dropdown_content" id="myDropdown")
-              .header_mini
-                img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
-                .naming_info
-                  p(class="naming_info_list1") Name
-                  p(class="naming_info_list2") @reference
-              a(href="#") New Story
-              a(href="#") Stories
-              a(href="#") Settings
+          if locals.authenticated
+            form(action="/users/logout" method="post")
+              button(type="submit" class="logout") Logout
+            .dropdown
+              img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
+              div(class="dropdown_content" id="myDropdown")
+                .header_mini
+                  img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
+                  .naming_info
+                    p(class="naming_info_list1") Name
+                    p(class="naming_info_list2") @reference
+                a(href="#") New Story
+                a(href="#") Stories
+                a(href="#") Settings
+          else
+            span(class="loggedin")
+              a(class="login" href='/users/login') Login
+              a(class="register" href='users/register') Register
     block content
