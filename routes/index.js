@@ -14,8 +14,10 @@ router.get('/', asyncHandler(async (req, res, next) => {
   const limits = 5;
   const highlights = await getStoryList({filter: getHighlights});
   const trending = await getStoryList({filter: getTrending, req});
-  const recent = await getStoryList({ordering: [['updatedAt', 'DESC']], limits});
-  res.render('index', { title: 'Infinium', highlights, trending, recent });
+  const recents = await getStoryList({ordering: [['updatedAt', 'DESC']], limits});
+  const topStory = highlights.pop();
+  console.log(highlights);
+  res.render('index', { title: 'Infinium', highlights, trending, recents, topStory });
 }));
 
 module.exports = router;
