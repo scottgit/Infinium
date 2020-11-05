@@ -57,11 +57,39 @@
     padding-bottom: 16px; 
 }
 
+.comments-container__comment-nav {
+    display: flex; 
+    justify-content: space-between;
+}
+
 .comments-container__comment-nav-user {
     padding-left: 12px; 
     font-weight: bold;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 10px;
+}
+
+.comments-container__comment-nav-menu {
+    width: 25px; 
+    height: 25px; 
+    vertical-align: middle;
+    padding-right: 12px; 
+    position: relative; 
+}
+
+.comments-container__comment-nav-menu-image {
+    max-width: 100%; 
+    max-height: 100%; 
+}
+
+.comments-container__comment-nav-menu-dropdown--hidden {
+    display: none;  
+}
+
+.comments-container__comment-nav-menu-dropdown {
+    position: absolute; 
+    top: 40px; 
+    
 }
 
 .comments-container__comment-text-box {

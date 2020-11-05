@@ -11,14 +11,10 @@ const { sequelize } = require('../db/models');
 
 router.get('/', asyncHandler(async (req, res) => {
     const storyId = 3; //parseInt(req.params.id, 10); 
-    let comments = await Comment.findAll({
+    const comments = await Comment.findAll({
         where: { storyId }, 
         order: [['createdAt', 'DESC']], 
-    });
-    
-    comments = comments.map(comment => {
-        return comment.comment;  
-    });   
+    }); 
 
     res.render('comments', {
         comments, 

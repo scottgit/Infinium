@@ -15,7 +15,16 @@ block content
                 if comments 
                 each comment in comments 
                     div
-                        div.comments-container__comment-nav-user User Name 
-                        div.comments-container__comment-text-box= comment  
+                        div.comments-container__comment-nav
+                            div.comments-container__comment-nav-user User Name 
+                            div(id=comment.id).comments-container__comment-nav-menu
+                                img(src='../images/3-dot-icon.jpg').comments-container__comment-nav-menu-image
+                                div.comments-container__comment-nav-menu-dropdown.comments-container__comment-nav-menu-dropdown--hidden
+                                    ul
+                                        li
+                                            button#edit Edit this response 
+                                        li
+                                            button#delete Delete 
+                        div.comments-container__comment-text-box= comment.comment  
                      
 
