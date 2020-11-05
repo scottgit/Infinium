@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { storyValidators } = require('../validations/stories');
+const { storyDraftValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const{requireAuth} = require('../auth');
@@ -43,12 +43,46 @@ router.get('/highlights', asyncHandler(async (req, res) => {
 }));
 
 /* GET new story */
-router.get('/new-story', requireAuth, asyncHandler(async (req, res) => {
+router.get('/new-story', requireAuth, csrfProtection, asyncHandler(async (req, res) => {
   const id = res.locals.user.id;
   const user = await User.findByPk(id);
-  console.log(res)
-  res.render('story-edit', {userId: user.id, name: user.username, contextMessage: `Draft by ${user.username}`, contextControls: `story-edit`, formAction: res.originalUrl})
+
+  res.render('story-edit', {
+    userId: user.id,
+    name: user.username,
+    contextMessage: `Draft by ${user.username}`, contextControls: `story-edit`,
+    formAction: res.originalUrl,
+    csrfToken: req.csrfToken(),
+  });
 }));
 
+router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res) => {
+  const {title, draft} = req.body;
+  let story = Story.build({
+    title,
+    draft
+  });
+
+  const validatorErrors = validationResult(req);
+
+  if (validatorErrors.isEmpty()) {
+    story = await story.save();
+    console.log(story)
+    res.redirect(`/users/${userId}/stories/${hexId}/draft`);
+  }
+  else {
+    // const errors = validatorErrors.array().map(error => error.msg);
+    // res.render('', {
+    //   title: 'Register',
+    //   emailAddress,
+    //   firstName,
+    //   lastName,
+    //   errors,
+    //   csrfToken: req.csrfToken()
+    // });
+  }
+
+
+}));
 
 module.exports = router;
