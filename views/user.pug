@@ -11,7 +11,7 @@ html
     header
       .header
         .title
-          .title_name= name
+          a(href=`/users/${userId}` class= "title_name")= name
           .followers 1 Follower
           .dot .
           a(href="" class="about") About
@@ -22,12 +22,12 @@ html
               .header_mini
                 img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
                 .naming_info
-                  p(class="naming_info_list1") Name
-                  p(class="naming_info_list2") @reference
-              a(href="#") New Story
-              a(href="#") Stories
+                  p(class="naming_info_list1")= name
+                  p(class="naming_info_list2") @#{name}
+              a(href="/stories/new-story") New Story
+              a(href="/") Stories
               a(href="#") Settings
-          a(href="/")
+          a(href="/stories/new-story")
             button(type="button" class="new_story") New Story
           a(href="/")
             .infinity_image
@@ -46,15 +46,15 @@ html
       if authCompare
         .question
           p(class="question_ask") Have something to share?
-          a(href="" class="question_answer") Create your own world.
+          a(href="/stories/new-story" class="question_answer") Create your own world.
       else
         .storyholder
-        each story in stories
           .recentStories
-            .recentStory
-              h2(class="recentStory_title")= story.title
-              h3(class="recentStory_subtitle")= story.subtitle
-            .storyImage
-              img(src="/images/dogs.jpg", alt="doggies" class="storyImage_recent")
-            .storyBody
-              p= story.published
+            each story in stories
+              .recentStory
+                h2(class="recentStory_title")= story.title
+                h3(class="recentStory_subtitle")= story.subtitle
+              .storyImage
+                img(src= story.imageLink, alt="doggies" class="storyImage_recent")
+              .storyBody
+                p= story.published
