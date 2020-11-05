@@ -44,6 +44,8 @@
   font-size: 26px;
   font-weight: bold;
   font-family: 'Noto Sans JP', sans-serif;
+  text-decoration: none;
+  color: black;
 }
 
 .followers{
