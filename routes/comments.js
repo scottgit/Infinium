@@ -67,7 +67,7 @@ router.put('/:id(\\d+)', commentValidator, asyncHandler(async (req, res) => {
 router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id, 10); 
     await Comment.destroy({ where: { id } });
-    res.redirect('/comments'); 
+    res.redirect('/comments/'); 
 }))
 
 module.exports = router; 
