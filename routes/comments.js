@@ -21,6 +21,19 @@ router.get('/', asyncHandler(async (req, res) => {
     })
 }));
 
+router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+    const commentId = parseInt(req.params.id, 10);
+    const comment = await Comment.findByPk(commentId); 
+    
+    const userId = comment.userId; 
+    const loggedInUser = res.locals.user.id; 
+    if (userId !== loggedInUser) {
+        res.redirect('/comments'); 
+    }
+
+    
+}))
+
 router.post('/', commentValidator, asyncHandler(async (req, res) => {
     const storyId = 3; //parseInt(req.params.id, 10); 
     const { comment } = req.body; 
