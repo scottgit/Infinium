@@ -1,18 +1,21 @@
 extends layout
 
 block content 
-    h2= storyTitle
-        ul 
-        if errors 
-            each error in errors 
-                li= error
-        ul
-        if comments 
-            each comment in comments 
-                li= comment
-        div(class="comment_container")
-            form(class="comment_form" method="post")
-                label(for="comment") Write comment 
-                input(class="comment" type="text" name="comment")
-                button(type="submit") Submit 
-                
+    link(rel='stylesheet', href='../stylesheets/comments.css')
+    div.major
+        div.comments-container
+            div.comments-container__heading-div 
+                h2.comments-container__heading-div-h2 Responses
+            form.comments-container__new-comment(method='post')
+                textarea.comments-container__new-comment-text-box(name="comment", cols="30", rows="10", placeholder='What are your thoughts?')
+                div.comments-container__new-comment-button-div
+                    button(type="reset") Cancel 
+                    button.comments-container__new-comment-button-respond(type="submit") Respond
+            div.comments-container__comment
+                if comments 
+                each comment in comments 
+                    div
+                        div.comments-container__comment-nav-user User Name 
+                        div.comments-container__comment-text-box= comment  
+                     
+
