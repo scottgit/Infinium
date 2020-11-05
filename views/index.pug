@@ -3,7 +3,7 @@ extends layout
 append head
   //- add page specific styles by appending to the head
   link(rel="stylesheet" href="/stylesheets/index.css")
-  link(href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet")
+  link(href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+KR&display=swap" rel="stylesheet")
   //- add page specific js
   script(src="/javascripts/index.js" type="module" defer)
 
@@ -11,53 +11,130 @@ block content
   div(class="homepage-container")
     div(class="homepage-top-story")
       div(class="top-story_content")
-        img(src="/images/dogs.jpg" width="200" alt="")
+        img(src="/images/dogs.jpg" alt="")
         div(class="top-story_author")
+          img(src="/images/dogs.jpg" width="20" height="20" alt="")
           h4 Michael Jensen in App Academy
-        h2 this is a header
-        p Cool Sub header
-        div
-          p read more 5 min read
+        h2 The United States of America, cool stuff right?
+        p What is going on in our rivers across the nation?
+        div(class="top-story_readtime")
+          a(href="") Read more
     div(class="homepage-top-stories")
-      div(class="top-stories_article")
-        div(class="article-content")
-          div(class="article-content_author")
-            h4 Michael Jensen in Jensen Times
-          h2 Article Name
-          div(class="article-content_date")
-            h4 Nov 3rd 10 min read
-        div(class="article-img")
-          img(src="/images/logo.png" width="80%" height="73.5%" alt="")
-      div(class="top-stories_article")
-        div(class="article-content")
-          div(class="article-content_author")
-            h4 Michael Jensen in Jensen Times
-          h2 Article Name
-          div(class="article-content_date")
-            h4 Nov 3rd 10 min read
-        div(class="article-img")
-          img(src="/images/logo.png" width="80%" height="73.5%" alt="")
-      div(class="top-stories_article")
-        div(class="article-content")
-          div(class="article-content_author")
-            h4 Michael Jensen in Jensen Times
-          h2 Article Name
-          div(class="article-content_date")
-            h4 Nov 3rd 10 min read
-        div(class="article-img")
-          img(src="/images/logo.png" width="80%" height="73.5%" alt="")
-      div(class="top-stories_article")
-        div(class="article-content")
-          div(class="article-content_author")
-            h4 Michael Jensen in Jensen Times
-          h2 Article Name
-          div(class="article-content_date")
-            h4 Nov 3rd 10 min read
-        div(class="article-img")
-          img(src="/images/logo.png" width="80%" height="73.5%" alt="")
+      div(class="stories-container")
+        div(class="top-stories_article")
+          div(class="article-content")
+            div(class="article-content_author")
+              img(src="/images/dogs.jpg" width="20" height="20" alt="")
+              h4 Michael Jensen in Jensen Times
+            h2 What are the TRUE colors of the rainbow?
+            div(class="article-content_date")
+              h4 Nov 3rd 10 min read
+          div(class="article-img")
+            img(src="/images/images.jpg" alt="")
+        div(class="top-stories_article")
+          div(class="article-content")
+            div(class="article-content_author")
+              img(src="/images/dogs.jpg" width="20" height="20" alt="")
+              h4 Michael Jensen in Jensen Times
+            h2 Why are people turning purple? Find out here
+            div(class="article-content_date")
+              h4 Nov 3rd 10 min read
+          div(class="article-img")
+            img(src="/images/images-dog.jpg" alt="")
+        div(class="top-stories_article")
+          div(class="article-content")
+            div(class="article-content_author")
+              img(src="/images/dogs.jpg" width="20" height="20" alt="")
+              h4 Michael Jensen in Jensen Times
+            h2 Mike is pretty cool right?
+            div(class="article-content_date")
+              h4 Nov 3rd 10 min read
+          div(class="article-img")
+            img(src="/images/records.jpg" alt="")
+        div(class="top-stories_article")
+          div(class="article-content")
+            div(class="article-content_author")
+              img(src="/images/dogs.jpg" width="20" height="20" alt="")
+              h4 Michael Jensen in Jensen Times
+            h2 What does my dad actually think about me?
+            div(class="article-content_date")
+              h4 Nov 3rd 10 min read
+          div(class="article-img")
+            img(src="/images/moon.jpg" alt="")
     div(class="homepage-followers")
     div(class="homepage-trending")
+      //- div(class="trending-header")
+      //-   h3 Trending on Infinium
+      div(class="homepage-trending_container")
+        div(class="trending-article")
+          div(class="trending-article_content")
+            h4 author 1
+            h2 article title
+            p read time
+        div(class="trending-article")
+          div(class="trending-article_content")
+            h4 author 2
+            h2 article title
+            p read time
+        div(class="trending-article")
+          div(class="trending-article_content")
+            h4 author 3
+            h2 article title
+            p read time
+        div(class="trending-article")
+          div(class="trending-article_content")
+            h4 author 4
+            h2 article title
+            p read time
+        div(class="trending-article")
+          div(class="trending-article_content")
+            h4 author 5
+            h2 article title
+            p read time
+        div(class="trending-article")
+          div(class="trending-article_content")
+            h4 author 6
+            h2 article title
+            p read time
     div(class="homepage-stream")
+      div(class="homepage-stream_container")
+        div(class="stream-article")
+          div(class="stream-article_content")
+            h4 author
+            h2 article title
+            p read time
+          div(class="stream-article_img")
+            img(src="/images/logo.png" width="100" height="100" alt="")
+        div(class="stream-article")
+          div(class="stream-article_content")
+            h4 author
+            h2 article title
+            p read time
+          div(class="stream-article_img")
+            img(src="/images/logo.png" width="100" height="100" alt="")
+        div(class="stream-article")
+          div(class="stream-article_content")
+            h4 author
+            h2 article title
+            p read time
+          div(class="stream-article_img")
+            img(src="/images/logo.png" width="100" height="100" alt="")
+        div(class="stream-article")
+          div(class="stream-article_content")
+            h4 author
+            h2 article title
+            p read time
+          div(class="stream-article_img")
+            img(src="/images/logo.png" width="100" height="100" alt="")
+        div(class="stream-article")
+          div(class="stream-article_content")
+            h4 author
+            h2 article title
+            p read time
+          div(class="stream-article_img")
+            img(src="/images/logo.png" width="100" height="100" alt="")
     div(class="homepage-bookmarks")
-      //- div(class="bookmarks-container")
-      //-   div(class="bookmarks-container_content")
+      div(class="bookmarks-container")
+        div(class="bookmarks-container_content")
+          h2 Cool scrolling bar
+          h4 this is some really cool box I made. I really hope you guys like this!

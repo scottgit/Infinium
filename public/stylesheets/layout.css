@@ -6,12 +6,14 @@
   grid-template-columns: 80%, 20%;
   grid-template-rows: 100%;
   box-sizing: border-box;
+  margin: 30px;
 }
 
 .title{
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding-left: 60px;
 }
 
 .icons{
@@ -26,11 +28,13 @@
 .logout{
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 500;
-  background-color: transparent;
+  background: linear-gradient(-45deg, #06c5c5, #a71bca);
+  background-size: 100% 100%;
   border: .1px solid lightgrey;
   padding: 4px 8px;
   margin-right: 8px;
   border-radius: 4px;
+  color: white;
 }
 
 .login{
