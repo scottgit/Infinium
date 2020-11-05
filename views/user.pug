@@ -27,7 +27,7 @@ html
               a(href="#") New Story
               a(href="#") Stories
               a(href="#") Settings
-          a(href="/")
+          a(href="/stories/new-story")
             button(type="button" class="new_story") New Story
           a(href="/")
             .infinity_image
@@ -49,12 +49,12 @@ html
           a(href="" class="question_answer") Create your own world.
       else
         .storyholder
-        each story in stories
           .recentStories
-            .recentStory
-              h2(class="recentStory_title")= story.title
-              h3(class="recentStory_subtitle")= story.subtitle
-            .storyImage
-              img(src="/images/dogs.jpg", alt="doggies" class="storyImage_recent")
-            .storyBody
-              p= story.published
+            each story in stories
+              .recentStory
+                h2(class="recentStory_title")= story.title
+                h3(class="recentStory_subtitle")= story.subtitle
+              .storyImage
+                img(src= story.imageLink, alt="doggies" class="storyImage_recent")
+              .storyBody
+                p= story.published
