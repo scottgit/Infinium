@@ -15,6 +15,7 @@ const { csrfProtection,
         getHighlights,
         getTrending,
         buildMissingStoryTitle,
+        prepareStoryEditorDetails
       } = require('./utils');
 
 const router = express.Router();
@@ -84,13 +85,9 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
   }
   else {
     const errors = validatorErrors.array().map(error => error.msg);
+    const details = prepareStoryEditorDetails(req, story);
     res.render('story-edit', {
-      userId,
-      name,
-      contextMessage: `Draft by ${name}`,
-      contextControls: `story-edit`,
-      formAction: req.originalUrl,
-      csrfToken: req.csrfToken(),
+      ...details,
       errors,
     });
   }

@@ -178,6 +178,30 @@ const buildMissingStoryTitle = (draft) => {
     return title;
 }
 
+const prepareStoryEditorDetails = (req, story, skipPreProcess=false) => {
+    if (!skipPreProcess) {
+        [story] = preProcessStories([story]);
+    }
+
+    const name = story.author;
+
+    const details = {
+      userId: story.userId,
+      name,
+      contextMessage: `Draft by ${name}`,
+      contextControls: `story-edit-with-publish`,
+      formAction: req.originalUrl,
+      csrfToken: req.csrfToken(),
+      title: story.title,
+      subtitle: story.subtitle,
+      author: name,
+      date: story.date,
+      draft: story.draft,
+    };
+
+    return details;
+}
+
 module.exports = {
     csrfProtection,
     asyncHandler,
@@ -193,4 +217,5 @@ module.exports = {
     getHighlights,
     getTrending,
     buildMissingStoryTitle,
+    prepareStoryEditorDetails
 }

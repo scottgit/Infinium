@@ -20,6 +20,7 @@ const { csrfProtection,
         sendStoryList,
         getStoryList,
         buildMissingStoryTitle,
+        prepareStoryEditorDetails
       } = require('./utils');
 
 /* GET the main user page */
@@ -243,23 +244,7 @@ router.post(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection
       draft,
     });
 
-    if (story) [story] = preProcessStories([story]);
-
-    const name = story.author;
-
-    const details = {
-      userId,
-      name,
-      contextMessage: `Draft by ${name}`,
-      contextControls: `story-edit-with-publish`,
-      formAction: req.originalUrl,
-      csrfToken: req.csrfToken(),
-      title: story.title,
-      subtitle: story.subtitle,
-      author: name,
-      date: story.date,
-      draft: story.draft,
-    };
+    const details = prepareStoryEditorDetails(req, story);
 
     res.render('story-edit', {
       ...details
@@ -267,25 +252,12 @@ router.post(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection
   }
   else {
     const errors = validatorErrors.array().map(error => error.msg);
+    const details = prepareStoryEditorDetails(req, story);
     res.render('story-edit', {
-      userId,
-      name,
-      contextMessage: `Draft by ${name}`,
-      contextControls: `story-edit-with-publish`,
-      formAction: req.originalUrl,
-      csrfToken: req.csrfToken(),
-      title: story.title,
-      subtitle: story.subtitle,
-      author: name,
-      date: story.date,
-      draft: story.draft,
+      ...details,
       errors,
     });
   }
-
-
-
-
 
 }));
 
