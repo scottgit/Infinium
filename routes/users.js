@@ -32,7 +32,6 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
   const authCompare = parseInt(authUser, 10) === parseInt(userId, 10);
   const stories = [];
   user.Stories.map(story => stories.push(story))
-  console.log(stories)
   const name = user.username;
   res.render('user', {
     title: 'User',
