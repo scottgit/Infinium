@@ -19,6 +19,27 @@ const { csrfProtection,
         getStoryList,
       } = require('./utils');
 
+/* GET the main user page */
+router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
+  const userId = req.params.userId
+  const user = await User.findByPk(userId, {
+    include: Story
+        })
+  const authUser = res.locals.user.id;
+  const authCompare = parseInt(authUser, 10) === parseInt(userId, 10);
+  const stories = [];
+  user.Stories.map(story => stories.push(story))
+  console.log(stories)
+  const name = user.username;
+  res.render('user', {
+    title: 'User',
+    stories,
+    authCompare,
+    userId,
+    name,
+  });
+}));
+
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {
   const user = User.build();
@@ -145,5 +166,6 @@ router.get('/:userId(\\d+)/stories', requireAuth, asyncHandler(async (req, res) 
   const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
   sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
 }));
+
 
 module.exports = router;
