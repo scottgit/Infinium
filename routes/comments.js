@@ -7,6 +7,7 @@ const { Comment, Story } = db;
 const { asyncHandler } = require('./utils'); 
 const commentValidator = require('../validations/comments');
 const { sequelize } = require('../db/models');
+const{requireAuth} = require('../auth');
 
 
 router.get('/', asyncHandler(async (req, res) => {
@@ -15,6 +16,14 @@ router.get('/', asyncHandler(async (req, res) => {
         where: { storyId }, 
         order: [['createdAt', 'DESC']], 
     }); 
+
+    const loggedInUser = 2; //res.locals.user.id; 
+
+    comments.forEach(comment => {
+        if (comment.userId === loggedInUser) {
+            comment.authCompare = true; 
+        }
+    });
 
     res.render('comments', {
         comments, 
@@ -26,12 +35,34 @@ router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
     const comment = await Comment.findByPk(commentId); 
     
     const userId = comment.userId; 
-    const loggedInUser = res.locals.user.id; 
+    const loggedInUser = comment.userId; //res.locals.user.id; 
+    const authCompare = userId === loggedInUser;
+      
     if (userId !== loggedInUser) {
-        res.redirect('/comments'); 
+        res.redirect('/comments/'); 
     }
 
-    
+    const storyId = comment.storyId; 
+    const comments = await Comment.findAll({
+        where: { storyId }, 
+        order: [['createdAt', 'DESC']], 
+    }); 
+
+    comments.forEach(comment => {
+        if (comment.userId === loggedInUser) {
+            comment.authCompare = authCompare; 
+        }
+    });
+
+    comments.forEach(comment => {
+        if (comment.authCompare === true) {
+            console.log(comment); 
+        }
+    })
+
+    res.render('comments', {
+        comments, 
+    });        
 }))
 
 router.post('/', commentValidator, asyncHandler(async (req, res) => {

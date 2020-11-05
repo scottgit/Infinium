@@ -22,26 +22,25 @@ window.addEventListener('DOMContentLoaded', e => {
             alert("Something went wrong. Please try again!"); 
         }
     });
-
-    // const menu = document.querySelector('.comments-container__comment-nav-menu');
-    // menu.addEventListener('click', (e) => {
-    //     menu.classList.remove('.comments-container__comment-nav-menu-dropdown--hidden');
-    //     console.log('hello')
-    // })
     
     document.querySelectorAll('.comments-container__comment-nav-menu').forEach(menu => {
         menu.addEventListener('click', async (e) => {
-            console.log('hello'); 
-            const id = menu.getAttribute('id'); 
-            try {
-                const res = await fetch(`http://localhost:8080/comments/${id}`);
-                if (!res.ok) {
-                    throw res;
-                }
-                window.location.href = "/comments/"
-            } catch (err) {
-                alert("Something went wrong. Please try again!")
+            const dropdown = menu.querySelector('.comments-container__comment-nav-menu-dropdown');
+            const edit = document.getElementById('edit');
+            const remove = document.getElementById('delete'); 
+            
+            if (dropdown.classList.contains('comments-container__comment-nav-menu-dropdown--hidden')) {
+                dropdown.classList.remove('comments-container__comment-nav-menu-dropdown--hidden'); 
+
+                remove.addEventListener('click', (e) => {
+
+                })
+
+
+
+            } else {
+                dropdown.classList.add('comments-container__comment-nav-menu-dropdown--hidden');
             }
         })
-    }); 
+    });
 });
