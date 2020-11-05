@@ -15,7 +15,8 @@ const { csrfProtection,
         getHighlights,
         getTrending,
         buildMissingStoryTitle,
-        prepareStoryEditorDetails
+        prepareStoryEditorDetails,
+        checkTitle,
       } = require('./utils');
 
 const router = express.Router();
@@ -66,8 +67,8 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
   const name = res.locals.user.username;
 
   //If no title, build one from the body
-  if (!title && draft) {
-    buildMissingStoryTitle(draft);
+  if (checkTitle(title) && draft) {
+    title = buildMissingStoryTitle(draft);
   }
 
   let story = Story.build({
@@ -85,7 +86,7 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
   }
   else {
     const errors = validatorErrors.array().map(error => error.msg);
-    const details = prepareStoryEditorDetails(req, story);
+    const details = prepareStoryEditorDetails(req, story, name);
     res.render('story-edit', {
       ...details,
       errors,

@@ -20,7 +20,8 @@ const { csrfProtection,
         sendStoryList,
         getStoryList,
         buildMissingStoryTitle,
-        prepareStoryEditorDetails
+        prepareStoryEditorDetails,
+        checkTitle,
       } = require('./utils');
 
 /* GET the main user page */
@@ -229,10 +230,9 @@ router.post(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection
     where: isDraft(userId, storyId),
     include: getAuthor(),
   });
-
   //If no title, build one from the body
-  if (!title && draft) {
-    buildMissingStoryTitle(draft);
+  if (checkTitle(title) && draft) {
+    title = buildMissingStoryTitle(draft);
   }
 
   const validatorErrors = validationResult(req);

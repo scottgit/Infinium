@@ -16,13 +16,14 @@ const setHexadecimal = number => number.toString(16);
 const parseHexadecimal = hexString => parseInt(hexString, 16);
 
 /* Used to build a cleaner story object to send in requests, including the hexId for the URL path */
-const preProcessStories = stories => {
+const preProcessStories = (stories, username) => {
+
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
     const processed = stories.map(story => {
         story = story.toJSON();
-        story.hexId = setHexadecimal(story.id);
-        story.author = story.User.username;
-        story.date = story.updatedAt.toLocaleDateString("en-US", dateOptions);
+        story.hexId = story.id ? setHexadecimal(story.id) : null;
+        story.author = username || story.User.username;
+        story.date = story.updatedAt ? story.updatedAt.toLocaleDateString("en-US", dateOptions) : null;
         delete story.User;
         return story;
     });
@@ -159,31 +160,30 @@ const getStoryList = async ({req, res, userId, storyId, limits, ordering, filter
 const buildMissingStoryTitle = (draft) => {
 
     //Get length of string or first 100 characters
-    let title = draft.slice(0, Math.min(draft.length - 1, 99));
-
+    let title = draft.slice(0, Math.min(draft.length - 1, 100));
+    console.log('HERE', title.length)
     if (title.length === 100) {
         //Break at last whitespace character that is at least 3 spaces from end
         while(title.length > 97) {
-        const match = title.match(/\s/g);
-        if (!match) {
-            title = title.slice(0, 97);
-        } else {
-            const whitespace = match[match.length - 1];
-            const spaceIndex = title.lastIndexOf(whitespace);
-            title = title.slice(0, spaceIndex);
-        }
+            const match = title.match(/\s/g);
+            if (!match) {
+                title = title.slice(0, 97);
+            } else {
+                const whitespace = match[match.length - 1];
+                const spaceIndex = title.lastIndexOf(whitespace);
+                title = title.slice(0, spaceIndex);
+            }
         }
         title += '...';
     }
     return title;
 }
 
-const prepareStoryEditorDetails = (req, story, skipPreProcess=false) => {
-    if (!skipPreProcess) {
-        [story] = preProcessStories([story]);
-    }
+const prepareStoryEditorDetails = (req, story, name) => {
 
-    const name = story.author;
+    [story] = preProcessStories([story], name);
+
+    name = story.author;
 
     const details = {
       userId: story.userId,
@@ -202,6 +202,10 @@ const prepareStoryEditorDetails = (req, story, skipPreProcess=false) => {
     return details;
 }
 
+const checkTitle = title => {
+    return !title || title.match(/^\s*$/)
+}
+
 module.exports = {
     csrfProtection,
     asyncHandler,
@@ -217,5 +221,6 @@ module.exports = {
     getHighlights,
     getTrending,
     buildMissingStoryTitle,
-    prepareStoryEditorDetails
+    prepareStoryEditorDetails,
+    checkTitle,
 }
