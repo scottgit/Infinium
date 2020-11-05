@@ -58,10 +58,24 @@ const isPublished = (userId, storyId) => {
     }
 }
 
-const isDraft = () => {
-    return {
-        draft: {
-            [Op.and]: [{[Op.ne]: ''}, {[Op.ne]: null}]
+const isDraft = (userId, storyId) => {
+    //When finding all a user's draft stories, it looks for empty published fields
+    //However, when both userId and storyId is given, it is assumed that a published story
+    //is returning to draft status
+    const notPublished = {
+        [Op.and]: [{[Op.eq]: ''}, {[Op.eq]: null}]
+    }
+    if (userId) {
+        if (storyId) {
+            return {
+                id: storyId,
+                userId,
+            }
+        }
+
+        return {
+            userId,
+            published: notPublished,
         }
     }
 }
@@ -141,6 +155,29 @@ const getStoryList = async ({req, res, userId, storyId, limits, ordering, filter
     return stories;
 }
 
+/* Constructs a title from the draft if no title was given */
+const buildMissingStoryTitle = (draft) => {
+
+    //Get length of string or first 100 characters
+    let title = draft.slice(0, Math.min(draft.length - 1, 99));
+
+    if (title.length === 100) {
+        //Break at last whitespace character that is at least 3 spaces from end
+        while(title.length > 97) {
+        const match = title.match(/\s/g);
+        if (!match) {
+            title = title.slice(0, 97);
+        } else {
+            const whitespace = match[match.length - 1];
+            const spaceIndex = title.lastIndexOf(whitespace);
+            title = title.slice(0, spaceIndex);
+        }
+        }
+        title += '...';
+    }
+    return title;
+}
+
 module.exports = {
     csrfProtection,
     asyncHandler,
@@ -155,4 +192,5 @@ module.exports = {
     getStoryList,
     getHighlights,
     getTrending,
+    buildMissingStoryTitle,
 }
