@@ -25,24 +25,6 @@ router.get(`/`, asyncHandler(async (req, res) => {
   sendStoryList(wantsJSON(req), res, stories, 'Stories since the beginning of time...');
 }));
 
-/* GET a singular story by id */
-// router.get('/:storyId(\\d+)', asyncHandler(async (req, res) => {
-//   const storyId = parseInt(req.params.storyId);
-//   const story = await Story.findByPk(storyId, {
-//     include: User
-//   })
-//   let authorMonth = story.updatedAt.toLocaleDateString('en-US', { month: 'long' }).slice(0,3)
-//   let authorDay = story.updatedAt.getDate();
-//   let publishedOn = `${authorMonth} ${authorDay}`
-//   const storyUser = story.User;
-//   res.render('story-id', {
-//     Title: story.title,
-//     story,
-//     storyUser,
-//     publishedOn
-//   })
-// }));
-
 /* GET all recent stories (limit 5 unless optional route indicates differently) */
 router.get(/\/recent(\/(\d+))?/, asyncHandler(async (req, res) => {
   const limits = req.params[1] ? parseInt(req.params[1],10) : 5;
