@@ -20,6 +20,9 @@ html
             .title_greeting= contextMessage
           else
             .title_greeting Live Long and Prosper
+          if contextControls
+            if (contextControls = 'story-edit')
+              button.story-save(type='submit' form='story-edit') Save
         .icons
           if locals.authenticated
             form(action="/users/logout" method="post")

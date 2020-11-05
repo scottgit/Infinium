@@ -47,7 +47,7 @@ router.get('/new-story', requireAuth, asyncHandler(async (req, res) => {
   const id = res.locals.user.id;
   const user = await User.findByPk(id);
   console.log(res)
-  res.render('story-edit', {userId: user.id, name: user.username, contextMessage: `Draft by ${user.username}`, formAction: res.originalUrl})
+  res.render('story-edit', {userId: user.id, name: user.username, contextMessage: `Draft by ${user.username}`, contextControls: `story-edit`, formAction: res.originalUrl})
 }));
 
 

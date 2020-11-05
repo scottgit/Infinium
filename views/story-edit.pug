@@ -5,6 +5,6 @@ block head_trailer
 
 block content
   .story-editor
-    form.story-edit(action=formAction, method='post')
+    form.story-edit(action=formAction, method='post', id='story-draft', autocomplete='off')
       input.story-edit-title(type='text', value=title, name='title', placeholder='Your story\'s title', max-length=100)
       textarea.story-edit-draft(name="draft", value=draft, placeholder='Tell your story...')

@@ -19,6 +19,7 @@ body {
   flex-direction: column;
   flex: 1;
   font-family: Georgia, Cambria, 'Times New Roman', Times, serif;
+  color: #555;
 }
 
 .story-edit-title {
@@ -28,6 +29,7 @@ body {
   outline: none;
   padding: 3px 5px;
   font-family: inherit;
+  color: inherit;
 }
 
 .story-edit-draft {
@@ -37,7 +39,18 @@ body {
   padding: 5px;
   border: 1px solid transparent;
   font-family: inherit;
+  color: inherit;
   font-size: 1.3em;
+}
+
+.story-edit-title::placeholder,
+.story-edit-draft::placeholder {
+  color: #ccc;
+}
+
+.story-edit-title:hover::placeholder,
+.story-edit-draft:hover::placeholder {
+  color: #aaa;
 }
 
 .story-edit-title:hover,
@@ -52,4 +65,39 @@ body {
 .story-edit-title:focus,
 .story-edit-draft:focus {
   background-color: rgba(0,0,0,0.02);
+}
+
+
+
+.story-save {
+  position: relative;
+  font-family: 'Lato', sans-serif;
+  background: linear-gradient(-45deg, #06c5c5, #a71bca);
+  background-size: 100% 100%;
+  border-radius: 20px;
+  padding: 5px 20px;
+  margin: 15px 10px 10px;
+  font-size: 15px;
+  color: white;
+  border: white;
+  font-weight: bold;
+  z-index: 1;
+}
+
+.story-save::before {
+  border-radius: inherit;
+  position: absolute;
+  content: '';
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(-45deg, #a71bca, #06c5c5);
+  z-index: -1;
+  transition: opacity 0.4s linear;
+  opacity: 0;
+}
+
+.story-save:hover::before {
+  opacity: 1;
 }
