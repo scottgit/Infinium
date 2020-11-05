@@ -9,4 +9,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
         drop.classList.remove('show');
       }
     })
+  document.querySelector(".about").addEventListener("click", event => {
+    event.preventDefault();
+    document.querySelector('.about').classList.add("hide")
+    document.querySelector('.dot').classList.add("hide")
+    document.querySelector('.person_info').classList.remove("hide")
+    document.querySelector('.profilePic').classList.remove("hide")
+    document.querySelectorAll('.recentStories').forEach(function (story) {
+      story.classList.add("hide")
+    })
+  })
+  
 })

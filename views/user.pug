@@ -11,7 +11,7 @@ html
     header
       .header
         .title
-          .title_name Dale Sakamoto
+          .title_name= name
           .followers 1 Follower
           .dot .
           a(href="" class="about") About
@@ -33,4 +33,24 @@ html
             .infinity_image
               img(src="/images/infinity.jpg" alt="Infinity" class="infinity_image_icon")
     section
-      
+      .about_me
+        .person_info.hide
+          .nameplate About #{name}
+            p(class="nameplate_bio") I'm so interesting!
+          .follow_following
+            .person_info_following 13 Following
+            .person_info_dot .
+            .person_info_follower 1 Follower
+        .profilePic.hide
+          img(src="/images/dogs.jpg", alt="doggies" class="profilePic_pic")
+      if authCompare
+        .question
+          p(class="question_ask") Have something to share?
+          a(href="" class="question_answer") Create your own world.
+      else
+        each story in stories
+          .recentStories
+            div= story.imageLink
+            h2= story.title
+            h= story.subtitle
+            p= story.published

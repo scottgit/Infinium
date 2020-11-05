@@ -130,6 +130,83 @@
   background-color: #ddd;
 }
 
+.question{
+  margin: 60px;
+  display: grid;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  color: grey;
+}
+
+.question_answer{
+  display: none;
+  color: grey;
+  margin-left: 5px;
+}
+
+.question_ask{
+  display: none;
+}
+
+.about_me{
+  margin: 50px 200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+}
+
+.nameplate{
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-bottom: lightgrey solid 1px;
+  padding-bottom: 30px;
+}
+
+.nameplate_bio{
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.follow_following{
+  padding-top: 30px;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.person_info_following{
+  padding: 5px 10px 0 0;
+}
+
+.person_info_dot{
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.person_info_follower{
+  padding: 5px 0 0 10px;
+}
+
+.profilePic{
+  margin: 0 0 0 90px;
+  width: 220px;
+  height: 220px;
+}
+
+.profilePic_pic{
+  width:100%;
+  height: 100%;
+}
+
 .show{
   display:block;
+}
+
+.hide{
+  display: none;
 }
