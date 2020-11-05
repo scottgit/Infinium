@@ -1,0 +1,260 @@
+.header{
+  width: 100%;
+  height: 100px;
+  padding: 65px 60px 90px 60px;
+  display: grid;
+  grid-template-columns: 80%, 20%;
+  grid-template-rows: 100%;
+  box-sizing: border-box;
+  border-bottom: lightgrey solid 1px;
+}
+
+.title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.icons{
+  align-items: center;
+  grid-column-start: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  padding: 7px 0 0 0;
+}
+
+.new_story{
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  background: linear-gradient(-45deg, #06c5c5, #a71bca);
+  background-size: 100% 100%;
+  border: transparent;
+  padding: 6px 10px;
+  margin: 10px;
+  border-radius: 4px;
+}
+
+.infinity_image{
+  padding: 50px;
+}
+
+.title_name{
+  padding: 7px 15px 0 15px;
+  font-size: 26px;
+  font-weight: bold;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.followers{
+  padding: 15px 5px 0 5px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+}
+
+.dot{
+  padding: 10px 5px 0 5px;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: grey;
+}
+
+.about{
+  padding: 16px 5px 0 5px;
+  font-size: 14px;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: grey;
+  text-decoration: none;
+}
+
+.icons_image{
+  align-self: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  margin-top: 5px;
+  padding: 10px;
+}
+
+.infinity_image{
+  padding: 3px 0 0 5px;
+  width: 40px;
+  height: 20px;
+}
+
+.infinity_image_icon{
+  width: 100%;
+  height: 100%
+}
+
+
+.dropdown_content{
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 12px;
+  display: none;
+  position: absolute;
+  background-color: #F8F8F8;
+  min-width: 150px;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, .2);
+  z-index: 1;
+}
+
+.dropdown_content a{
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.header_mini{
+  padding: 0 5px;
+  display: flex;
+  flex-direction: row;
+  border-bottom: .5px solid lightgrey ;
+}
+
+.naming_info{
+  margin: 0 0 10px 10px;
+}
+
+.naming_info_list1{
+  padding-top: 10px;
+}
+
+.naming_info_list2{
+  padding-bottom: 10px;
+}
+
+.dropdown-content a:hover{
+  background-color: #ddd;
+}
+
+.question{
+  margin: 60px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  color: grey;
+}
+
+.question_answer{
+  color: grey;
+  margin-left: 5px;
+}
+
+.question_ask{
+  color: grey;
+}
+
+.storyholder{
+  margin-top: -75px;
+}
+
+.about_me{
+  margin: 50px 200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-content: center;
+}
+
+.nameplate{
+  font-size: 30px;
+  font-weight: bold;
+  font-family: 'Noto Sans JP', sans-serif;
+  border-bottom: lightgrey solid 1px;
+  padding-bottom: 30px;
+}
+
+.nameplate_bio{
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.follow_following{
+  padding-top: 30px;
+  display: flex;
+  flex-direction: row;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.person_info_following{
+  padding: 5px 10px 0 0;
+}
+
+.person_info_dot{
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.person_info_follower{
+  padding: 5px 0 0 10px;
+}
+
+.profilePic{
+  margin: 0 0 0 90px;
+  width: 220px;
+  height: 220px;
+}
+
+.profilePic_pic{
+  width:100%;
+  height: 100%;
+}
+
+.recentStories{
+  font-family: 'Noto Sans JP', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recentStory{
+  width: 650px;
+  height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.recentStory_title{
+  font-size: 34px;
+  height: 5px;
+}
+
+.recentStory_subtitle{
+  font-size: 22px;
+  padding: -5px 0;
+  color: grey;
+  font-weight: 500;
+}
+
+.storyImage{
+  margin-top: 10px;
+  width: 650px;
+  height: 500px;
+}
+
+.storyImage_recent{
+  width: 100%;
+  height: 100%;
+}
+
+.storyBody{
+  width: 650px;
+  padding: 20px 0;
+  border-bottom: lightgrey solid 1px;
+}
+
+.show{
+  display:block;
+}
+
+.hide{
+  display: none;
+}

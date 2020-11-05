@@ -1,20 +1,18 @@
 window.addEventListener("DOMContentLoaded", (event) => {
 
-  // document.querySelector(".logout").addEventListener("click", event => {
-  //   event.preventDefault();
-  //   fetch("/users/logout", {
-  //     method: "POST"
-  //   })
-  //     .then(function (res) {
-  //       if (!res.ok) {
-  //         throw Error(res.statusText);
-  //       }
-  //       return res.json()
-  //     })
-  //     .then(function (data) {
-
-  //   }).catch((error) => console.log(error))
-  // })
+  document.querySelector(".logout").addEventListener("click", event => {
+    // event.preventDefault();
+    fetch("/")
+      .then(function (res) {
+        if (!res.ok) {
+          throw Error(res.statusText);
+        }
+        return res.json()
+      })
+      .then(function (data) {
+        console.log(data)
+    }).catch((error) => console.log(error))
+  })
   let icons = document.querySelector(".icons");
   let image = document.querySelector("icons_image")
 if (icons.contains(image)) {

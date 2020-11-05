@@ -1,0 +1,18 @@
+extends layout
+
+block content 
+    h2= storyTitle
+        ul 
+        if errors 
+            each error in errors 
+                li= error
+        ul
+        if comments 
+            each comment in comments 
+                li= comment
+        div(class="comment_container")
+            form(class="comment_form" method="post")
+                label(for="comment") Write comment 
+                input(class="comment" type="text" name="comment")
+                button(type="submit") Submit 
+                

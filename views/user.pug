@@ -1,0 +1,60 @@
+doctype html
+html
+  head
+      block head
+        title="Express Starter App"
+        link(rel='stylesheet' href='/stylesheets/user.css')
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap")
+        link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;900&display=swap")
+        script(src="/javascripts/user.js" type="module" defer)
+  body
+    header
+      .header
+        .title
+          .title_name= name
+          .followers 1 Follower
+          .dot .
+          a(href="" class="about") About
+        .icons
+          .dropdown
+            img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
+            div(class="dropdown_content" id="myDropdown")
+              .header_mini
+                img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
+                .naming_info
+                  p(class="naming_info_list1") Name
+                  p(class="naming_info_list2") @reference
+              a(href="#") New Story
+              a(href="#") Stories
+              a(href="#") Settings
+          a(href="/")
+            button(type="button" class="new_story") New Story
+          a(href="/")
+            .infinity_image
+              img(src="/images/infinity.jpg" alt="Infinity" class="infinity_image_icon")
+    section
+      .about_me
+        .person_info.hide
+          .nameplate About #{name}
+            p(class="nameplate_bio") I'm so interesting!
+          .follow_following
+            .person_info_following 13 Following
+            .person_info_dot .
+            .person_info_follower 1 Follower
+        .profilePic.hide
+          img(src="/images/dogs.jpg", alt="doggies" class="profilePic_pic")
+      if authCompare
+        .question
+          p(class="question_ask") Have something to share?
+          a(href="" class="question_answer") Create your own world.
+      else
+        .storyholder
+        each story in stories
+          .recentStories
+            .recentStory
+              h2(class="recentStory_title")= story.title
+              h3(class="recentStory_subtitle")= story.subtitle
+            .storyImage
+              img(src="/images/dogs.jpg", alt="doggies" class="storyImage_recent")
+            .storyBody
+              p= story.published

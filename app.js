@@ -11,6 +11,7 @@ const {restoreUser} = require('./auth')
 const {sessionSecret, environment} = require('./config')
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const commentsRouter = require('./routes/comments');
 const storiesRouter = require('./routes/stories');
 const { asyncHandler } = require('./routes/utils');
 const { sequelize } = require('./db/models');
@@ -41,6 +42,7 @@ store.sync()
 app.use(asyncHandler(restoreUser));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/comments', commentsRouter);
 app.use('/stories', storiesRouter);
 
 // catch 404 and forward to error handler
