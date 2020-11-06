@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { storyDraftValidators } = require('../validations/stories');
+const { storyDraftValidators, storyPublishValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const{requireAuth, checkUserRouteAccess} = require('../auth');
@@ -8,12 +8,15 @@ const{requireAuth, checkUserRouteAccess} = require('../auth');
 const { User, Story } = require('../db/models');
 const { csrfProtection,
         asyncHandler,
-        wantsJSON,
+        preProcessStories,
+        parseHexadecimal,
         setHexadecimal,
+        wantsJSON,
+        isPublished,
+        isDraft,
+        getAuthor,
         sendStoryList,
         getStoryList,
-        getHighlights,
-        getTrending,
         buildMissingStoryTitle,
         prepareStoryEditorDetails,
         checkEmpty,
@@ -22,7 +25,7 @@ const { csrfProtection,
 const router = express.Router();
 
 /* GET all published stories */
-router.get(`/`, asyncHandler(async (req, res) => {
+router.get(`/all`, asyncHandler(async (req, res) => {
   const stories = await getStoryList();
   sendStoryList(wantsJSON(req), res, stories, 'Stories since the beginning of time...');
 }));
@@ -98,9 +101,9 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
 
 /* USER route integrated story display */
 /* GET single user story to read */
-router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
-  const userId = parseInt(req.params[0], 10);
-  const storyId = parseHexadecimal(req.params[1]);
+router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
+  const userId = res.locals.user.id;
+  const storyId = parseHexadecimal(req.params[0]);
   let story = await Story.findOne({
     where: isPublished(userId, storyId),
     include: getAuthor(),
@@ -127,25 +130,30 @@ router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res, next)
 }));
 
 /* GET all stories by the specific logged in user */
+
 router.get(
-  '/:userId(\\d+)/stories',
+  '/', // This route handles /users/<id>/stories
   requireAuth,
   checkUserRouteAccess,
-  asyncHandler(async (req, res) => {
-    const userId = req.params.userId;
+  asyncHandler(async (req, res, next) => {
+
+    const userId = res.locals.user.id;
     const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
     if (!stories) res.redirect(`/users/${userId}`);
     const published = [];
     const drafts = [];
-    stories.forEach(story => return story.published);
+    stories.forEach(story => {
+       if (story.published) published.push(story)
+       else drafts.push(story);
+    });
 
-    sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
+    sendStoryList(wantsJSON(req), res, [published, drafts], `Your stories`);
   })
 );
 
 /* GET single user saved story draft */
 router.get(
-  /\/(\d+)\/stories\/([0-9a-f]+)\/draft$/,
+  /\/([0-9a-f]+)\/draft$/,
   requireAuth,
   checkUserRouteAccess,
   csrfProtection,
@@ -153,7 +161,7 @@ router.get(
   asyncHandler(
     async (req, res, next) => {
       const userId = res.locals.user.id;
-      const storyId = parseHexadecimal(req.params[1]);
+      const storyId = parseHexadecimal(req.params[0]);
 
       let story = await Story.findOne({
         where: isDraft(userId, storyId),
@@ -177,7 +185,7 @@ router.get(
 
 /* POST single user saved story draft to save edits */
 router.post(
-  /\/(\d+)\/stories\/([0-9a-f]+)\/draft$/,
+  /\/([0-9a-f]+)\/draft$/,
   requireAuth,
   checkUserRouteAccess,
   csrfProtection,
@@ -185,9 +193,8 @@ router.post(
   asyncHandler(
     async (req, res, next) => {
       const userId = res.locals.user.id;
-
+      const storyId = parseHexadecimal(req.params[0]);
       let {title, draft} = req.body;
-      const storyId = parseHexadecimal(req.params[1]);
 
       let story = await Story.findOne({
         where: isDraft(userId, storyId),
@@ -229,7 +236,7 @@ router.post(
 
 /* POST single user publish story draft */
 router.post(
-  /\/(\d+)\/stories\/([0-9a-f]+)\/draft\/publish$/,
+  /\/([0-9a-f]+)\/draft\/publish$/,
   requireAuth,
   checkUserRouteAccess,
   csrfProtection,
@@ -237,8 +244,8 @@ router.post(
   asyncHandler(
     async (req, res, next) => {
       const userId = res.locals.user.id;
+      const storyId = parseHexadecimal(req.params[0]);
       let {title, draft, subtitle, imageLink} = req.body;
-      const storyId = parseHexadecimal(req.params[1]);
 
       let story = await Story.findOne({
         where: isDraft(userId, storyId),
@@ -283,7 +290,7 @@ router.post(
 );
 
 router.delete(
-  /\/(\d+)\/stories\/([0-9a-f]+)$/,
+  /\/([0-9a-f]+)$/,
   requireAuth,
   checkUserRouteAccess,
   asyncHandler(async (req, res) => {

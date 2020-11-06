@@ -149,9 +149,10 @@ const getStoryList = async ({req, res, userId, storyId, limits, ordering, filter
 
     let stories = await Story.findAll(queryParams);
 
-    if(stories) stories = preProcessStories(stories);
-
-    if(filter) stories = filter(stories, req, res);
+    if(stories) {
+        stories = preProcessStories(stories);
+        if(filter) stories = filter(stories, req, res);
+    }
 
     return stories;
 }
