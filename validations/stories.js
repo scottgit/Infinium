@@ -1,5 +1,4 @@
-const { check, oneOf } = require('express-validator');
-const { User, Story } = require('../db/models');
+const { check } = require('express-validator');
 
 const storyDraftValidators = [
   check('title')
@@ -10,4 +9,17 @@ const storyDraftValidators = [
     .withMessage('Oops, did you mean to write something so short? Please write more and try publishing again.')
 ];
 
-module.exports = {storyDraftValidators};
+const storyPublishValidators = [
+  ...storyDraftValidators,
+  check('subtitle')
+    .isLength({max: 100})
+    .withMessage('Subtitle cannot exceed 100 characters'),
+  check('imageLink')
+    .isLength({max: 255})
+    .withMessage('Subtitle cannot exceed 100 characters'),
+];
+
+module.exports = {
+  storyDraftValidators,
+  storyPublishValidators
+};

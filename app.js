@@ -42,9 +42,10 @@ app.use(
 store.sync()
 app.use(asyncHandler(restoreUser));
 app.use('/', indexRouter);
+app.use('/users/(\\d+)/stories', storiesRouter);
+app.use('/stories', storiesRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
-app.use('/stories', storiesRouter);
 app.use('/likes', likesRouter);
 
 // catch 404 and forward to error handler
