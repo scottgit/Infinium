@@ -1,18 +1,6 @@
 window.addEventListener("DOMContentLoaded", (event) => {
 
-  if (document.querySelector(".dropdown")){
-    document.querySelector(".icons_image").addEventListener("click", event => {
-      event.preventDefault();
-      document.getElementById('myDropdown').classList.toggle("show")
-    })
-  }
-  document.body.addEventListener('click', event => {
-    const drop = document.getElementById('myDropdown')
-    if (!event.target.matches('.icons_image'))
-      if (drop.classList.contains('show')) {
-        drop.classList.remove('show');
-      }
-  })
+  //Dropdown js moved to the layout.js which will also include into the story-id
   document.querySelector(".about").addEventListener("click", event => {
     event.preventDefault();
     // let question = document.querySelector(".question");
@@ -28,5 +16,5 @@ window.addEventListener("DOMContentLoaded", (event) => {
       story.classList.add("hide")
     })
   })
-  
+
 })

@@ -1,0 +1,19 @@
+.header
+  .title
+    a(href=`/users/${userId}` class= "title_name")= author || locals.user.username
+    .followers 1 Follower
+    .dot .
+    a(href="" class="about") About
+  .icons
+    if locals.user
+      include user-loggedin-dropdown-include
+      if authCompare
+        a(href="/stories/new-story")
+          button.rainbow-button(type="button" class="new_story") New Story
+    else
+      span(class="loggedin")
+        a(class="login" href='/users/login') Login
+        a(class="register" href='users/register') Register
+    a(href="/")
+      .infinity_image
+        img(src="/images/infinity.jpg" alt="Infinity" class="infinity_image_icon")
