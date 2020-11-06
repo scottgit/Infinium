@@ -1,18 +1,51 @@
 extends layout
 
+mixin story-list(story, finalUrl, storySet)
+  li.story
+    a.story-list-title(href=`/users/${story.userId}/stories/${story.hexId}${finalUrl}`)
+      h3= story.title
+    if (story.subtitle)
+      .story-list-subtitle= story.subtitle
+    .story-info
+      if (!storySet)
+        .story-author= `By ${story.author} - `
+      .story-date= `${(finalUrl === '/draft' ? 'Last edited ' : 'Published ') + story.date}`
+      if (storySet)
+        .story-options-wrapper
+          .story-options-dropdown ^
+          .story-options.hide
+            a(href=`/users/${story.userId}/stories/${story.hexId}${finalUrl}`) Edit
+            a(href="/delete-my-story") Delete
+
+
+append head
+  script(src="/javascripts/users-own-stories.js" type="module" defer)
+  link(rel='stylesheet' href='/stylesheets/users-own-stories.css')
+
 block content
-  h2= title
-  .stories-container
-  if (storySet)
-    if (published)
-      h3 Published
-      ul.published-list
-        each story in published
-          li.story
-            a(href=`/users/${story.userId}/stories/${story.hexId}`)= story.title
-    if (drafts)
-      h3 Drafts
-      ul.draft-list
-        each story in drafts
-          li.story
-            a(href=`/users/${story.userId}/stories/${story.hexId}`)= story.title
+    .title-wrapper
+      h2.page-title= title
+      if (locals.authenticated)
+        a.rainbow-button(href="/stories/new-story") New Story
+    .stories-container
+      if (storySet)
+        .tab-controls
+          if (drafts)
+            .tab-drafts.tab.active Drafts &nbsp;#{drafts.length}
+          if (published)
+            .tab-published.tab(class=`${!drafts ? 'active' :''}`) Published &nbsp;#{published.length}
+      if (storySet && drafts)
+        #drafts.story-tab
+          ul.draft-list.story-list
+            each story in drafts
+              +story-list(story, '/draft', storySet)
+      if (storySet && published)
+        #published.story-tab
+          ul.published-list.story-list(class=`${!drafts ? '' :'hide'}`)
+            each story in published
+              +story-list(story, '', storySet)
+      else
+        .story-list
+        ul.published-list.story-list
+          each story in stories
+            +story-list(story, '', storySet)

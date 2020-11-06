@@ -144,7 +144,13 @@ router.get(
 
     const storySet = true;
 
-    res.render('story-list', {title: `Your stories`, storySet, published, drafts})
+    res.render('story-list', {
+      title: `Your stories`,
+      storySet,
+      published,
+      drafts,
+      contextControls: 'not-home',
+    });
   })
 );
 

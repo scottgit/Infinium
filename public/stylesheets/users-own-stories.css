@@ -1,0 +1,98 @@
+.stories-container{
+  font-family: 'Noto Sans JP', sans-serif;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  margin: 15px 200px;
+}
+
+.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 15px 200px;
+}
+
+.page-title {
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;;
+  font-size: 3rem;
+  margin: 10px;
+  font-weight: bold;
+}
+
+.tab-controls {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1px solid #bbb;
+}
+
+.tab {
+  padding: 5px 10px;
+  margin-bottom: -1px;
+  font-weight: 200;
+  border-bottom: 1px solid transparent;
+  color: #bbb;
+}
+
+.tab:not(.active):hover {
+  color: #555;
+  cursor: pointer;
+}
+
+.active {
+  border-bottom-color: #555;
+  color: black;
+  cursor: default;
+}
+
+.story-tab {
+  width: 100%;
+  padding: 5px 0;
+}
+
+.story {
+  list-style-type: none;
+  border-bottom: 1px solid #bbb;
+  padding: 10px 0;
+}
+
+.story-list-title,
+.story-list-title > h3 {
+  font-weight: bold;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.story-info {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.story-date,
+.story-author {
+  font-size: .9rem;
+}
+
+.story-date {
+  padding-right: 3px;
+}
+
+.story-options-wrapper {
+  position: relative;
+}
+
+.story-options-dropdown {
+  font-size: 1.5rem;
+  padding: 2px 5px;
+  transform: rotate(90deg) scale(2, 1);
+  color: #555;
+  transition: transform .5s;
+  will-change: transform;
+}
+
+.story-options-dropdown:hover {
+  cursor: pointer;
+  color: black;
+  transform: rotate(180deg) scale(2, 1);
+}
