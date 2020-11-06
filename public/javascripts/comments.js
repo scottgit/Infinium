@@ -17,10 +17,46 @@ window.addEventListener('DOMContentLoaded', e => {
             if (!res.ok) {
                 throw res; 
             }
-            window.location.href = "/comments/";
         } catch (err) {
             alert(err.message); 
         }
+
+        //make elements 
+        const commentContainer = document.createElement('div'); 
+        commentContainer.setAttribute('class', 'comments-container__comment'); 
+        const commentNavBar = document.createElement('div'); 
+        commentNavBar.setAttribute('class', 'comments-container__comment-nav');
+        const commentNavBarUser = document.createElement('div'); 
+        commentNavBarUser.setAttribute('class', 'comments-container__comment-nav-user'); 
+        const commentNavBarMenu = document.createElement('div'); 
+        commentNavBarMenu.setAttribute('class', 'comments-container__comment-nav-menu'); 
+        const commentNavBarMenuImage = document.createElement('img'); 
+        commentNavBarMenuImage.setAttribute('src', '/images/3-dot-icon.jpg'); 
+        commentNavBarMenuImage.setAttribute('class', 'comments-container__comment-nav-menu-image'); 
+        const commentNavBarMenuDrop = document.createElement('div'); 
+        commentNavBarMenuDrop.setAttribute('class', 'comments-container__comment-nav-menu-dropdown'); 
+        commentNavBarMenuDrop.setAttribute('class', 'comments-container__comment-nav-menu-dropdown--hidden');
+        const commentButtonEdit = document.createElement('button'); 
+        commentButtonEdit.setAttribute('class', 'edit'); 
+        const commentButtonDelete = document.createElement('button'); 
+        commentButtonDelete.setAttribute('class', 'delete'); 
+        commentButtonEdit.innerHTML = 'Edit'; 
+        commentButtonDelete.innerHTML = 'Delete'; 
+        const commentText = document.createElement('div'); 
+        commentText.setAttribute('class', 'comments-container__comment-text-box'); 
+        commentText.innerHTML = comment; 
+
+        //set parents 
+        const commentsContainer = document.querySelector('.comments-container__comments'); 
+        commentsContainer.prepend(commentContainer); 
+        commentContainer.appendChild(commentNavBar); 
+        commentContainer.appendChild(commentText); 
+        commentNavBar.appendChild(commentNavBarUser); 
+        commentNavBar.appendChild(commentNavBarMenu); 
+        commentNavBarMenu.appendChild(commentNavBarMenuImage);
+        commentNavBarMenu.appendChild(commentNavBarMenuDrop);
+        commentNavBarMenuDrop.appendChild(commentButtonDelete);
+        commentNavBarMenuDrop.appendChild(commentButtonEdit);
     });
     
     document.querySelectorAll('.comments-container__comment-nav-menu').forEach(menu => {
