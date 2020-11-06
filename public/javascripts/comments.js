@@ -38,6 +38,7 @@ window.addEventListener('DOMContentLoaded', e => {
                     const commentId = commentBlock.getAttribute('id');
                     const deleteContainer = commentBlock.querySelector('.delete-container'); 
                     const confirmButton = commentBlock.querySelector('.delete-container__inner-button-confirm');
+                    const cancelButton = commentBlock.querySelector('.delete-container__inner-button-cancel');
                     deleteContainer.classList.remove('delete-container--hidden');
                        
 
@@ -55,6 +56,9 @@ window.addEventListener('DOMContentLoaded', e => {
                         }
                     })
 
+                    cancelButton.addEventListener('click', (e) => {
+                        deleteContainer.classList.add('delete-container--hidden'); 
+                    })
                 })
             
 
