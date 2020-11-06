@@ -3,7 +3,7 @@ const express = require('express');
 const { storyDraftValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
-const{requireAuth} = require('../auth');
+const{requireAuth, checkUserRouteAccess} = require('../auth');
 
 const { User, Story } = require('../db/models');
 const { csrfProtection,

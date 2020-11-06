@@ -4,7 +4,7 @@ const { userRegValidators, userSignInValidators } = require('../validations/user
 const { storyDraftValidators, storyPublishValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const{loginUser, logoutUser, requireAuth} = require('../auth');
+const{loginUser, logoutUser, requireAuth, checkUserRouteAccess} = require('../auth');
 const { Op } = require("sequelize");
 
 
@@ -36,7 +36,8 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
   const stories = user.Stories.map(story => {
     story.hexId = setHexadecimal(story.id)
     return story;
-})
+  });
+
   const name = user.username;
   res.render('user', {
     title: 'User',
@@ -172,102 +173,110 @@ router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res, next)
 }));
 
 /* GET all published stories by specific user */
-router.get('/:userId(\\d+)/stories', requireAuth, asyncHandler(async (req, res) => {
-  const userId = req.params.userId;
-  const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
-  sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
-}));
+router.get(
+  '/:userId(\\d+)/stories',
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    const userId = req.params.userId;
+    const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
+    sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
+  })
+);
 
 /* GET single user saved story draft */
-router.get(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res, next) => {
-  const userId = parseInt(req.params[0], 10);
-  const loggedInUser = res.locals.user.id;
-  //Only allow users who are owners of the story to access this route, otherwise
-  //send them on their way...
-  if (userId !== loggedInUser) next();
+router.get(
+  /\/(\d+)\/stories\/([0-9a-f]+)\/draft$/,
+  requireAuth,
+  checkUserRouteAccess,
+  csrfProtection,
+  storyDraftValidators,
+  asyncHandler(
+    async (req, res, next) => {
+      const userId = res.locals.user.id;
+      const storyId = parseHexadecimal(req.params[1]);
 
-  const storyId = parseHexadecimal(req.params[1]);
+      let story = await Story.findOne({
+        where: isDraft(userId, storyId),
+        include: getAuthor(),
+      });
 
-  let story = await Story.findOne({
-    where: isDraft(userId, storyId),
-    include: getAuthor(),
-  });
+      if (!story) next(); //Become a 404
 
-  if (!story) next(); //Become a 404
+      //Move story out of published status if needed
+      if (!story.draft) {
+        story.draft = story.published;
+        story.published = '';
+        await story.update({published: ''})
+      }
 
-  //Move story out of published status if needed
-  if (!story.draft) {
-    story.draft = story.published;
-    story.published = '';
-    await story.update({published: ''})
-  }
+      const details = prepareStoryEditorDetails(req, story);
 
-  const details = prepareStoryEditorDetails(req, story);
-
-  res.render('story-edit', {...details});
-}));
+      res.render('story-edit', {...details});
+    })
+);
 
 /* POST single user saved story draft to save edits */
-router.post(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res, next) => {
-  const userId = parseInt(req.params[0], 10);
-  const loggedInUser = res.locals.user.id;
-  //Only allow users who are owners of the story to access this route, otherwise
-  //send them on their way...
-  if (userId !== loggedInUser) next();
-  let {title, draft} = req.body;
-  const storyId = parseHexadecimal(req.params[1]);
+router.post(
+  /\/(\d+)\/stories\/([0-9a-f]+)\/draft$/,
+  requireAuth,
+  checkUserRouteAccess,
+  csrfProtection,
+  storyDraftValidators,
+  asyncHandler(
+    async (req, res, next) => {
+      const userId = res.locals.user.id;
 
-  let story = await Story.findOne({
-    where: isDraft(userId, storyId),
-    include: getAuthor(),
-  });
+      let {title, draft} = req.body;
+      const storyId = parseHexadecimal(req.params[1]);
 
-  if (!story) next(); //Become a 404
+      let story = await Story.findOne({
+        where: isDraft(userId, storyId),
+        include: getAuthor(),
+      });
 
-  //If no title, build one from the body
-  if (checkEmpty(title) && !checkEmpty(draft)) {
-    title = buildMissingStoryTitle(draft);
-  }
+      if (!story) next(); //Become a 404
 
-  const validatorErrors = validationResult(req);
+      //If no title, build one from the body
+      if (checkEmpty(title) && !checkEmpty(draft)) {
+        title = buildMissingStoryTitle(draft);
+      }
 
-  if (validatorErrors.isEmpty()) {
-    story = await story.update({
-      title,
-      draft,
-    });
+      const validatorErrors = validationResult(req);
 
-    const details = prepareStoryEditorDetails(req, story);
+      if (validatorErrors.isEmpty()) {
+        story = await story.update({
+          title,
+          draft,
+        });
 
-    res.render('story-edit', {...details});
-  }
-  else {
-    const errors = validatorErrors.array().map(error => error.msg);
-    story.title = title;
-    story.draft = draft;
-    const details = prepareStoryEditorDetails(req, story);
-    res.render('story-edit', {
-      ...details,
-      errors,
-    });
-  }
+        const details = prepareStoryEditorDetails(req, story);
 
-}));
+        res.render('story-edit', {...details});
+      }
+      else {
+        const errors = validatorErrors.array().map(error => error.msg);
+        story.title = title;
+        story.draft = draft;
+        const details = prepareStoryEditorDetails(req, story);
+        res.render('story-edit', {
+          ...details,
+          errors,
+        });
+      }
+
+  })
+);
 
 /* POST single user publish story draft */
 router.post(
   /\/(\d+)\/stories\/([0-9a-f]+)\/draft\/publish$/,
   requireAuth,
+  checkUserRouteAccess,
   csrfProtection,
   storyPublishValidators,
   asyncHandler(
     async (req, res, next) => {
-
-      const userId = parseInt(req.params[0], 10);
-      const loggedInUser = res.locals.user.id;
-      //Only allow users who are owners of the story to access this route, otherwise
-      //send them on their way...
-      if (userId !== loggedInUser) next();
+      const userId = res.locals.user.id;
       let {title, draft, subtitle, imageLink} = req.body;
       const storyId = parseHexadecimal(req.params[1]);
 
@@ -310,6 +319,15 @@ router.post(
         });
       }
 
+  })
+);
+
+router.delete(
+  /\/(\d+)\/stories\/([0-9a-f]+)$/,
+  requireAuth,
+  checkUserRouteAccess,
+  asyncHandler(async (req, res) => {
+    res.end(); //TODO finish this
   })
 );
 

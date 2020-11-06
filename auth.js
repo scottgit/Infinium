@@ -38,9 +38,26 @@ const requireAuth = (req, res, next) => {
   return next();
 }
 
+const checkUserRouteAccess = (req, res, next) => {
+  const routeUserId = parseInt(
+    req.originalUrl
+      .match(/users\/(?<user>\d+)/)
+      .groups.user
+    , 10);
+  const userId = parseInt(res.locals.user.id, 10);
+  if(routeUserId === userId) {
+    next();
+  }
+  else {
+    //redirect to their own user page if not a match
+    res.redirect(`/users/${userId}`);
+  }
+}
+
 module.exports = {
   loginUser,
   restoreUser,
   logoutUser,
-  requireAuth
+  requireAuth,
+  checkUserRouteAccess,
 };
