@@ -314,49 +314,4 @@ router.post(
 );
 
 
-/* POST single user saved story draft to save edits */
-router.post(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res, next) => {
-  const userId = parseInt(req.params[0], 10);
-  const loggedInUser = res.locals.user.id;
-  //Only allow users who are owners of the story to access this route, otherwise
-  //send them on their way...
-  if (userId !== loggedInUser) next();
-  let {title, draft} = req.body;
-  const storyId = parseHexadecimal(req.params[1]);
-
-  let story = await Story.findOne({
-    where: isDraft(userId, storyId),
-    include: getAuthor(),
-  });
-
-  if (!story) next(); //Become a 404
-
-  //If no title, build one from the body
-  if (!title && draft) {
-    buildMissingStoryTitle(draft);
-  }
-
-  const validatorErrors = validationResult(req);
-
-  if (validatorErrors.isEmpty()) {
-    story = await story.update({
-      title,
-      draft,
-    });
-
-    const details = prepareStoryEditorDetails(req, story);
-
-    res.render('story-edit', {...details});
-  }
-  else {
-    const errors = validatorErrors.array().map(error => error.msg);
-    const details = prepareStoryEditorDetails(req, story);
-    res.render('story-edit', {
-      ...details,
-      errors,
-    });
-  }
-
-}));
-
 module.exports = router;
