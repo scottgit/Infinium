@@ -41,8 +41,9 @@ html
                 img(src="/images/dogs.jpg" alt="dogs" class="author_info_icon")
                 a(href=`/users/${userId}` class="author_info_name")= author
                 p(class="author_info_date")= date
-          .storyImage
-            img(src= story.imageLink, alt="doggies" class="storyImage_recent")
+          if (story.imageLink)
+            .storyImage
+              img(src= story.imageLink, alt="doggies" class="storyImage_recent")
           .storyBody
             p= story.published
     section
