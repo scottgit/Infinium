@@ -1,7 +1,8 @@
+@import "global.css";
+
 .header{
-  width: 100%;
   height: 100px;
-  padding: 65px 60px 90px 60px;
+  padding: 65px 200px 90px 200px;
   display: grid;
   grid-template-columns: 80%, 20%;
   grid-template-rows: 100%;

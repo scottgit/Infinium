@@ -14,8 +14,13 @@ html
     header
       .header
         .title
-          img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
-          .title_name Infinium
+          if (contextControls === 'story-edit' || contextControls === 'story-edit-with-publish')
+            a.logo-anchor(href="/")
+              img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
+              .title_name Infinium
+          else
+            img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
+            .title_name Infinium
           if contextMessage
             .title_greeting= contextMessage
           else

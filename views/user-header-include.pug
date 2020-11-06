@@ -8,12 +8,11 @@
     if locals.user
       include user-loggedin-dropdown-include
       if authCompare
-        a(href="/stories/new-story")
-          button.rainbow-button(type="button" class="new_story") New Story
+        a.rainbow-button(href="/stories/new-story") New Story
     else
       span(class="loggedin")
         a(class="login" href='/users/login') Login
-        a(class="register" href='users/register') Register
+        a(class="register" href='/users/register') Register
     a(href="/")
       .infinity_image
         img(src="/images/infinity.jpg" alt="Infinity" class="infinity_image_icon")
