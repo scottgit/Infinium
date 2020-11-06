@@ -35,6 +35,7 @@
     min-height: 100px;    
     border: none; 
     resize: none; 
+    outline: none;
 }
 
 .comments-container__new-comment-button-div {
@@ -53,9 +54,13 @@
     border-width: 1px;
 }
 
-.comments-container__comment {
+.comments-container__comments {
     padding-top: 25px; 
     padding-bottom: 16px; 
+}
+
+.comments-container__comment {
+    padding: 0px; 
 }
 
 .comments-container__comment-nav {
@@ -91,6 +96,7 @@
     position: absolute; 
     top: 15px; 
     right: 20px; 
+    background-color: white;
 }
 
 .comments-container__comment-text-box {

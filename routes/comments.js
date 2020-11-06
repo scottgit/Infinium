@@ -9,6 +9,12 @@ const commentValidator = require('../validations/comments');
 const { sequelize } = require('../db/models');
 const{requireAuth} = require('../auth');
 
+const commentNotFoundError = (id) => {
+    const error = new Error(`Comment ${id} not found`); 
+    error.title = 'Comment not found'; 
+    error.status = 404; 
+    return error; 
+}
 
 router.get('/', asyncHandler(async (req, res) => {
     const storyId = 3; //parseInt(req.params.id, 10); 
@@ -30,41 +36,6 @@ router.get('/', asyncHandler(async (req, res) => {
     })
 }));
 
-router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
-    const commentId = parseInt(req.params.id, 10);
-    const comment = await Comment.findByPk(commentId); 
-    
-    const userId = comment.userId; 
-    const loggedInUser = comment.userId; //res.locals.user.id; 
-    const authCompare = userId === loggedInUser;
-      
-    if (userId !== loggedInUser) {
-        res.redirect('/comments/'); 
-    }
-
-    const storyId = comment.storyId; 
-    const comments = await Comment.findAll({
-        where: { storyId }, 
-        order: [['createdAt', 'DESC']], 
-    }); 
-
-    comments.forEach(comment => {
-        if (comment.userId === loggedInUser) {
-            comment.authCompare = authCompare; 
-        }
-    });
-
-    comments.forEach(comment => {
-        if (comment.authCompare === true) {
-            console.log(comment); 
-        }
-    })
-
-    res.render('comments', {
-        comments, 
-    });        
-}))
-
 router.post('/', commentValidator, asyncHandler(async (req, res) => {
     const storyId = 3; //parseInt(req.params.id, 10); 
     const { comment } = req.body; 
@@ -80,7 +51,7 @@ router.post('/', commentValidator, asyncHandler(async (req, res) => {
 
     if (validateErrors.isEmpty()) {
         await newComment.save(); 
-        res.redirect('/comments'); 
+        res.status(204).end(); 
     } else {
         const errors = validateErrors.array().map(error => error.msg);  
         res.render('comments', { 
@@ -99,7 +70,6 @@ router.put('/:id(\\d+)', commentValidator, asyncHandler(async (req, res) => {
     if (validateErrors.isEmpty()) {
         oldComment.comment = comment;
         await comment.save(); 
-        res.redirect('/comments');
     } else {
         const errors = validateErrors.array().map(error => error.msg);  
         res.render('comments', { 
@@ -110,8 +80,14 @@ router.put('/:id(\\d+)', commentValidator, asyncHandler(async (req, res) => {
 
 router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id, 10); 
-    await Comment.destroy({ where: { id } });
-    res.redirect('/comments/'); 
-}))
+    const comment = await Comment.findByPk(id); 
+
+    if (comment) {
+        await comment.destroy(); 
+        res.status(204).end(); 
+    } else {
+        next(commentNotFoundError(error)) 
+    }
+}));
 
 module.exports = router; 

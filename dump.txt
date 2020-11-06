@@ -67,3 +67,40 @@ const edit = document.getElementById('edit');
                 //         alert("Something went wrong. Please try again!"); 
                 //     }
                 // });
+
+
+
+                router.get('/:id(\\d+)', asyncHandler(async (req, res) => {
+    const commentId = parseInt(req.params.id, 10);
+    const comment = await Comment.findByPk(commentId); 
+    
+    const userId = comment.userId; 
+    const loggedInUser = comment.userId; //res.locals.user.id; 
+    const authCompare = userId === loggedInUser;
+      
+    if (userId !== loggedInUser) {
+        res.redirect('/comments/'); 
+    }
+
+    const storyId = comment.storyId; 
+    const comments = await Comment.findAll({
+        where: { storyId }, 
+        order: [['createdAt', 'DESC']], 
+    }); 
+
+    comments.forEach(comment => {
+        if (comment.userId === loggedInUser) {
+            comment.authCompare = authCompare; 
+        }
+    });
+
+    comments.forEach(comment => {
+        if (comment.authCompare === true) {
+            console.log(comment); 
+        }
+    })
+
+    res.render('comments', {
+        comments, 
+    });        
+}))

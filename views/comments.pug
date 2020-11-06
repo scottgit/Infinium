@@ -12,14 +12,14 @@ block content
                 div.comments-container__new-comment-button-div
                     button(type="reset") Cancel 
                     button.comments-container__new-comment-button-respond(type="submit") Respond
-            div.comments-container__comment
+            div.comments-container__comments
                 if comments 
                 each comment in comments 
-                    div
+                    div(id=comment.id class='comments-container__comment')
                         div.comments-container__comment-nav
                             div.comments-container__comment-nav-user User Name 
                             if comment.authCompare
-                                div(id=comment.id).comments-container__comment-nav-menu
+                                div.comments-container__comment-nav-menu
                                     img(src='/images/3-dot-icon.jpg').comments-container__comment-nav-menu-image
                                     div.comments-container__comment-nav-menu-dropdown.comments-container__comment-nav-menu-dropdown--hidden
                                         button#edit Edit this response 
