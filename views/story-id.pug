@@ -45,6 +45,10 @@ html
             img(src= story.imageLink, alt="doggies" class="storyImage_recent")
           .storyBody
             p= story.published
+            .likes
+              img(src="/images/clap.png" id="upvote")
+              p(class="likesCount")
+              //- p=storyLike.id
     section
       .about_me
         .person_info.hide

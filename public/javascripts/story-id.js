@@ -25,5 +25,25 @@ window.addEventListener("DOMContentLoaded", (event) => {
       story.classList.add("hide")
     })
   })
-  
+
+  document.getElementById('upvote').addEventListener('click', (e) => {
+    const url = window.location.pathname;
+    console.log(url);
+    fetch(`/likes${url}/upvote`, {
+        method: "POST",
+      })
+      .then (res => {
+          if (!res.ok) throw Error(res.statusText);
+          return res.json();
+      })
+      .then (data => {
+        //   console.log(data);
+          let score = document.getElementsByClassName('likesCount');
+          score[0].innerHTML = data.likesCount;
+      })
+      .catch (err => {
+        alert(err.message);
+      })
+});
+
 })

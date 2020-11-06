@@ -1,31 +1,37 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../auth');
+const parseHexadecimal = require('./utils');
 
-const { storyLike } = require('../db/models');
+const { storyLike, Story } = require('../db/models');
+const { asyncHandler } = require('./utils');
 
 // POST for Likes fetch request
-router.post(`/:id/upvote`, async (req, res) => {
-    let test = await storyLike.findOne({
+router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( async (req, res) => {
+    // let parsedStoryId = parseHexadecimal(req.params.storyId);
+    // let parsedUserId = parseInt(res.locals.user.id, 10);
+    let likes = await storyLike.findOne({
       where: {
         userId: res.locals.user.id,
-        storyId: req.params.id
+        storyId: req.params.storyId
       }
     })
 
-    if (test) {
-      test.likesCount+= 1;
-      await test.save();
+    if (likes) {
+      likes.likesCount+= 1;
+      await likes.save();
     } else {
-      test = await storyLike.create({
+      likes = await storyLike.create({
         likesCount: 1,
         userId: res.locals.user.id,
-        storyId: req.params.id
+        storyId: req.params.storyId
       })
     }
 
-    res.json({ likesCount: test.likesCount });
-  });
+    res.json({ likesCount: likes.likesCount });
+
+    // console.log(parsedUserId, parsedStoryId);
+  }));
 
 
 
