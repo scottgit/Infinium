@@ -162,6 +162,7 @@
   border: white;
   font-weight: bold;
   z-index: 1;
+  cursor: pointer;
 }
 
 .rainbow-button::before {

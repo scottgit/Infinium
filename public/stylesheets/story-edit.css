@@ -14,7 +14,7 @@ body {
   padding: 15px 100px 0;
 }
 
-.story-edit {
+.story-edit-form {
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -77,27 +77,40 @@ body {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(255,255,255,0.8);
+  background-color: rgba(255,255,255,0.9);
   z-index: 2;
 }
 
 
 .story-publish-form {
+  width: 70%;
+  min-width: 800px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
+  justify-content: center;
+  padding: 50px 20px;
+  background-color: rgba(255,255,255,0.5);
 }
 
-.image-wrapper {
-  float: left;
-  width: 70%;
-  text-align: center;
-  padding: 10px;
+.story-publish-image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  min-width: 400px;
   position: relative;
   z-index: 1;
+  border: 1px solid #bbb;
+  color: #aaa;
+  background-color: inherit;
+  margin: 0 10px;
+  padding: 0 20px;
+  text-align: center;
 }
 
-.image-wrapper::before {
+.story-publish-image-wrapper::before {
   content: '';
   float: left;
   padding-top: 75%;
@@ -112,6 +125,14 @@ body {
   z-index: 2;
 }
 
+.story-publish-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  min-width: 400px;
+  margin: 0 10px;
+}
+
 .story-publisher-close {
   position: absolute;
   top: 5px;
@@ -119,19 +140,38 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 3em;
-  min-width: 20px;
-  min-height: 20px;
-  color: black;
+  font-size: 20px;
+  color: #333;
   opacity: 0.7;
   cursor: pointer;
-  border: 1px solid #aaa;
-  padding: 2px 7px;
+  border: 1px solid #555;
+  padding: 3px 9px;
+  box-shadow: 2px 2px 3px #000;
+  border-radius: 30px;
+  text-align: center;
+  transition: opacity .5s
 }
 
 .story-publisher-close:hover {
   opacity: 1;
-  border: 1px solid #555;
+}
+
+.story-publish-now {
+  align-self: center;
+}
+
+.story-publish-label {
+  margin: 5px 0 3px;
+}
+
+.story-publish-title {
+  margin: 3px 0;
+  font-size: 1.2em;
+}
+
+.story-publish-subtitle {
+  margin: 3px 0;
+  font-size: 1em;
 }
 
 .hide {

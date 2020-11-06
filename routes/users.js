@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
-const { storyDraftValidators } = require('../validations/stories');
+const { storyDraftValidators, storyPublishValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const{loginUser, logoutUser, requireAuth} = require('../auth');
@@ -267,5 +267,61 @@ router.post(/\/(\d+)\/stories\/([0-9a-f]+)\/draft$/, requireAuth, csrfProtection
   }
 
 }));
+
+/* POST single user publish story draft */
+router.post(
+  /\/(\d+)\/stories\/([0-9a-f]+)\/draft\/publish$/,
+  requireAuth,
+  csrfProtection,
+  storyPublishValidators,
+  asyncHandler(
+    async (req, res, next) => {
+
+      const userId = parseInt(req.params[0], 10);
+      const loggedInUser = res.locals.user.id;
+      //Only allow users who are owners of the story to access this route, otherwise
+      //send them on their way...
+      if (userId !== loggedInUser) next();
+      let {title, draft, subtitle, imageLink} = req.body;
+      const storyId = parseHexadecimal(req.params[1]);
+
+      let story = await Story.findOne({
+        where: isDraft(userId, storyId),
+        include: getAuthor(),
+      });
+      //If no title, build one from the body
+      if (checkEmpty(title) && !checkEmpty(draft)) {
+        title = buildMissingStoryTitle(draft);
+      }
+
+      const validatorErrors = validationResult(req);
+
+      if (validatorErrors.isEmpty()) {
+        story = await story.update({
+          title,
+          subtitle,
+          imageLink,
+          published: draft,
+          draft: null,
+        });
+
+        const captureUrl = req.originalUrl.match(/^(?<url>.*)\/draft\/publish$/).groups;
+        res.redirect(captureUrl.url)
+      }
+      else {
+        const publishErrors = validatorErrors.array().map(error => error.msg);
+        story.title = title;
+        story.draft = draft;
+        story.subtitle = subtitle;
+        story.imageLink = imageLink;
+        const details = prepareStoryEditorDetails(req, story);
+        res.render('story-edit', {
+          ...details,
+          publishErrors,
+        });
+      }
+
+  })
+);
 
 module.exports = router;
