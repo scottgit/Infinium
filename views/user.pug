@@ -2,7 +2,7 @@ doctype html
 html
   head
       block head
-        title="Express Starter App"
+        title="Infinium"
         link(rel='stylesheet' href='/stylesheets/user.css')
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap")
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;900&display=swap")
@@ -55,7 +55,8 @@ html
               .recentStory
                 a(href=`/users/${userId}/stories/${sto.hexId}` class="recentStory_title")= sto.title
                 h3(class="recentStory_subtitle")= sto.subtitle
-              .storyImage
-                img(src= sto.imageLink, alt="doggies" class="storyImage_recent")
+              if (sto.imageLink)
+                .storyImage
+                  img(src= sto.imageLink, alt="doggies" class="storyImage_recent")
               .storyBody
                 p= sto.published

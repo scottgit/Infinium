@@ -2,7 +2,7 @@ doctype html
 html
   head
       block head
-        title="Express Starter App"
+        title="Infinium"
         link(rel='stylesheet' href='/stylesheets/story-id.css')
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap")
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;900&display=swap")
@@ -41,8 +41,9 @@ html
                 img(src="/images/dogs.jpg" alt="dogs" class="author_info_icon")
                 a(href=`/users/${userId}` class="author_info_name")= author
                 p(class="author_info_date")= date
-          .storyImage
-            img(src= story.imageLink, alt="doggies" class="storyImage_recent")
+          if (story.imageLink)
+            .storyImage
+              img(src= story.imageLink, alt="doggies" class="storyImage_recent")
           .storyBody
             p= story.published
     section

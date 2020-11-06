@@ -15,6 +15,8 @@ const { csrfProtection,
         getHighlights,
         getTrending,
         buildMissingStoryTitle,
+        prepareStoryEditorDetails,
+        checkEmpty,
       } = require('./utils');
 
 const router = express.Router();
@@ -59,14 +61,15 @@ router.get('/new-story', requireAuth, csrfProtection, asyncHandler(async (req, r
   });
 }));
 
+/* POST save new story for the first time */
 router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res) => {
   let {title, draft} = req.body;
   const userId = res.locals.user.id;
   const name = res.locals.user.username;
 
   //If no title, build one from the body
-  if (!title && draft) {
-    buildMissingStoryTitle(draft);
+  if (checkEmpty(title) && !checkEmpty(draft)) {
+    title = buildMissingStoryTitle(draft);
   }
 
   let story = Story.build({
@@ -84,13 +87,9 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
   }
   else {
     const errors = validatorErrors.array().map(error => error.msg);
+    const details = prepareStoryEditorDetails(req, story, name);
     res.render('story-edit', {
-      userId,
-      name,
-      contextMessage: `Draft by ${name}`,
-      contextControls: `story-edit`,
-      formAction: req.originalUrl,
-      csrfToken: req.csrfToken(),
+      ...details,
       errors,
     });
   }

@@ -22,9 +22,9 @@ html
             .title_greeting Live Long and Prosper
           if contextControls
             if (contextControls === 'story-edit' || contextControls === 'story-edit-with-publish')
-              button.story-save(type='submit' form='story-edit' value="Save") Save
+              button.story-save.rainbow-button(type='submit' form='story-edit-form' value="Save") Save
             if (contextControls === 'story-edit-with-publish')
-              button.story-publish(type='button' value="Publish") Publish
+              button.story-publish.rainbow-button(type='button' value="Publish") Publish
         .icons
           if locals.authenticated
             form(action="/users/logout" method="post")
