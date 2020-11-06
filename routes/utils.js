@@ -17,7 +17,6 @@ const parseHexadecimal = hexString => parseInt(hexString, 16);
 
 /* Used to build a cleaner story object to send in requests, including the hexId for the URL path */
 const preProcessStories = (stories, username) => {
-
     const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
     const processed = stories.map(story => {
         story = story.toJSON();

@@ -3,7 +3,7 @@ const express = require('express');
 const { storyDraftValidators, storyPublishValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
-const{requireAuth, checkUserRouteAccess} = require('../auth');
+const{requireAuth, checkUserRouteAccess, getRouteUserId} = require('../auth');
 
 const { User, Story } = require('../db/models');
 const { csrfProtection,
@@ -100,9 +100,9 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
 }));
 
 /* USER route integrated story display */
-/* GET single user story to read */
+/* GET for ANY user to see a single user story to read */
 router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
-  const userId = res.locals.user.id;
+  const userId = getRouteUserId(req);
   const storyId = parseHexadecimal(req.params[0]);
   let story = await Story.findOne({
     where: isPublished(userId, storyId),
@@ -125,11 +125,13 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   else {
     res.render('story-id', {
       ...details, userId, story
-    })
+    });
   }
+  console.log('HERE')
+  res.end();
 }));
 
-/* GET all stories by the specific logged in user */
+/* GET all own stories by the specific logged in user */
 
 router.get(
   '/', // This route handles /users/<id>/stories
@@ -151,7 +153,7 @@ router.get(
   })
 );
 
-/* GET single user saved story draft */
+/* GET single user's own saved story draft */
 router.get(
   /\/([0-9a-f]+)\/draft$/,
   requireAuth,
@@ -183,7 +185,7 @@ router.get(
     })
 );
 
-/* POST single user saved story draft to save edits */
+/* POST single user's own saved story draft to save edits */
 router.post(
   /\/([0-9a-f]+)\/draft$/,
   requireAuth,
@@ -234,7 +236,7 @@ router.post(
   })
 );
 
-/* POST single user publish story draft */
+/* POST single user's own publish story draft */
 router.post(
   /\/([0-9a-f]+)\/draft\/publish$/,
   requireAuth,
@@ -289,6 +291,7 @@ router.post(
   })
 );
 
+/* GET user's own request to delete their story */
 router.delete(
   /\/([0-9a-f]+)$/,
   requireAuth,
