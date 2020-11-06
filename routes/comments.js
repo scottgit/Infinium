@@ -61,15 +61,16 @@ router.post('/', commentValidator, asyncHandler(async (req, res) => {
 }));
 
 router.put('/:id(\\d+)', commentValidator, asyncHandler(async (req, res) => {
-    const { comment } = req.body; 
     const id = parseInt(req.params.id, 10); 
     const oldComment = await Comment.findByPk(id); 
-
+    
     const validateErrors = validationResult(req); 
-
+    
     if (validateErrors.isEmpty()) {
-        oldComment.comment = comment;
-        await comment.save(); 
+        const { comment } = req.body; 
+        oldComment.comment = comment; 
+        await oldComment.save(); 
+        res.status(204).end(); 
     } else {
         const errors = validateErrors.array().map(error => error.msg);  
         res.render('comments', { 

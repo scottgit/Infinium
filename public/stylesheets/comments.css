@@ -99,14 +99,7 @@
     background-color: white;
 }
 
-.comments-container__comment-text-box {
-    min-height: 100px;    
-    border: none; 
-    font-weight: 200; 
-    padding-left: 12px; 
-}
-
-#edit {
+.edit {
     border: none; 
     width: 120px; 
     text-align: left;
@@ -114,17 +107,24 @@
     color: grey; 
 }
 
-#edit:hover {
+.edit:hover {
     cursor: grab; 
     color: black; 
 }
 
-#delete {
+.delete {
     border: none;
     color: grey; 
 }
 
-#delete:hover {
+.delete:hover {
     cursor: grab;
     color: black;  
+}
+
+.comments-container__comment-text-box {
+    min-height: 100px;    
+    border: none; 
+    font-weight: 200; 
+    padding-left: 12px; 
 }
