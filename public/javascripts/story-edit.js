@@ -1,8 +1,8 @@
 const publishButton = document.querySelector('.story-publish');
 
 if (publishButton) {
-  editorForm = document.getElementById('story-editor');
-  publisherForm = document.getElementById('story-publisher');
+  const editorForm = document.getElementById('story-editor');
+  const publisherForm = document.getElementById('story-publisher');
 
   publishButton.addEventListener('click', e => {
     //Show the form

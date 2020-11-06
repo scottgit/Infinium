@@ -3,6 +3,7 @@ include utils
 
 block head_trailer
   link(rel='stylesheet' href='/stylesheets/story-edit.css')
+  script(src="/javascripts/story-edit.js" type="module" async defer)
 
 block content
   #story-editor.story-editor
@@ -14,7 +15,7 @@ block content
   if (contextControls === 'story-edit-with-publish')
     #story-publisher.story-publisher.hide
       .story-publisher-close X
-      form#story-publish.story-publish(action=`${formAction}/publish`, method='post')
+      form#story-publish-form.story-publish-form(action=`${formAction}/publish`, method='post')
         +validationErrorSummary(publishErrors)
         input(type='hidden' name='_csrf' value=csrfToken)
         input.story-publish-draft(type='hidden' name='draft' value=draft)
