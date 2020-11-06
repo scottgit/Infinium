@@ -3,19 +3,19 @@ const express = require('express');
 const { storyDraftValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
-const{requireAuth} = require('../auth');
+const { requireAuth } = require('../auth');
 
-const { User, Story } = require('../db/models');
+const { User, Story, storyLike } = require('../db/models');
 const { csrfProtection,
-        asyncHandler,
-        wantsJSON,
-        setHexadecimal,
-        sendStoryList,
-        getStoryList,
-        getHighlights,
-        getTrending,
-        buildMissingStoryTitle,
-      } = require('./utils');
+  asyncHandler,
+  wantsJSON,
+  setHexadecimal,
+  sendStoryList,
+  getStoryList,
+  getHighlights,
+  getTrending,
+  buildMissingStoryTitle,
+} = require('./utils');
 
 const router = express.Router();
 
@@ -27,20 +27,20 @@ router.get(`/`, asyncHandler(async (req, res) => {
 
 /* GET all recent stories (limit 5 unless optional route indicates differently) */
 router.get(/\/recent(\/(\d+))?/, asyncHandler(async (req, res) => {
-  const limits = req.params[1] ? parseInt(req.params[1],10) : 5;
-  const stories = await getStoryList({ordering: [['updatedAt', 'DESC']], limits});
+  const limits = req.params[1] ? parseInt(req.params[1], 10) : 5;
+  const stories = await getStoryList({ ordering: [['updatedAt', 'DESC']], limits });
   sendStoryList(wantsJSON(req), res, stories, `The ${limits} most recent stories`);
 }));
 
 /* GET all trending stories (limit 3 unless optional route indicates differently) */
 router.get(/\/trending(\/(\d+))?/, asyncHandler(async (req, res) => {
-  const stories = await getStoryList({filter: getTrending, req});
+  const stories = await getStoryList({ filter: getTrending, req });
   sendStoryList(wantsJSON(req), res, stories, `Trending stories`);
 }));
 
 /* GET highlight stories (limit 5) */
 router.get('/highlights', asyncHandler(async (req, res) => {
-  const stories = await getStoryList({filter: getHighlights});
+  const stories = await getStoryList({ filter: getHighlights });
   sendStoryList(wantsJSON(req), res, stories, `Highlight stories`);
 }));
 
@@ -59,8 +59,33 @@ router.get('/new-story', requireAuth, csrfProtection, asyncHandler(async (req, r
   });
 }));
 
+// PATCH for Likes fetch request
+
+
+router.post(`/:id/upvote`, async (req, res) => {
+  let test = await storyLike.findOne({
+    where: {
+      userId: res.locals.user.id,
+      storyId: req.params.id
+    }
+  })
+
+  if (test) {
+    test.likesCount+= 1;
+    await test.save();
+  } else {
+    test = await storyLike.create({
+      likesCount: 1,
+      userId: res.locals.user.id,
+      storyId: req.params.id
+    })
+  }
+
+  res.json({ likesCount: test.likesCount });
+});
+
 router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res) => {
-  let {title, draft} = req.body;
+  let { title, draft } = req.body;
   const userId = res.locals.user.id;
   const name = res.locals.user.username;
 
