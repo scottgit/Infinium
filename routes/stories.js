@@ -61,6 +61,7 @@ router.get('/new-story', requireAuth, csrfProtection, asyncHandler(async (req, r
   });
 }));
 
+/* POST save new story for the first time */
 router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res) => {
   let {title, draft} = req.body;
   const userId = res.locals.user.id;
