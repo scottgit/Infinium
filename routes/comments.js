@@ -3,7 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator'); 
 
 const db = require('../db/models');
-const { Comment, Story } = db; 
+const { Comment, User } = db; 
 const { asyncHandler } = require('./utils'); 
 const commentValidator = require('../validations/comments');
 const { sequelize } = require('../db/models');
@@ -20,6 +20,7 @@ router.get('/', asyncHandler(async (req, res) => {
     const storyId = 3; //parseInt(req.params.id, 10); 
     const comments = await Comment.findAll({
         where: { storyId }, 
+        include: User, 
         order: [['createdAt', 'DESC']], 
     }); 
 

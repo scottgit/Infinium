@@ -34,19 +34,27 @@ window.addEventListener('DOMContentLoaded', e => {
             if (dropdown.classList.contains('comments-container__comment-nav-menu-dropdown--hidden')) {
                 dropdown.classList.remove('comments-container__comment-nav-menu-dropdown--hidden'); 
 
-                remove.addEventListener('click', async (e) => {
+                remove.addEventListener('click', (e) => {
                     const commentId = commentBlock.getAttribute('id');
-                    try {
-                        const res = await fetch(`/comments/${commentId}`, {
-                            method: 'DELETE',
-                        });
-                        if (!res.ok) {
-                            throw res; 
+                    const deleteContainer = commentBlock.querySelector('.delete-container'); 
+                    const confirmButton = commentBlock.querySelector('.delete-container__inner-button-confirm');
+                    deleteContainer.classList.remove('delete-container--hidden');
+                       
+
+                    confirmButton.addEventListener('click', async (e) => {
+                        try {
+                            const res = await fetch(`/comments/${commentId}`, {
+                                method: 'DELETE',
+                            });
+                            if (!res.ok) {
+                                throw res; 
+                            }
+                            commentBlock.remove(); 
+                        } catch (err) {
+                            alert("Something went wrong. Please try again!"); 
                         }
-                        commentBlock.remove(); 
-                    } catch (err) {
-                        alert("Something went wrong. Please try again!"); 
-                    }
+                    })
+
                 })
             
 
