@@ -152,6 +152,26 @@
   color: grey;
 }
 
+.login{
+  text-decoration: none;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: black;
+  padding: 4px 8px;
+  border: .1px solid lightgrey;
+  border-radius: 4px;
+  margin-right: 8px;
+}
+
+.register{
+  text-decoration: none;
+  font-family: 'Noto Sans JP', sans-serif;
+  color: black;
+  padding: 4px 8px;
+  margin-right: 8px;
+  border: .1px solid lightgrey;
+  border-radius: 4px;
+}
+
 .about_me{
   margin: 50px 200px;
   display: grid;
