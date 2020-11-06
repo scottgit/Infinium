@@ -14,8 +14,13 @@ html
     header
       .header
         .title
-          img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
-          .title_name Infinium
+          if (contextControls === 'story-edit' || contextControls === 'story-edit-with-publish')
+            a.logo-anchor(href="/")
+              img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
+              .title_name Infinium
+          else
+            img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
+            .title_name Infinium
           if contextMessage
             .title_greeting= contextMessage
           else
@@ -27,22 +32,9 @@ html
               button.story-publish.rainbow-button(type='button' value="Publish") Publish
         .icons
           if locals.authenticated
-            form(action="/users/logout" method="post")
-              button(type="submit" class="logout") Logout
-            .dropdown
-              a(href="" class="icons_image_holder")
-                img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
-              div(class="dropdown_content" id="myDropdown")
-                .header_mini
-                  img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
-                  .naming_info
-                    a(href=`/users/${locals.user.id}` class="naming_info_list1")= locals.user.username
-                    a(href=`/users/${locals.user.id}` class="naming_info_list2") @#{locals.user.username}
-                a(href="/") Home
-                a(href="/stories/new-story") New Story
-                a(href="#") Settings
+            include user-loggedin-dropdown-include
           else
             span(class="loggedin")
-              a(class="login" href='/users/login') Login
-              a(class="register" href='users/register') Register
+              a.rainbow-button(class="login" href='/users/login') Login
+              a.rainbow-button(class="register" href='users/register') Register
     block content
