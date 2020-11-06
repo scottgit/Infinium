@@ -59,30 +59,6 @@ router.get('/new-story', requireAuth, csrfProtection, asyncHandler(async (req, r
   });
 }));
 
-// PATCH for Likes fetch request
-
-
-router.post(`/:id/upvote`, async (req, res) => {
-  let test = await storyLike.findOne({
-    where: {
-      userId: res.locals.user.id,
-      storyId: req.params.id
-    }
-  })
-
-  if (test) {
-    test.likesCount+= 1;
-    await test.save();
-  } else {
-    test = await storyLike.create({
-      likesCount: 1,
-      userId: res.locals.user.id,
-      storyId: req.params.id
-    })
-  }
-
-  res.json({ likesCount: test.likesCount });
-});
 
 router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asyncHandler(async (req, res) => {
   let { title, draft } = req.body;

@@ -1,5 +1,5 @@
 document.getElementById('upvote').addEventListener('click', (e) => {
-    fetch(`/stories/1/upvote`, {
+    fetch(`/likes/1/upvote`, {
         method: "POST",
       })
       .then (res => {
