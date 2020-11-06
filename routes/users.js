@@ -13,6 +13,7 @@ const { csrfProtection,
         asyncHandler,
         preProcessStories,
         parseHexadecimal,
+        setHexadecimal,
         wantsJSON,
         isPublished,
         isDraft,
@@ -27,11 +28,13 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
   const userId = req.params.userId
   const user = await User.findByPk(userId, {
     include: Story
-        })
+  })
   const authUser = res.locals.user.id;
   const authCompare = parseInt(authUser, 10) === parseInt(userId, 10);
-  const stories = [];
-  user.Stories.map(story => stories.push(story))
+  const stories = user.Stories.map(story => {
+    story.hexId = setHexadecimal(story.id)
+    return story;
+})
   const name = user.username;
   res.render('user', {
     title: 'User',
@@ -110,7 +113,9 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
       if (passwordMatch) {
         loginUser(req, res, user)
-        return res.redirect('/')
+        return req.session.save(function () {
+          res.redirect('/')
+        })
       }
     }
     errors.push('Login failed')
@@ -130,14 +135,15 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
 
 router.post('/logout', (req, res) => {
   logoutUser(req, res);
-  res.redirect('/')
+  return req.session.save(function () {
+    res.redirect('/')
+  })
 });
 
 /* GET single user story to read */
 router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
   const userId = parseInt(req.params[0], 10);
   const storyId = parseHexadecimal(req.params[1]);
-
   let story = await Story.findOne({
     where: isPublished(userId, storyId),
     include: getAuthor(),
@@ -156,8 +162,8 @@ router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res) => {
     res.json(details);
   }
   else {
-    res.render('story-detail', {
-      ...details
+    res.render('story-id', {
+      ...details, userId, story
     })
   }
 }));
