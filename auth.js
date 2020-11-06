@@ -38,12 +38,16 @@ const requireAuth = (req, res, next) => {
   return next();
 }
 
-const checkUserRouteAccess = (req, res, next) => {
-  const routeUserId = parseInt(
+const getRouteUserId = (req) => {
+  return parseInt(
     req.originalUrl
       .match(/users\/(?<user>\d+)/)
       .groups.user
     , 10);
+}
+
+const checkUserRouteAccess = (req, res, next) => {
+  const routeUserId = getRouteUserId(req);
   const userId = parseInt(res.locals.user.id, 10);
   if(routeUserId === userId) {
     next();
@@ -60,4 +64,5 @@ module.exports = {
   logoutUser,
   requireAuth,
   checkUserRouteAccess,
+  getRouteUserId
 };
