@@ -113,7 +113,9 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
       const passwordMatch = await bcrypt.compare(password, user.hashedPassword.toString());
       if (passwordMatch) {
         loginUser(req, res, user)
-        return res.redirect('/')
+        return req.session.save(function () {
+          res.redirect('/')
+        })
       }
     }
     errors.push('Login failed')
@@ -133,7 +135,9 @@ router.post('/login', csrfProtection, userSignInValidators, asyncHandler(async (
 
 router.post('/logout', (req, res) => {
   logoutUser(req, res);
-  res.redirect('/')
+  return req.session.save(function () {
+    res.redirect('/')
+  })
 });
 
 /* GET single user story to read */
