@@ -1,7 +1,7 @@
 block content 
     link(rel='stylesheet', href='/stylesheets/comments.css')
     script(src="/javascripts/comments.js" type="module")
-    div.comments-container
+    div.comments-container.unreveal.hide
         div.comments-container__heading-div 
             h2.comments-container__heading-div-h2 Responses (#{comments.length})
         form.comments-container__new-comment(method='post')

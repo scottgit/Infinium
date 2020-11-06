@@ -32,7 +32,12 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   document.querySelector(".comment_button").addEventListener('click', event => {
     event.preventDefault()
-    
-})
+    const commentsContainer = document.querySelector('.comments-container');
+    if (commentsContainer.classList.contains("hide")) {
+      commentsContainer.classList.remove("hide")
+    }
+    commentsContainer.classList.toggle("reveal")
+    commentsContainer.classList.toggle("unreveal")
+  })
   
 })

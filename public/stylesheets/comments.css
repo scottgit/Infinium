@@ -6,7 +6,7 @@
 .comments-container {
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
     position: fixed;
-    right: 0px;
+    right: -420px;
     bottom: 0px;
     top: 0px;
     background-color: white;
@@ -16,6 +16,29 @@
     box-sizing: border-box;
 }
 
+.reveal{
+    display: block;
+    animation: move_left .75s 1;
+    animation-fill-mode: forwards;
+    animation-direction: linear;
+}
+
+.unreveal{
+    animation: move_right .75s 1;
+    animation-fill-mode: forwards;
+    animation-direction: linear;
+}
+
+@keyframes move_left {
+    0% {transform: translateX(0); visibility: visible}
+    100% {transform: translateX(-420px); visibility: visible}
+    }
+
+@keyframes move_right {
+    0% {transform: translateX(-420px); visibility: visible}
+    100% {transform: translateX(0px); visibility: visible}
+    }
+    
 .comments-container__heading-div {
     padding: 24px; 
 }
