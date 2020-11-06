@@ -17,15 +17,16 @@ html
           a(href="" class="about") About
         .icons
           .dropdown
-            img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
+            a(href="" class="icons_image_holder")
+              img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
             div(class="dropdown_content" id="myDropdown")
               .header_mini
                 img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
                 .naming_info
-                  p(class="naming_info_list1")= locals.user.username
-                  p(class="naming_info_list2") @#{locals.user.username}
-              a(href=`/stories/new-story`) New Story
-              a(href="/") Stories
+                  a(href=`/users/${locals.user.id}` class="naming_info_list1")= locals.user.username
+                  a(href=`/users/${locals.user.id}` class="naming_info_list2") @#{locals.user.username}
+              a(href="/") Home
+              a(href="/stories/new-story") New Story
               a(href="#") Settings
           a(href="/stories/new-story")
             button(type="button" class="new_story") New Story
