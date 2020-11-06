@@ -13,6 +13,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         drop.classList.remove('show');
       }
   })
+
   document.querySelector(".about").addEventListener("click", event => {
     event.preventDefault();
     // let question = document.querySelector(".question");
@@ -28,5 +29,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
       story.classList.add("hide")
     })
   })
+
+  document.querySelector(".comment_button").addEventListener('click', event => {
+    event.preventDefault()
+    
+})
   
 })

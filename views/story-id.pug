@@ -1,5 +1,6 @@
 doctype html
 html
+include comments.pug
   head
       block head
         title="Infinium"
@@ -51,6 +52,11 @@ html
               img(src= story.imageLink, alt="doggies" class="storyImage_recent")
           .storyBody
             p= story.published
+          .footer_info
+            a(href="")
+              img(src="/images/clapping.png" alt="comment" class="clapping")
+            a(href="")
+              img(src="/images/comment-button.png" alt="comment" class="comment_button")
     section
       .about_me
         .person_info.hide
