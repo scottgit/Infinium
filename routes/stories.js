@@ -127,11 +127,9 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
       ...details, userId, story
     });
   }
-  console.log('HERE')
-  res.end();
 }));
 
-/* GET all own stories by the specific logged in user */
+/* GET all user's own stories by the specific logged in user */
 
 router.get(
   '/', // This route handles /users/<id>/stories
@@ -140,16 +138,13 @@ router.get(
   asyncHandler(async (req, res, next) => {
 
     const userId = res.locals.user.id;
-    const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
-    if (!stories) res.redirect(`/users/${userId}`);
-    const published = [];
-    const drafts = [];
-    stories.forEach(story => {
-       if (story.published) published.push(story)
-       else drafts.push(story);
-    });
+    const published = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
+    const drafts = await getStoryList({userId, ordering: [['updatedAt', 'DESC']], group: 'drafts'});
+    if (!published && !drafts) res.redirect(`/users/${userId}`);
 
-    sendStoryList(wantsJSON(req), res, [published, drafts], `Your stories`);
+    const storySet = true;
+
+    res.render('story-list', {title: `Your stories`, storySet, published, drafts})
   })
 );
 
