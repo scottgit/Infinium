@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", (event) => {
   document.querySelector(".icons_image").addEventListener("click", event => {
+    event.preventDefault();
     document.getElementById('myDropdown').classList.toggle("show")
   })
     document.body.addEventListener('click', event => {
