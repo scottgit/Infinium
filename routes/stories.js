@@ -94,7 +94,201 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
     });
   }
 
-
 }));
+
+/* USER route integrated story display */
+/* GET single user story to read */
+router.get(/\/(\d+)\/stories\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
+  const userId = parseInt(req.params[0], 10);
+  const storyId = parseHexadecimal(req.params[1]);
+  let story = await Story.findOne({
+    where: isPublished(userId, storyId),
+    include: getAuthor(),
+  });
+
+  if (!story) next(); //Become a 404
+  [story] = preProcessStories([story]);
+
+  const details = {
+    title: story.title,
+    subtitle: story.subtitle,
+    author: story.author,
+    date: story.date,
+    storyBody: story.published,
+  };
+  if(wantsJSON(req)) {
+    res.json(details);
+  }
+  else {
+    res.render('story-id', {
+      ...details, userId, story
+    })
+  }
+}));
+
+/* GET all stories by the specific logged in user */
+router.get(
+  '/:userId(\\d+)/stories',
+  requireAuth,
+  checkUserRouteAccess,
+  asyncHandler(async (req, res) => {
+    const userId = req.params.userId;
+    const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
+    if (!stories) res.redirect(`/users/${userId}`);
+    const published = [];
+    const drafts = [];
+    stories.forEach(story => return story.published);
+
+    sendStoryList(wantsJSON(req), res, stories, `Stories by ${stories[0].author}`);
+  })
+);
+
+/* GET single user saved story draft */
+router.get(
+  /\/(\d+)\/stories\/([0-9a-f]+)\/draft$/,
+  requireAuth,
+  checkUserRouteAccess,
+  csrfProtection,
+  storyDraftValidators,
+  asyncHandler(
+    async (req, res, next) => {
+      const userId = res.locals.user.id;
+      const storyId = parseHexadecimal(req.params[1]);
+
+      let story = await Story.findOne({
+        where: isDraft(userId, storyId),
+        include: getAuthor(),
+      });
+
+      if (!story) next(); //Become a 404
+
+      //Move story out of published status if needed
+      if (!story.draft) {
+        story.draft = story.published;
+        story.published = '';
+        await story.update({published: ''})
+      }
+
+      const details = prepareStoryEditorDetails(req, story);
+
+      res.render('story-edit', {...details});
+    })
+);
+
+/* POST single user saved story draft to save edits */
+router.post(
+  /\/(\d+)\/stories\/([0-9a-f]+)\/draft$/,
+  requireAuth,
+  checkUserRouteAccess,
+  csrfProtection,
+  storyDraftValidators,
+  asyncHandler(
+    async (req, res, next) => {
+      const userId = res.locals.user.id;
+
+      let {title, draft} = req.body;
+      const storyId = parseHexadecimal(req.params[1]);
+
+      let story = await Story.findOne({
+        where: isDraft(userId, storyId),
+        include: getAuthor(),
+      });
+
+      if (!story) next(); //Become a 404
+
+      //If no title, build one from the body
+      if (checkEmpty(title) && !checkEmpty(draft)) {
+        title = buildMissingStoryTitle(draft);
+      }
+
+      const validatorErrors = validationResult(req);
+
+      if (validatorErrors.isEmpty()) {
+        story = await story.update({
+          title,
+          draft,
+        });
+
+        const details = prepareStoryEditorDetails(req, story);
+
+        res.render('story-edit', {...details});
+      }
+      else {
+        const errors = validatorErrors.array().map(error => error.msg);
+        story.title = title;
+        story.draft = draft;
+        const details = prepareStoryEditorDetails(req, story);
+        res.render('story-edit', {
+          ...details,
+          errors,
+        });
+      }
+
+  })
+);
+
+/* POST single user publish story draft */
+router.post(
+  /\/(\d+)\/stories\/([0-9a-f]+)\/draft\/publish$/,
+  requireAuth,
+  checkUserRouteAccess,
+  csrfProtection,
+  storyPublishValidators,
+  asyncHandler(
+    async (req, res, next) => {
+      const userId = res.locals.user.id;
+      let {title, draft, subtitle, imageLink} = req.body;
+      const storyId = parseHexadecimal(req.params[1]);
+
+      let story = await Story.findOne({
+        where: isDraft(userId, storyId),
+        include: getAuthor(),
+      });
+
+      if (!story) next(); //Become a 404
+
+      //If no title, build one from the body
+      if (checkEmpty(title) && !checkEmpty(draft)) {
+        title = buildMissingStoryTitle(draft);
+      }
+
+      const validatorErrors = validationResult(req);
+
+      if (validatorErrors.isEmpty()) {
+        story = await story.update({
+          title,
+          subtitle,
+          imageLink,
+          published: draft,
+          draft: null,
+        });
+
+        const captureUrl = req.originalUrl.match(/^(?<url>.*)\/draft\/publish$/).groups;
+        res.redirect(captureUrl.url)
+      }
+      else {
+        const publishErrors = validatorErrors.array().map(error => error.msg);
+        story.title = title;
+        story.draft = draft;
+        story.subtitle = subtitle;
+        story.imageLink = imageLink;
+        const details = prepareStoryEditorDetails(req, story);
+        res.render('story-edit', {
+          ...details,
+          publishErrors,
+        });
+      }
+
+  })
+);
+
+router.delete(
+  /\/(\d+)\/stories\/([0-9a-f]+)$/,
+  requireAuth,
+  checkUserRouteAccess,
+  asyncHandler(async (req, res) => {
+    res.end(); //TODO finish this
+  })
+);
 
 module.exports = router;
