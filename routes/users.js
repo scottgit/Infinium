@@ -7,7 +7,7 @@ const{loginUser, logoutUser, requireAuth, checkUserRouteAccess} = require('../au
 const { Op } = require("sequelize");
 
 
-const { User, Story } = require('../db/models')
+const { User, Story, Follower } = require('../db/models')
 const { csrfProtection,
         asyncHandler,
         setHexadecimal,
@@ -19,6 +19,22 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
   const userId = req.params.userId
   const user = await User.findByPk(userId, {
     include: Story
+  })
+  const findAllFollowers = await Follower.findAll({
+    where: {
+      userId: userId
+    }
+  })
+
+  const followerCount = findAllFollowers.length;
+
+  const followCompare = await Follower.findOne({
+    where: {
+      [Op.and]: [
+        { userId: userId },
+        { followerId: res.locals.user.id }
+      ]
+    }
   })
   const authUser = res.locals.user.id;
   const authCompare = parseInt(authUser, 10) === parseInt(userId, 10);
@@ -32,6 +48,8 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
     title: 'User',
     stories,
     authCompare,
+    followCompare,
+    followerCount,
     userId,
     name,
   });

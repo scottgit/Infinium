@@ -14,6 +14,7 @@ const usersRouter = require('./routes/users');
 const commentsRouter = require('./routes/comments');
 const storiesRouter = require('./routes/stories');
 const likesRouter = require('./routes/storylikes');
+const followsRouter = require('./routes/follows');
 const { asyncHandler } = require('./routes/utils');
 const { sequelize } = require('./db/models');
 
@@ -44,7 +45,8 @@ app.use(asyncHandler(restoreUser));
 app.use('/', indexRouter);
 app.use('/stories/:storyId/comments', commentsRouter);
 app.use('/users/(\\d+)/stories', storiesRouter);
-app.use('/stories', storiesRouter);
+app.use('/users/:id(\\d+)/follows', followsRouter);
+// app.use('/stories', storiesRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
 app.use('/likes', likesRouter);

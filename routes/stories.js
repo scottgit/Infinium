@@ -5,7 +5,8 @@ const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const { requireAuth, checkUserRouteAccess, getRouteUserId } = require('../auth');
 
-const { User, Story, storyLike, Comment } = require('../db/models');
+const { User, Story, storyLike, Comment, Follower } = require('../db/models');
+
 const { csrfProtection,
   asyncHandler,
   setHexadecimal,
@@ -132,6 +133,14 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
 
   const author = story.User.username;
 
+  const findAllFollowers = await Follower.findAll({
+    where: {
+      userId: userId
+    }
+  })
+
+  const followerCount = findAllFollowers.length;
+
   const comments = await Comment.findAll({
     where: { storyId },
     include: User,
@@ -164,7 +173,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   }
   else {
     res.render('story-id', {
-      ...details, userId, story, comments, author, storyId, storyLikes: count
+      ...details, userId, story, comments, followerCount, author, storyId, storyLikes: count
     });
   }
 }));
