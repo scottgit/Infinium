@@ -22,6 +22,7 @@ const preProcessStories = (stories, username) => {
         story = story.toJSON();
         story.hexId = story.id ? setHexadecimal(story.id) : null;
         story.author = username || story.User.username;
+        story.authorId = story.User? story.User.id : null;
         story.date = story.updatedAt ? story.updatedAt.toLocaleDateString("en-US", dateOptions) : null;
         delete story.User;
         return story;
@@ -62,20 +63,21 @@ const isDraft = (userId, storyId) => {
     //When finding all a user's draft stories, it looks for empty published fields
     //However, when both userId and storyId is given, it is assumed that a published story
     //is returning to draft status
-    const notPublished = {
-        [Op.and]: [{[Op.eq]: ''}, {[Op.eq]: null}]
+    const draft = {
+        [Op.and]: [{[Op.ne]: ''}, {[Op.ne]: null}]
     }
     if (userId) {
         if (storyId) {
             return {
                 id: storyId,
                 userId,
+                draft,
             }
         }
 
         return {
             userId,
-            published: notPublished,
+            draft,
         }
     }
 }
@@ -84,7 +86,7 @@ const isDraft = (userId, storyId) => {
 const getAuthor = () => {
     return [{
         model: User,
-        attributes: ['username']
+        attributes: ['username', 'id']
     }];
 }
 
@@ -136,10 +138,16 @@ const getHighlights = (stories) => {
 }
 
 /* Get a list of stories based on critera; all parameters are optional, passed within an object for destructuring, but if storyId then userId is required; any filter function expects at least the stories list, possibly req and/or res */
-const getStoryList = async ({req, res, userId, storyId, limits, ordering, filter} = {}) => {
+const getStoryList = async ({req, res, userId, storyId, limits, ordering, filter, group='published'} = {}) => {
+    if (group === 'published') {
+        group = isPublished(userId, storyId);
+    }
+    else {
+        group = isDraft(userId, storyId)
+    }
 
     const queryParams = {
-        where: isPublished(userId, storyId),
+        where: group,
         include: getAuthor(),
     };
 
@@ -195,6 +203,7 @@ const prepareStoryEditorDetails = (req, story, name) => {
       title: story.title,
       subtitle: story.subtitle,
       author: name,
+      authorId: story.authorId,
       date: story.date,
       draft: story.draft,
       imageLink: story.imageLink,
