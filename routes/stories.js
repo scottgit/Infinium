@@ -8,15 +8,17 @@ const{requireAuth, checkUserRouteAccess, getRouteUserId} = require('../auth');
 const { User, Story, Comment } = require('../db/models');
 const { csrfProtection,
         asyncHandler,
-        preProcessStories,
-        parseHexadecimal,
         setHexadecimal,
+        parseHexadecimal,
+        preProcessStories,
         wantsJSON,
         isPublished,
         isDraft,
         getAuthor,
         sendStoryList,
         getStoryList,
+        getHighlights,
+        getTrending,
         buildMissingStoryTitle,
         prepareStoryEditorDetails,
         checkEmpty,
@@ -110,16 +112,16 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   });
 
   const comments = await Comment.findAll({
-    where: { storyId }, 
-    include: User, 
-    order: [['createdAt', 'DESC']], 
-  }); 
-  
-  const loggedInUser = res.locals.user.id 
+    where: { storyId },
+    include: User,
+    order: [['createdAt', 'DESC']],
+  });
+
+  const loggedInUser = res.locals.user.id
 
   comments.forEach(comment => {
       if (comment.userId === loggedInUser) {
-          comment.authCompare = true; 
+          comment.authCompare = true;
       }
   });
 
