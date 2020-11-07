@@ -68,6 +68,15 @@
   text-decoration: none;
 }
 
+.about:hover{
+  color: black;
+}
+
+.about_remove{
+  pointer-events: none;
+  cursor: default;
+}
+
 .icons_image{
   align-self: center;
   width: 32px;
@@ -202,6 +211,14 @@
 
 .person_info_following{
   padding: 5px 10px 0 0;
+}
+
+.followers_count{
+  padding: 15px 5px 0 5px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
 }
 
 .person_info_dot{

@@ -48,10 +48,24 @@
   color: black;
 }
 
-.followers{
+.follow, .following{
   padding: 15px 5px 0 5px;
   font-family: 'Noto Sans JP', sans-serif;
+  text-decoration: none;
   font-size: 14px;
+  color: green;
+}
+
+.following{
+  color: black;
+}
+
+.followers_count{
+  padding: 15px 5px 0 5px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
 }
 
 .dot{
@@ -66,6 +80,15 @@
   font-family: 'Noto Sans JP', sans-serif;
   color: grey;
   text-decoration: none;
+}
+
+.about:hover{
+  color: black;
+}
+
+.about_remove{
+  pointer-events: none;
+  cursor: default;
 }
 
 .icons_image{

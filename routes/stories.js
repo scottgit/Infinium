@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const{requireAuth, checkUserRouteAccess, getRouteUserId} = require('../auth');
 
-const { User, Story, Comment } = require('../db/models');
+const { User, Story, Comment, Follower } = require('../db/models');
 const { csrfProtection,
         asyncHandler,
         preProcessStories,
@@ -109,6 +109,14 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     include: getAuthor()
   });
 
+  const findAllFollowers = await Follower.findAll({
+    where: {
+      userId: userId
+    }
+  })
+
+  const followerCount = findAllFollowers.length;
+
   const comments = await Comment.findAll({
     where: { storyId }, 
     include: User, 
@@ -140,7 +148,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   }
   else {
     res.render('story-id', {
-      ...details, userId, story, comments
+      ...details, userId, story, comments, followerCount
     });
   }
   console.log('HERE')

@@ -12,7 +12,12 @@ html
       .header
         .title
           a(href=`/users/${userId}` class= "title_name")= author
-          .followers 1 Follower
+          if followerCount === 0
+            .followers_count Followers
+          else if followerCount === 1
+            .followers_count #{followerCount} Follower
+          else 
+            .followers_count #{followerCount} Followers
           .dot .
           a(href="" class="about") About
         .icons

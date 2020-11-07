@@ -12,9 +12,21 @@ html
       .header
         .title
           a(href=`/users/${userId}` class= "title_name")= name
-          .followers 1 Follower
+          if followerCount === 0
+            .followers_count Followers
+          else if followerCount === 1
+            .followers_count #{followerCount} Follower
+          else 
+            .followers_count #{followerCount} Followers
           .dot .
           a(href="" class="about") About
+          if !authCompare && locals.user
+            if !followCompare
+              a(href="" class="follow") Follow
+              a(href="" class="following hide") Following
+            else 
+              a(href="" class="follow hide") Follow
+              a(href="" class="following") Following
         .icons
           .dropdown
             a(href="" class="icons_image_holder")

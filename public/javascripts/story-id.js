@@ -21,8 +21,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
     //   document.querySelector('.question_ask').classList.add("hide")
     //   document.querySelector('.question_answer').classList.add("hide")
     // }
-    document.querySelector('.about').classList.add("hide")
-    document.querySelector('.dot').classList.add("hide")
+    document.querySelector('.about').style.color = "black"
+    document.querySelector('.about').classList.add("about_remove")
     document.querySelector('.person_info').classList.remove("hide")
     document.querySelector('.profilePic').classList.remove("hide")
     document.querySelectorAll('.recentStories').forEach(function (story) {
@@ -39,5 +39,4 @@ window.addEventListener("DOMContentLoaded", (event) => {
     commentsContainer.classList.toggle("reveal")
     commentsContainer.classList.toggle("unreveal")
   })
-  
 })
