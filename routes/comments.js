@@ -4,7 +4,7 @@ const { check, validationResult } = require('express-validator');
 
 const db = require('../db/models');
 const { Comment, User } = db; 
-const { asyncHandler } = require('./utils'); 
+const { asyncHandler, parseHexadecimal } = require('./utils'); 
 const commentValidator = require('../validations/comments');
 const { sequelize } = require('../db/models');
 const{requireAuth} = require('../auth');
@@ -16,32 +16,32 @@ const commentNotFoundError = (id) => {
     return error; 
 }
 
-router.get('/', asyncHandler(async (req, res) => {
-    const storyId = 3; //parseInt(req.params.id, 10); 
-    const comments = await Comment.findAll({
-        where: { storyId }, 
-        include: User, 
-        order: [['createdAt', 'DESC']], 
-    }); 
+// router.get('/', asyncHandler(async (req, res) => {
+//     const storyId = 3; //parseInt(req.params.id, 10); 
+//     const comments = await Comment.findAll({
+//         where: { storyId }, 
+//         include: User, 
+//         order: [['createdAt', 'DESC']], 
+//     }); 
 
-    const loggedInUser = 2; //res.locals.user.id; 
+//     const loggedInUser = 2; //res.locals.user.id; 
 
-    comments.forEach(comment => {
-        if (comment.userId === loggedInUser) {
-            comment.authCompare = true; 
-        }
-    });
+//     comments.forEach(comment => {
+//         if (comment.userId === loggedInUser) {
+//             comment.authCompare = true; 
+//         }
+//     });
 
-    res.render('comments', {
-        comments, 
-    })
-}));
+//     res.render('comments', {
+//         comments, 
+//     })
+// }));
 
 router.post('/', commentValidator, asyncHandler(async (req, res) => {
-    const storyId = 3; //parseInt(req.params.id, 10); 
-    const { comment } = req.body; 
+    const { comment, storiesId } = req.body; 
+    const storyId = parseHexadecimal(storiesId)
 
-    const userId = 2; //res.locals.user.id; 
+    const userId = res.locals.user.id
     const newComment =  Comment.build({
         comment, 
         storyId,
@@ -88,7 +88,10 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
         await comment.destroy(); 
         res.status(204).end(); 
     } else {
-        next(commentNotFoundError(error)) 
+        const errors = validateErrors.array().map(error => error.msg);  
+        res.render('comments', { 
+            errors,
+        });    
     }
 }));
 

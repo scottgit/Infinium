@@ -1,13 +1,16 @@
 window.addEventListener('DOMContentLoaded', e => {
     const respond = document.querySelector('.comments-container__new-comment'); 
-    
+    const url = window.location.pathname
+    const urlArray = url.split("/")
+    const storiesId = urlArray[4];
+
     respond.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(respond); 
         const comment = formData.get("comment"); 
-        const body = { comment }; 
+        const body = { comment, storiesId }; 
         try {
-            const res = await fetch("/comments", {
+            const res = await fetch(`/stories/${storiesId}/comments`, {
                 method: "POST", 
                 body: JSON.stringify(body),
                 headers: {
@@ -75,12 +78,11 @@ window.addEventListener('DOMContentLoaded', e => {
                     const deleteContainer = commentBlock.querySelector('.delete-container'); 
                     const confirmButton = commentBlock.querySelector('.delete-container__inner-button-confirm');
                     const cancelButton = commentBlock.querySelector('.delete-container__inner-button-cancel');
-                    deleteContainer.classList.remove('delete-container--hidden');
-                       
+                    deleteContainer.classList.remove('delete-container--hidden'); 
 
                     confirmButton.addEventListener('click', async (e) => {
                         try {
-                            const res = await fetch(`/comments/${commentId}`, {
+                            const res = await fetch(`/stories/${storiesId}/comments/${commentId}`, {
                                 method: 'DELETE',
                             });
                             if (!res.ok) {
@@ -134,7 +136,7 @@ window.addEventListener('DOMContentLoaded', e => {
                         const comment = formData.get("comment"); 
                         const body = { comment }; 
                         try {
-                            const res = await fetch(`/comments/${commentId}`, {
+                            const res = await fetch(`/stories/${storiesId}/comments/${commentId}`, {
                                 method: "PUT", 
                                 body: JSON.stringify(body),
                                 headers: {

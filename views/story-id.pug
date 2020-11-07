@@ -30,9 +30,13 @@ html
               img(src="/images/clap.png" id="upvote")
               //- p(class="likesCount")
               p(id="likesCount")
-
               p= storyLikes
 
+          .footer_info
+            a(href="")
+              img(src="/images/clapping.png" alt="comment" class="clapping")
+            a(href="")
+              img(src="/images/comment-button.png" alt="comment" class="comment_button")
     section
       .about_me
         .person_info.hide
@@ -44,3 +48,4 @@ html
             .person_info_follower 1 Follower
         .profilePic.hide
           img(src="/images/dogs.jpg", alt="doggies" class="profilePic_pic")
+    include comments.pug

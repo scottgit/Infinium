@@ -42,6 +42,7 @@ app.use(
 store.sync()
 app.use(asyncHandler(restoreUser));
 app.use('/', indexRouter);
+app.use('/stories/:storyId/comments', commentsRouter);
 app.use('/users/(\\d+)/stories', storiesRouter);
 app.use('/stories', storiesRouter);
 app.use('/users', usersRouter);
