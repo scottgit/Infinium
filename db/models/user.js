@@ -15,6 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING.BINARY,
       allowNull: false
     },
+    avatar: {
+      type: DataTypes.STRING(255),
+    },
+    description: {
+      type: DataTypes.STRING(255),
+    }
   }, {});
   User.associate = function(models) {
     User.hasMany(models.Story, {foreignKey: 'userId'}),
