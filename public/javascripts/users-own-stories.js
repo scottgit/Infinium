@@ -22,17 +22,39 @@ document.addEventListener("DOMContentLoaded", e => {
     });
   }
 
-  storiesContainer.addEventListener('click', e => {
+  storiesContainer.addEventListener('click', async (e) => {
     const target = e.target;
-    const menu = target.nextSibling;
-    if (menu.classList.contains('hide')) {
-      target.classList.add('active');
-      menu.classList.remove('hide');
-    } else {
-      target.classList.remove('active');
-      menu.classList.add('hide');
+    if (target.classList.contains('story-options-dropdown')) {
+
+      const menu = target.nextSibling;
+      if (menu.classList.contains('hide')) {
+        target.classList.add('active');
+        menu.classList.remove('hide');
+      } else {
+        target.classList.remove('active');
+        menu.classList.add('hide');
+      }
+    }
+    if (target.classList.contains('delete-story')) {
+      e.preventDefault();
+      const doIt = confirm('Permanently delete your story?');
+      if (!doIt) return;
+      try {
+        const res = await fetch(`${target.href}`, {
+            method: "DELETE",
+            // headers: {
+            //     "Content-Type": "application/json",
+            // },
+        });
+        if (!res.ok) {
+            throw new Error('Deletion failed' + res);
+        }
+        target.closest('.story').remove();
+      } catch (err) {
+          alert(err.message);
+      }
     }
   });
 
-  
+
 })

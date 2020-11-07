@@ -297,8 +297,18 @@ router.delete(
   /\/([0-9a-f]+)$/,
   requireAuth,
   checkUserRouteAccess,
-  asyncHandler(async (req, res) => {
-    res.end(); //TODO finish this
+  asyncHandler(async (req, res, next) => {
+    const storyId = parseHexadecimal(req.params[0]);
+    const story = await Story.findByPk(storyId);
+    if (story) {
+      await story.destroy();
+      res.status(204).end();
+    }
+    else {
+      const err = new Error(`Story database id ${storyId} (hexId: ${req.params[0]}) not found.`)
+      err.status = 404;
+      return next(err);;
+    }
   })
 );
 

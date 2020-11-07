@@ -15,7 +15,7 @@ mixin story-list(story, finalUrl, storySet)
           .story-options-dropdown ^
           .story-options.hide
             a(href=`/users/${story.userId}/stories/${story.hexId}${finalUrl}`) Edit
-            a(href="/delete-my-story") Delete
+            a.delete-story(href=`/users/${story.userId}/stories/${story.hexId}`) Delete
 
 
 append head
