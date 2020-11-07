@@ -1,37 +1,34 @@
-extends layout
-
 block content 
     link(rel='stylesheet', href='/stylesheets/comments.css')
     script(src="/javascripts/comments.js" type="module")
-    div.major(id="major")
-        div.comments-container
-            div.comments-container__heading-div 
-                h2.comments-container__heading-div-h2 Responses (#{comments.length})
-            form.comments-container__new-comment(method='post')
-                textarea.comments-container__new-comment-text-box(name="comment", cols="30", rows="10", placeholder='What are your thoughts?')
-                div.comments-container__new-comment-button-div
-                    button(type="reset") Cancel 
-                    button.comments-container__new-comment-button-respond(type="submit") Respond
-            div.comments-container__comments
-                if comments 
-                each comment in comments 
-                    div(id=comment.id class='comments-container__comment')
-                        div.comments-container__comment-nav
-                            div.comments-container__comment-nav-user= comment.User.username 
-                            if comment.authCompare
-                                div(class="comments-container__comment-nav-menu" id=comment.id)
-                                    img(src='/images/3-dot-icon.jpg').comments-container__comment-nav-menu-image
-                                    div.comments-container__comment-nav-menu-dropdown.comments-container__comment-nav-menu-dropdown--hidden
-                                        button.edit Edit this response 
-                                        button.delete Delete 
-                        div.comments-container__comment-text-box= comment.comment  
-                        div.delete-container.delete-container--hidden
-                            div.delete-container__inner
-                                h2.delete-container__inner-heading Delete
-                                div.delete-container__inner-textbox Deleted responses are gone forever. Are you sure?
-                                div.delete-container__inner-button-container 
-                                    button(type="reset").delete-container__inner-button-cancel Cancel 
-                                    button.delete-container__inner-button-confirm Confirm 
+    div.comments-container.unreveal.hide
+        div.comments-container__heading-div 
+            h2.comments-container__heading-div-h2 Responses (#{comments.length})
+        form.comments-container__new-comment(method='post')
+            textarea.comments-container__new-comment-text-box(name="comment", cols="30", rows="10", placeholder='What are your thoughts?')
+            div.comments-container__new-comment-button-div
+                button(type="reset") Cancel 
+                button.comments-container__new-comment-button-respond(type="submit") Respond
+        div.comments-container__comments
+            if comments 
+            each comment in comments 
+                div(id=comment.id class='comments-container__comment')
+                    div.comments-container__comment-nav
+                        div.comments-container__comment-nav-user= comment.User.username 
+                        if comment.authCompare
+                            div(class="comments-container__comment-nav-menu" id=comment.id)
+                                img(src='/images/3-dot-icon.jpg').comments-container__comment-nav-menu-image
+                                div.comments-container__comment-nav-menu-dropdown.comments-container__comment-nav-menu-dropdown--hidden
+                                    button.edit Edit this response 
+                                    button.delete Delete 
+                    div.comments-container__comment-text-box= comment.comment  
+                    div.delete-container.delete-container--hidden
+                        div.delete-container__inner
+                            h2.delete-container__inner-heading Delete
+                            div.delete-container__inner-textbox Deleted responses are gone forever. Are you sure?
+                            div.delete-container__inner-button-container 
+                                button(type="reset").delete-container__inner-button-cancel Cancel 
+                                button.delete-container__inner-button-confirm Confirm 
 
 
                      

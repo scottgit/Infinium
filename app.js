@@ -41,10 +41,10 @@ app.use(
 store.sync()
 app.use(asyncHandler(restoreUser));
 app.use('/', indexRouter);
+app.use('/stories/:storyId/comments', commentsRouter);
 app.use('/users/(\\d+)/stories', storiesRouter);
-app.use('/stories', storiesRouter);
+// app.use('/stories', storiesRouter);
 app.use('/users', usersRouter);
-app.use('/comments', commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

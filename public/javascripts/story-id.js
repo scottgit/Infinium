@@ -1,6 +1,5 @@
 window.addEventListener("DOMContentLoaded", (event) => {
 
-  //Dropdown js moved to the layout.js which will also include into the story-id
   document.querySelector(".about").addEventListener("click", event => {
     event.preventDefault();
     // let question = document.querySelector(".question");
@@ -17,4 +16,16 @@ window.addEventListener("DOMContentLoaded", (event) => {
     })
   })
 
+
+  document.querySelector(".comment_button").addEventListener('click', event => {
+    event.preventDefault()
+    const commentsContainer = document.querySelector('.comments-container');
+    if (commentsContainer.classList.contains("hide")) {
+      commentsContainer.classList.remove("hide")
+    }
+    commentsContainer.classList.toggle("reveal")
+    commentsContainer.classList.toggle("unreveal")
+  })
+  
+})
 })
