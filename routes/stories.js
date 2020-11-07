@@ -5,7 +5,7 @@ const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 const{requireAuth, checkUserRouteAccess, getRouteUserId} = require('../auth');
 
-const { User, Story } = require('../db/models');
+const { User, Story, Comment } = require('../db/models');
 const { csrfProtection,
         asyncHandler,
         preProcessStories,
@@ -106,8 +106,24 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   const storyId = parseHexadecimal(req.params[0]);
   let story = await Story.findOne({
     where: isPublished(userId, storyId),
-    include: getAuthor(),
+    include: getAuthor()
   });
+
+  const comments = await Comment.findAll({
+    where: { storyId }, 
+    include: User, 
+    order: [['createdAt', 'DESC']], 
+  }); 
+  
+  const loggedInUser = res.locals.user.id 
+
+  comments.forEach(comment => {
+      if (comment.userId === loggedInUser) {
+          comment.authCompare = true; 
+      }
+  });
+
+  console.log(comments)
 
   if (!story) next(); //Become a 404
   [story] = preProcessStories([story]);
@@ -124,7 +140,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   }
   else {
     res.render('story-id', {
-      ...details, userId, story
+      ...details, userId, story, comments
     });
   }
   console.log('HERE')
