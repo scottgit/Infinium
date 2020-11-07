@@ -8,7 +8,7 @@ mixin story-list(story, finalUrl, storySet)
       .story-list-subtitle= story.subtitle
     .story-info
       if (!storySet)
-        .story-author= `By ${story.author} - `
+        .story-author By #[a(href=`/users/${story.authorId}`) #{story.author}] - &nbsp;
       .story-date= `${(finalUrl === '/draft' ? 'Last edited ' : 'Published ') + story.date}`
       if (storySet)
         .story-options-wrapper
@@ -20,7 +20,7 @@ mixin story-list(story, finalUrl, storySet)
 
 append head
   script(src="/javascripts/users-own-stories.js" type="module" defer)
-  link(rel='stylesheet' href='/stylesheets/users-own-stories.css')
+  link(rel='stylesheet' href='/stylesheets/story-list.css')
 
 block content
     .title-wrapper
