@@ -70,6 +70,7 @@
 
 .story-list-title > h3:hover {
   color: black;
+  text-decoration: underline;
 }
 
 .story-info {
@@ -135,4 +136,11 @@
 .story-options > a:hover {
   text-decoration: underline;
   color: black;
+}
+
+.story-author > a {
+  text-decoration: none;
+}
+.story-author > a:hover {
+  text-decoration: underline;
 }
