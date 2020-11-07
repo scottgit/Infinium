@@ -8,21 +8,28 @@ const{requireAuth, checkUserRouteAccess, getRouteUserId} = require('../auth');
 const { User, Story, Comment } = require('../db/models');
 const { csrfProtection,
         asyncHandler,
-        preProcessStories,
-        parseHexadecimal,
         setHexadecimal,
+        parseHexadecimal,
+        preProcessStories,
         wantsJSON,
         isPublished,
         isDraft,
         getAuthor,
         sendStoryList,
         getStoryList,
+        getHighlights,
+        getTrending,
         buildMissingStoryTitle,
         prepareStoryEditorDetails,
         checkEmpty,
       } = require('./utils');
 
 const router = express.Router();
+
+/* Redirect /stories to root '/' */
+router.get('/', asyncHandler(async (req, res) => {
+  res.redirect('/');
+}));
 
 /* GET all published stories */
 router.get(`/all`, asyncHandler(async (req, res) => {
@@ -108,18 +115,19 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     where: isPublished(userId, storyId),
     include: getAuthor()
   });
+  const author = story.User.username;
 
   const comments = await Comment.findAll({
-    where: { storyId }, 
-    include: User, 
-    order: [['createdAt', 'DESC']], 
-  }); 
-  
-  const loggedInUser = res.locals.user.id 
+    where: { storyId },
+    include: User,
+    order: [['createdAt', 'DESC']],
+  });
+
+  const loggedInUser = res.locals.user.id
 
   comments.forEach(comment => {
       if (comment.userId === loggedInUser) {
-          comment.authCompare = true; 
+          comment.authCompare = true;
       }
   });
 
@@ -132,6 +140,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     title: story.title,
     subtitle: story.subtitle,
     author: story.author,
+    authorId: story.authorId,
     date: story.date,
     storyBody: story.published,
   };
@@ -140,14 +149,12 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   }
   else {
     res.render('story-id', {
-      ...details, userId, story, comments
+      ...details, userId, story, comments, author
     });
   }
-  console.log('HERE')
-  res.end();
 }));
 
-/* GET all own stories by the specific logged in user */
+/* GET all user's own stories by the specific logged in user */
 
 router.get(
   '/', // This route handles /users/<id>/stories
@@ -156,16 +163,19 @@ router.get(
   asyncHandler(async (req, res, next) => {
 
     const userId = res.locals.user.id;
-    const stories = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
-    if (!stories) res.redirect(`/users/${userId}`);
-    const published = [];
-    const drafts = [];
-    stories.forEach(story => {
-       if (story.published) published.push(story)
-       else drafts.push(story);
-    });
+    const published = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
+    const drafts = await getStoryList({userId, ordering: [['updatedAt', 'DESC']], group: 'drafts'});
+    if (!published && !drafts) res.redirect(`/users/${userId}`);
 
-    sendStoryList(wantsJSON(req), res, [published, drafts], `Your stories`);
+    const storySet = true;
+
+    res.render('story-list', {
+      title: `Your stories`,
+      storySet,
+      published,
+      drafts,
+      contextControls: 'not-home',
+    });
   })
 );
 
@@ -312,8 +322,18 @@ router.delete(
   /\/([0-9a-f]+)$/,
   requireAuth,
   checkUserRouteAccess,
-  asyncHandler(async (req, res) => {
-    res.end(); //TODO finish this
+  asyncHandler(async (req, res, next) => {
+    const storyId = parseHexadecimal(req.params[0]);
+    const story = await Story.findByPk(storyId);
+    if (story) {
+      await story.destroy();
+      res.status(204).end();
+    }
+    else {
+      const err = new Error(`Story database id ${storyId} (hexId: ${req.params[0]}) not found.`)
+      err.status = 404;
+      return next(err);;
+    }
   })
 );
 
