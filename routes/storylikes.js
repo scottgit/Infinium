@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { requireAuth } = require('../auth');
-const { parseHexadecimal } = require('./utils');
+const { parseHexadecimal, getAuthor, isPublished } = require('./utils');
 
 const { storyLike, Story } = require('../db/models');
 const { asyncHandler } = require('./utils');
@@ -14,7 +14,6 @@ router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( asy
     let parsedStoryId = parseHexadecimal(storyId);
     // let parsedStoryId = parseHexadecimal(req.params.storyId);
     // let parsedUserId = parseInt(res.locals.user.id, 10);
-    console.log("THIS IS HERE", storyId, parsedStoryId, res.locals.user.id);
     let likes = await storyLike.findAll({
       where: {
         storyId: parsedStoryId
@@ -22,14 +21,24 @@ router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( asy
     })
 
     // let test = await storyLike.findOne({
-    //   where: {
-    //     userId: res.locals.user.id
-    //   }
-    // })
+      //   where: {
+        //     userId: res.locals.user.id
+        //   }
+        // })
 
-    let counter = 0;
+    console.log("THIS IS HERE", likes,);
+    let counter;
+    console.log('COUNTER', counter);
 
-    if (likes) {
+    if (!likes.length) {
+      counter = 0;
+      console.log('THIS WORKS')
+    } else {
+      counter = likes[0].dataValues.likesCount;
+    }
+
+
+    if (likes.length) {
       likes.forEach( async(like) => {
         if (like.userId === res.locals.user.id) {
           like.likesCount += 1;
@@ -44,7 +53,7 @@ router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( asy
         storyId: parsedStoryId
       })
     }
-
+    console.log(counter);
     res.json({ likesCount: counter });
 
     // console.log(parsedUserId, parsedStoryId);

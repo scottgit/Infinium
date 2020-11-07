@@ -3,26 +3,26 @@ const express = require('express');
 const { storyDraftValidators, storyPublishValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
 const { Op } = require("sequelize");
-const{requireAuth, checkUserRouteAccess, getRouteUserId} = require('../auth');
+const { requireAuth, checkUserRouteAccess, getRouteUserId } = require('../auth');
 
 const { User, Story, storyLike, Comment } = require('../db/models');
 const { csrfProtection,
-        asyncHandler,
-        setHexadecimal,
-        parseHexadecimal,
-        preProcessStories,
-        wantsJSON,
-        isPublished,
-        isDraft,
-        getAuthor,
-        sendStoryList,
-        getStoryList,
-        getHighlights,
-        getTrending,
-        buildMissingStoryTitle,
-        prepareStoryEditorDetails,
-        checkEmpty,
-      } = require('./utils');
+  asyncHandler,
+  setHexadecimal,
+  parseHexadecimal,
+  preProcessStories,
+  wantsJSON,
+  isPublished,
+  isDraft,
+  getAuthor,
+  sendStoryList,
+  getStoryList,
+  getHighlights,
+  getTrending,
+  buildMissingStoryTitle,
+  prepareStoryEditorDetails,
+  checkEmpty,
+} = require('./utils');
 
 const router = express.Router();
 
@@ -127,7 +127,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     count += likes.likesCount
   })
 
-  console.log(count);
+  // console.log(story);
   // console.log(storyLikes.length)
 
   const author = story.User.username;
@@ -141,12 +141,12 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   const loggedInUser = res.locals.user.id
 
   comments.forEach(comment => {
-      if (comment.userId === loggedInUser) {
-          comment.authCompare = true;
-      }
+    if (comment.userId === loggedInUser) {
+      comment.authCompare = true;
+    }
   });
 
-  console.log(comments)
+  // console.log(comments)
 
   if (!story) next(); //Become a 404
   [story] = preProcessStories([story]);
@@ -159,12 +159,12 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     date: story.date,
     storyBody: story.published,
   };
-  if(wantsJSON(req)) {
+  if (wantsJSON(req)) {
     res.json(details);
   }
   else {
     res.render('story-id', {
-      ...details, userId, story,  comments, author, storyId, storyLikes:count
+      ...details, userId, story, comments, author, storyId, storyLikes: count
     });
   }
 }));
@@ -178,8 +178,8 @@ router.get(
   asyncHandler(async (req, res, next) => {
 
     const userId = res.locals.user.id;
-    const published = await getStoryList({userId, ordering: [['updatedAt', 'DESC']]});
-    const drafts = await getStoryList({userId, ordering: [['updatedAt', 'DESC']], group: 'drafts'});
+    const published = await getStoryList({ userId, ordering: [['updatedAt', 'DESC']] });
+    const drafts = await getStoryList({ userId, ordering: [['updatedAt', 'DESC']], group: 'drafts' });
     if (!published && !drafts) res.redirect(`/users/${userId}`);
 
     const storySet = true;
@@ -217,12 +217,12 @@ router.get(
       if (!story.draft) {
         story.draft = story.published;
         story.published = '';
-        await story.update({published: ''})
+        await story.update({ published: '' })
       }
 
       const details = prepareStoryEditorDetails(req, story);
 
-      res.render('story-edit', {...details});
+      res.render('story-edit', { ...details });
     })
 );
 
@@ -237,7 +237,7 @@ router.post(
     async (req, res, next) => {
       const userId = res.locals.user.id;
       const storyId = parseHexadecimal(req.params[0]);
-      let {title, draft} = req.body;
+      let { title, draft } = req.body;
 
       let story = await Story.findOne({
         where: isDraft(userId, storyId),
@@ -261,7 +261,7 @@ router.post(
 
         const details = prepareStoryEditorDetails(req, story);
 
-        res.render('story-edit', {...details});
+        res.render('story-edit', { ...details });
       }
       else {
         const errors = validatorErrors.array().map(error => error.msg);
@@ -274,7 +274,7 @@ router.post(
         });
       }
 
-  })
+    })
 );
 
 /* POST single user's own publish story draft */
@@ -288,7 +288,7 @@ router.post(
     async (req, res, next) => {
       const userId = res.locals.user.id;
       const storyId = parseHexadecimal(req.params[0]);
-      let {title, draft, subtitle, imageLink} = req.body;
+      let { title, draft, subtitle, imageLink } = req.body;
 
       let story = await Story.findOne({
         where: isDraft(userId, storyId),
@@ -329,7 +329,7 @@ router.post(
         });
       }
 
-  })
+    })
 );
 
 /* GET user's own request to delete their story */

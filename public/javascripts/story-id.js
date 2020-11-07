@@ -32,9 +32,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
           return res.json();
       })
       .then (data => {
-        //   console.log(data);
+          console.log(data);
           let score = document.getElementById('likesCount');
-          score.innerHTML = data.likesCount;
+          score.innerHTML = data.likesCount + 1;
       })
       .catch (err => {
         alert(err.message);
