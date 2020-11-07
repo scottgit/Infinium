@@ -44,6 +44,7 @@
   border-bottom-color: #555;
   color: black;
   cursor: default;
+  pointer-events: none;
 }
 
 .story-tab {
@@ -57,11 +58,18 @@
   padding: 10px 0;
 }
 
-.story-list-title,
-.story-list-title > h3 {
-  font-weight: bold;
+.story-list-title {
   text-decoration: none;
   cursor: pointer;
+}
+.story-list-title > h3 {
+  color: #555;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.story-list-title > h3:hover {
+  color: black;
 }
 
 .story-info {
@@ -91,8 +99,38 @@
   will-change: transform;
 }
 
-.story-options-dropdown:hover {
+.story-options-dropdown:hover,
+.story-options-dropdown.active {
   cursor: pointer;
   color: black;
   transform: rotate(180deg) scale(2, 1);
+}
+
+.story-options {
+  position: absolute;
+  top: 100%;
+  margin-top: -3px;
+  opacity: 1;
+  transition: opacity .5s;
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  z-index: 1;
+  background-color: #F8F8F8;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, .2);
+}
+
+.story-options.hide {
+  opacity: 0;
+}
+
+.story-options > a {
+  text-decoration: none;
+  color: #555;
+  padding: 5px 7px;
+}
+
+.story-options > a:hover {
+  text-decoration: underline;
+  color: black;
 }

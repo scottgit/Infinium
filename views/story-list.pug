@@ -40,8 +40,8 @@ block content
             each story in drafts
               +story-list(story, '/draft', storySet)
       if (storySet && published)
-        #published.story-tab
-          ul.published-list.story-list(class=`${!drafts ? '' :'hide'}`)
+        #published.story-tab(class=`${!drafts ? '' :'hide'}`)
+          ul.published-list.story-list
             each story in published
               +story-list(story, '', storySet)
       else
