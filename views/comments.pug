@@ -1,9 +1,12 @@
 block content 
     link(rel='stylesheet', href='/stylesheets/comments.css')
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap")
     script(src="/javascripts/comments.js" type="module")
     div.comments-container.unreveal.hide
         div.comments-container__heading-div 
             h2.comments-container__heading-div-h2 Responses (#{comments.length})
+            button.comments-container__heading-div-container
+                img(src='/images/x-men.jpg').comments-container__heading-div-button-img
         form.comments-container__new-comment(method='post')
             textarea.comments-container__new-comment-text-box(name="comment", cols="30", rows="10", placeholder='What are your thoughts?')
             div.comments-container__new-comment-button-div
