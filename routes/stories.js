@@ -106,8 +106,22 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   const storyId = parseHexadecimal(req.params[0]);
   let story = await Story.findOne({
     where: isPublished(userId, storyId),
-    include: getAuthor(),
+    include: getAuthor()
   });
+
+  let storyLikes = await storyLike.findAll({
+    where: {
+      storyId
+    }
+  });
+
+  let count = 0
+  storyLikes.forEach((likes) => {
+    count += likes.likesCount
+  })
+
+  console.log(count);
+  // console.log(storyLikes.length)
 
   if (!story) next(); //Become a 404
   [story] = preProcessStories([story]);
@@ -124,7 +138,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   }
   else {
     res.render('story-id', {
-      ...details, userId, story
+      ...details, userId, story, storyId, storyLikes:count
     });
   }
   console.log('HERE')

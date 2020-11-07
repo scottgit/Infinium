@@ -28,8 +28,11 @@ html
             p= story.published
             .likes
               img(src="/images/clap.png" id="upvote")
-              p(class="likesCount")
-              //- p=storyLike.id
+              //- p(class="likesCount")
+              p(id="likesCount")
+
+              p= storyLikes
+
     section
       .about_me
         .person_info.hide
