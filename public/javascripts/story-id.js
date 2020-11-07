@@ -26,6 +26,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
     commentsContainer.classList.toggle("reveal")
     commentsContainer.classList.toggle("unreveal")
   })
-  
+
 })
-})
+
