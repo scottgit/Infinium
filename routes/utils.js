@@ -22,6 +22,7 @@ const preProcessStories = (stories, username) => {
         story = story.toJSON();
         story.hexId = story.id ? setHexadecimal(story.id) : null;
         story.author = username || story.User.username;
+        story.authorId = story.User? story.User.id : null;
         story.date = story.updatedAt ? story.updatedAt.toLocaleDateString("en-US", dateOptions) : null;
         delete story.User;
         return story;
@@ -85,7 +86,7 @@ const isDraft = (userId, storyId) => {
 const getAuthor = () => {
     return [{
         model: User,
-        attributes: ['username']
+        attributes: ['username', 'id']
     }];
 }
 
@@ -202,6 +203,7 @@ const prepareStoryEditorDetails = (req, story, name) => {
       title: story.title,
       subtitle: story.subtitle,
       author: name,
+      authorId: story.authorId,
       date: story.date,
       draft: story.draft,
       imageLink: story.imageLink,
