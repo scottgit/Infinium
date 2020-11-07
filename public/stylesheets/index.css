@@ -54,6 +54,11 @@ h1 {
     width: 90%;
 }
 
+.top-story_content h2 > a {
+    text-decoration: none;
+    font-size: 22px;
+}
+
 .top-story_content p {
     font-size: 15px;
     margin: 0;
@@ -143,6 +148,11 @@ h1 {
     padding-bottom: 5%;
 }
 
+.article-content h2 > a {
+    text-decoration: none;
+    font-size: 15px;
+}
+
 .article-img {
     width: 30%;
 }
@@ -188,12 +198,26 @@ h1 {
 
 .trending-article {
     display: inline-block;
-    height: 150px;
+    height: 65px;
     width: 300px;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     margin: 0;
+}
+
+.trending-author {
+    display: flex;
+    align-content: center;
+}
+
+.trending-author img {
+    border-radius: 5px;
+}
+
+.trending-author h4 {
+    padding: 0 7px 0 0;
+
 }
 
 .trending-article > h2 {
@@ -258,6 +282,10 @@ h1 {
 
 .stream-content_headers {
     width: 100%;
+}
+
+.stream-content_headers a {
+    text-decoration: none;
 }
 
 .stream-content_headers h2 {

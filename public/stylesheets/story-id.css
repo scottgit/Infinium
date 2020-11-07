@@ -328,16 +328,34 @@
 
 .likes p {
   margin: 0;
-  padding: 0 0 0 7px;
+  /* padding: 0 10px 0 7px; */
+  font-size: 20px;
+}
 
+.claps {
+  display: flex;
+  align-content: center;
+  padding-right: 8px;
+}
+
+.claps p {
+  padding: 0 3px;
 }
 
 .footer_info{
   margin-top: 15px;
-  height: 30px;
+  height: 40px;
   width: 650px;
   display: flex;
   flex-direction: row;
+}
+
+#comment-pic {
+  padding: 6px 16px 0 0;
+}
+
+.clap-pic {
+  padding: 0 7px 0 0;
 }
 
 .clapping{
