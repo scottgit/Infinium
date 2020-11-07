@@ -10,7 +10,38 @@ html
         script(src="/javascripts/story-id.js" type="module" defer)
   body
     header
-      include user-header-include
+      .header
+        .title
+          a(href=`/users/${userId}` class= "title_name")= author
+          if followerCount === 0
+            .followers_count Followers
+          else if followerCount === 1
+            .followers_count #{followerCount} Follower
+          else 
+            .followers_count #{followerCount} Followers
+          .dot .
+          a(href="" class="about") About
+        .icons
+          if locals.user
+            .dropdown
+              a(href="" class="icons_image_holder")
+                img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
+              div(class="dropdown_content" id="myDropdown")
+                .header_mini
+                  img(src="/images/dogs.jpg", alt="Doggies!" class="icons_image")
+                  .naming_info
+                    a(href=`/users/${locals.user.id}` class="naming_info_list1")= locals.user.username
+                    a(href=`/users/${locals.user.id}` class="naming_info_list2") @#{locals.user.username}
+                a(href="/") Home
+                a(href="/stories/new-story") New Story
+                a(href="#") Settings
+          else
+            span(class="loggedin")
+              a(class="login" href='/users/login') Login
+              a(class="register" href='users/register') Register
+          a(href="/")
+            .infinity_image
+              img(src="/images/infinity.jpg" alt="Infinity" class="infinity_image_icon")
       .storyholder
         .recentStories
           .recentStory
