@@ -173,7 +173,8 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
+    /* margin-bottom: 30px; */
+    margin: 30px 0;
 }
 
 .homepage-trending_container {
@@ -182,15 +183,23 @@ h1 {
     align-items: center;
     justify-content: center;
     height: 280px;
-    width: 1000px;
+    width: 1100px;
 }
 
 .trending-article {
     display: inline-block;
     height: 150px;
     width: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    margin: 0;
 }
 
+.trending-article > h2 {
+    margin: 0;
+    padding: 10px 7px 0 0;
+}
 
 /* stream section css*/
 /* stream */
