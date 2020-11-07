@@ -177,6 +177,16 @@ window.addEventListener('DOMContentLoaded', e => {
                         updateButton.remove(); 
                         commentBlock.appendChild(newComment); 
                     })
+
+                    cancelButton.addEventListener('click', (e) => {
+                        form.remove(); 
+                        cancelButton.remove(); 
+                        updateButton.remove();
+                        const textBox = document.createElement('div'); 
+                        textBox.setAttribute('class', 'comments-container__comment-text-box'); 
+                        textBox.innerHTML = comment; 
+                        commentBlock.appendChild(textBox); 
+                    })
                 })
             } else {
                 dropdown.classList.add('comments-container__comment-nav-menu-dropdown--hidden');
