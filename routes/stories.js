@@ -131,8 +131,6 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
       }
   });
 
-  console.log(comments)
-
   if (!story) next(); //Become a 404
   [story] = preProcessStories([story]);
 

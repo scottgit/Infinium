@@ -41,17 +41,27 @@ router.post('/', commentValidator, asyncHandler(async (req, res) => {
     const { comment, storiesId } = req.body; 
     const storyId = parseHexadecimal(storiesId)
 
-    const userId = res.locals.user.id
+    const userId = res.locals.user.id; 
+
     const newComment =  Comment.build({
         comment, 
         storyId,
         userId,
     });  
-
+        
     const validateErrors = validationResult(req); 
-
+    
     if (validateErrors.isEmpty()) {
         await newComment.save(); 
+        const user = await Comment.findOne({
+            where: {
+                userId
+            }, 
+            include: User, 
+        });
+        const username = user.User.username;
+
+        res.json({username}); 
         res.status(204).end(); 
     } else {
         const errors = validateErrors.array().map(error => error.msg);  

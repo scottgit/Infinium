@@ -169,7 +169,7 @@ const buildMissingStoryTitle = (draft) => {
 
     //Get length of string or first 100 characters
     let title = draft.slice(0, Math.min(draft.length - 1, 100));
-    console.log('HERE', title.length)
+    
     if (title.length === 100) {
         //Break at last whitespace character that is at least 3 spaces from end
         while(title.length > 97) {

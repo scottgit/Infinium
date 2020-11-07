@@ -25,6 +25,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
     commentsContainer.classList.toggle("reveal")
     commentsContainer.classList.toggle("unreveal")
+    
+    // const closeButton = document.querySelector('.comments-container__heading-div-container');
+    // closeButton.addEventListener('click', (e) => {
+    //   commentsContainer.classList.toggle("unreveal")
+    // })
   })
 
 })
