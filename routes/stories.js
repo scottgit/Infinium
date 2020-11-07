@@ -26,6 +26,11 @@ const { csrfProtection,
 
 const router = express.Router();
 
+/* Redirect /stories to root '/' */
+router.get('/', asyncHandler(async (req, res) => {
+  res.redirect('/');
+}));
+
 /* GET all published stories */
 router.get(`/all`, asyncHandler(async (req, res) => {
   const stories = await getStoryList();
@@ -110,6 +115,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     where: isPublished(userId, storyId),
     include: getAuthor()
   });
+  const author = story.User.username;
 
   const comments = await Comment.findAll({
     where: { storyId },
@@ -134,6 +140,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     title: story.title,
     subtitle: story.subtitle,
     author: story.author,
+    authorId: story.authorId,
     date: story.date,
     storyBody: story.published,
   };
@@ -142,7 +149,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   }
   else {
     res.render('story-id', {
-      ...details, userId, story, comments
+      ...details, userId, story, comments, author
     });
   }
 }));
