@@ -1,13 +1,16 @@
 @import "global.css";
 
+html {
+    height: 100%;
+}
+
 body{
     font-family: 'Lato', sans-serif;
     background-color: #f2f2f2;
     display: flex;
-    flex-wrap: wrap;
-    padding-top: 150px;
-    justify-content: center;
-    /* box-sizing: border-box; */
+    height: 100%;
+    margin: 0;
+    overflow-y: scroll;
 }
 
 .log-in_container {
@@ -21,6 +24,7 @@ body{
     box-shadow: 1px 1px 8px lightgrey;
     justify-content: center;
     padding-top: 20px;
+    margin: auto;
 }
 
 .form-container{
@@ -50,7 +54,6 @@ body{
     width: 230px;
     margin: 10px 0 10px 0;
     font-size: 13px;
-    margin-right: 10px;
     box-sizing: border-box;
 }
 
@@ -78,6 +81,7 @@ button:hover {
 /* For the login and signup buttons */
 .rainbow-button {
     width: 230px;
+    padding: 8px;
 }
 
 p{
