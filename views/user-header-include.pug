@@ -2,9 +2,9 @@
   .title
     a(href=`/users/${userId}` class= "title_name")= author || name
     if followerCount === 1
-      .followers_count #{followerCount} Follower
+      .followers_count #[span #{followerCount}] Follower
     else
-      .followers_count #{followerCount} Followers
+      .followers_count #[span #{followerCount}] Followers
     .dot .
     a(href="" class="about") About
     if !authCompare && locals.user
