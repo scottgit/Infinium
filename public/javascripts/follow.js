@@ -34,30 +34,30 @@ export async function postFollow(follow, following, followersCount, aboutFollowe
 
 
   /* DELETE request to remove a follow relationship */
-  export async function deleteFollow(follow, following, followersCount) {
-      let urlPath = window.location.pathname
-      const urlArray = urlPath.split("/")
-      const currentUserId = urlArray[2];
-      if (urlArray.length === 5) { //from stories page
-        urlPath = urlArray.slice(0, 3).join('/');
+export async function deleteFollow(follow, following, followersCount) {
+    let urlPath = window.location.pathname
+    const urlArray = urlPath.split("/")
+    const currentUserId = urlArray[2];
+    if (urlArray.length === 5) { //from stories page
+      urlPath = urlArray.slice(0, 3).join('/');
+    }
+    const body = { currentUserId };
+    try {
+      const res = await fetch(`${urlPath}/follows`, {
+        method: "DELETE",
+        body: JSON.stringify(body),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!res.ok) {
+        throw new Error('Failed to complete request.');
       }
-      const body = { currentUserId };
-      try {
-        const res = await fetch(`${urlPath}/follows`, {
-          method: "DELETE",
-          body: JSON.stringify(body),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!res.ok) {
-          throw new Error('Failed to complete request.');
-        }
-        follow.classList.toggle("hide")
-        following.classList.toggle("hide")
-        followersCount.innerHTML = parseInt(followersCount.innerHTML, 10) - 1;
-      } catch (err) {
-        console.error(res);
-        alert(err.message);
-      }
+      follow.classList.toggle("hide")
+      following.classList.toggle("hide")
+      followersCount.innerHTML = parseInt(followersCount.innerHTML, 10) - 1;
+    } catch (err) {
+      console.error(res);
+      alert(err.message);
+    }
   }

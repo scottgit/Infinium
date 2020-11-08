@@ -1,4 +1,4 @@
-import {postFollow, deleteFollow} from './follow'
+import {postFollow, deleteFollow} from './follow.js'
 
 window.addEventListener("DOMContentLoaded", (event) => {
   let lightsaber = document.querySelector(".clap-pic")
