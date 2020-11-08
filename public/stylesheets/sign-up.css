@@ -69,8 +69,8 @@ p{
 .log-in_button {
     text-align: center;
 }
-
-button {
+/* Converted button to "rainbow-button" */
+/* button {
     font-family: 'Lato', sans-serif;
     background: linear-gradient(-45deg, #06c5c5, #a71bca);
     background-size: 100% 100%;
@@ -84,15 +84,15 @@ button {
 
 }
 
+button:hover {
+    background: linear-gradient(-45deg, #a71bca, #06c5c5);
+    background-position: 50% 50%;
+    transition: 5s;
+} */
+
 div > p {
     font-size: 14px;
     color: grey;
     padding-top: 15px;
     margin-bottom: 1px;
-}
-
-button:hover {
-    background: linear-gradient(-45deg, #a71bca, #06c5c5);
-    background-position: 50% 50%;
-    transition: 5s;
 }
