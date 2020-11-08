@@ -58,12 +58,11 @@ p{
 .sign-up_input {
     border-radius: 20px;
     padding: 10px;
-    margin: 10px 0 auto ;
+    margin: 5px auto ;
     width: 250px;
     border: 1px solid #999999;
     outline: none;
     font-size: 13px;
-    margin-right: 10px;
 }
 
 .log-in_button {
@@ -89,6 +88,10 @@ button:hover {
     background-position: 50% 50%;
     transition: 5s;
 } */
+
+.rainbow-button {
+    width: 270px;
+}
 
 div > p {
     font-size: 14px;

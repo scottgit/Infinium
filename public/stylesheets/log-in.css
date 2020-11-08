@@ -75,6 +75,11 @@ button:hover {
     background-position: 50% 50%;
 } */
 
+/* For the login and signup buttons */
+.rainbow-button {
+    width: 230px;
+}
+
 p{
     font-size: 14px;
     padding-top: 64px;

@@ -69,6 +69,15 @@
   text-decoration: none;
 }
 
+.about:hover{
+  color: black;
+}
+
+.about_remove{
+  pointer-events: none;
+  cursor: default;
+}
+
 .icons_image{
   align-self: center;
   width: 32px;
@@ -185,6 +194,14 @@
   padding: 5px 10px 0 0;
 }
 
+.followers_count{
+  padding: 15px 5px 0 5px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
+}
+
 .person_info_dot{
   font-weight: 700;
   font-size: 18px;
@@ -278,12 +295,47 @@
   border-bottom: lightgrey solid 1px;
 }
 
+.likes{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.likes img {
+  height: 40px;
+  width: 40px;
+}
+
+.likes p {
+  margin: 0;
+  /* padding: 0 10px 0 7px; */
+  font-size: 20px;
+}
+
+.claps {
+  display: flex;
+  align-content: center;
+  padding-right: 8px;
+}
+
+.claps p {
+  padding: 0 3px;
+}
+
 .footer_info{
   margin-top: 15px;
-  height: 30px;
+  height: 40px;
   width: 650px;
   display: flex;
   flex-direction: row;
+}
+
+#comment-pic {
+  padding: 6px 16px 0 0;
+}
+
+.clap-pic {
+  padding: 0 7px 0 0;
 }
 
 .clapping{

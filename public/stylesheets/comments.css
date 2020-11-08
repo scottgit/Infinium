@@ -1,8 +1,3 @@
-/* .major {
-    display: flex; 
-    justify-content: center;
-} */
-
 .comments-container {
     box-shadow: rgba(0, 0, 0, 0.15) 0px 4px 12px;
     position: fixed;
@@ -41,6 +36,8 @@
     
 .comments-container__heading-div {
     padding: 24px; 
+    display: flex; 
+    justify-content: space-between;
 }
 
 .comments-container__heading-div-h2 {
@@ -49,6 +46,22 @@
     color: rgba(41, 41, 41, 1); 
     font-size: 20px; 
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.comments-container__heading-div-container {
+    fill: rgba(117, 117, 117, 1);
+    vertical-align: middle;
+    background-size: 100%; 
+    border: none; 
+    cursor: grab; 
+    align-self: center;
+    background-color: white;
+}
+
+.comments-container__heading-div-button-img {
+    object-fit: cover;
+    width: 40px; 
+    height: 40px; 
 }
 
 .comments-container__new-comment {
@@ -88,6 +101,7 @@
 
 .comments-container__comment {
     padding: 0px; 
+    position: relative; 
 }
 
 .comments-container__comment-nav {
@@ -122,7 +136,7 @@
 
 .comments-container__comment-nav-menu-dropdown {
     position: absolute; 
-    top: 15px; 
+    top: 20px; 
     right: 20px; 
     background-color: white;
 }
@@ -132,7 +146,7 @@
     width: 120px; 
     text-align: left;
     padding-bottom: 5px; 
-    color: grey; 
+    background-color: white; 
 }
 
 .edit:hover {
@@ -142,7 +156,7 @@
 
 .delete {
     border: none;
-    color: grey; 
+    background-color: white; 
 }
 
 .delete:hover {
@@ -152,7 +166,7 @@
 
 .comments-container__comment-text-box {
     min-height: 100px;    
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(232, 232, 232, 0.1);
     box-shadow: rgba(0, 0, 0, 0.04) 0px 1px 4px;;
     font-weight: 200; 
     padding-left: 14px; 
@@ -166,10 +180,12 @@
 
 .delete-container {
     width: 414px; 
-    height: 50%; 
+    height: 160%; 
     z-index: 800; 
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: visible; 
+    opacity: 0.9;  
+    background-color: rgb(248, 212, 212); 
 }
 
 .delete-container__inner {

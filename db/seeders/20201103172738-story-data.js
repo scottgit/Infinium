@@ -1,7 +1,6 @@
 'use strict';
 const faker = require('faker');
-<<<<<<< Updated upstream
-=======
+
 const titlesAndSubtitles = [
   ["You never knew this about Superman", "The inside scoop on his greatest secret"],
   ["'War of the Worlds' redux", ""],
@@ -58,29 +57,27 @@ const titlesAndSubtitles = [
 function getRandom(max) {
   return Math.floor(Math.random() * max) + 1;
 }
->>>>>>> Stashed changes
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
       const stories = [];
-      const number = 50;
+      const number = titlesAndSubtitles.length;
       const users = 20;
 
       for(let i=0; i<number; i++) {
-        const userId = Math.floor(Math.random() * users) + 1;
-        const subtitle = Math.floor(Math.random() * 10) < 5 ? null : `Subtitle to this story (${i+1})`;
-        const published = `This ${i+1} story is totally gibberish from here ${faker.random.words(100 + Math.floor(Math.random() * 300))}`;
+        const userId = getRandom(users);
+        const published = `This ${i+1} story is totally gibberish from here ${faker.random.words(100 + getRandom(300))}`;
         const createdAt = faker.date.past(2);
         const updatedAt = faker.date.between(createdAt, faker.date.recent());
 
         stories.push(
           {
-            title: `Title of story '${(i+1).toString(16)}' (${i+1}) and gibberish ${faker.random.words(Math.floor(Math.random() * 5) + 1)}`,
-            subtitle,
+            title: titlesAndSubtitles[i][0],
+            subtitle: titlesAndSubtitles[i][1],
             draft: '',
             published,
             publishAfter: null,
-            imageLink: `${faker.image.imageUrl()}/any?dummy=${i}`,
+            imageLink: getRandom(20) < 19 ? `${faker.image.imageUrl()}/any?dummy=${i}` : '',
             userId,
             createdAt,
             updatedAt,

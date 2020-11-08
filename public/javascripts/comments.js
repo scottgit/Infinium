@@ -4,11 +4,20 @@ window.addEventListener('DOMContentLoaded', e => {
     const urlArray = url.split("/")
     const storiesId = urlArray[4];
 
+    /*Closing the comments side-bar functionality */ 
+    const closeButton = document.querySelector('.comments-container__heading-div-container');
+    closeButton.addEventListener('click', (e) => {
+        const commentsContainer = document.querySelector('.comments-container');
+        commentsContainer.classList.toggle('reveal');
+        commentsContainer.classList.toggle("unreveal");
+    })
+
     respond.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(respond); 
         const comment = formData.get("comment"); 
         const body = { comment, storiesId }; 
+        let username; 
         try {
             const res = await fetch(`/stories/${storiesId}/comments`, {
                 method: "POST", 
@@ -16,13 +25,20 @@ window.addEventListener('DOMContentLoaded', e => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-            }); 
+            });
+            
+            username = await res.json(); 
+
             if (!res.ok) {
                 throw res; 
             }
         } catch (err) {
             alert(err.message); 
         }
+
+        /*clear form */ 
+        const textResponse = document.querySelector('.comments-container__new-comment-text-box');
+        textResponse.value = ''; 
 
         //make elements 
         const commentContainer = document.createElement('div'); 
@@ -60,6 +76,9 @@ window.addEventListener('DOMContentLoaded', e => {
         commentNavBarMenu.appendChild(commentNavBarMenuDrop);
         commentNavBarMenuDrop.appendChild(commentButtonDelete);
         commentNavBarMenuDrop.appendChild(commentButtonEdit);
+
+        //set user 
+        commentNavBarUser.innerHTML = username.username; 
     });
     
     document.querySelectorAll('.comments-container__comment-nav-menu').forEach(menu => {
@@ -157,6 +176,16 @@ window.addEventListener('DOMContentLoaded', e => {
                         cancelButton.remove(); 
                         updateButton.remove(); 
                         commentBlock.appendChild(newComment); 
+                    })
+
+                    cancelButton.addEventListener('click', (e) => {
+                        form.remove(); 
+                        cancelButton.remove(); 
+                        updateButton.remove();
+                        const textBox = document.createElement('div'); 
+                        textBox.setAttribute('class', 'comments-container__comment-text-box'); 
+                        textBox.innerHTML = comment; 
+                        commentBlock.appendChild(textBox); 
                     })
                 })
             } else {

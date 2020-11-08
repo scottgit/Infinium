@@ -7,82 +7,100 @@ append head
   //- add page specific js
 
 block content
-  div(class="homepage-container")
-    div(class="homepage-top-story")
-      div(class="top-story_content")
+  .homepage-container
+    .homepage-top-story
+      .top-story_content
         img(src=topStory.imageLink alt="")
-        div(class="top-story_author")
+        .top-story_author
           img(src=topStory.imageLink width="20" height="20" alt="")
           h4= topStory.author
         h2
           a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
         p= topStory.subtitle
-        div(class="top-story_readtime")
+        .top-story_readtime
           a(href="") Read more
-    div(class="homepage-top-stories")
-      div(class="stories-container")
+    .homepage-top-stories
+      .stories-container
         each highlight in highlights
-          div(class="top-stories_article")
-            div(class="article-content")
-              div(class="article-content_author")
+          .top-stories_article
+            .article-content
+              .article-content_author
                 img(src=highlight.imageLink width="20" height="20" alt="")
                 h4= highlight.author
               h2
                 a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
-              div(class="article-content_date")
+              .article-content_date
                 h4= highlight.date
-            div(class="article-img")
+            .article-img
               img(src=highlight.imageLink alt="")
-    div(class="homepage-followers")
-    div(class="homepage-trending")
-      div(class="homepage-trending_container")
-        div(class="trending-article")
-          div(class="trending-article_content")
-            h4 author 1
-            h2 article title
+    .homepage-followers
+    .homepage-trending
+      .homepage-trending_container
+        .trending-article
+          h1 01
+          .trending-article_content
+            .trending-author
+              img(src="./images/moon.jpg" width="20" height="20" alt="")
+              h4 Jimmy Jones
+            h2 New Movie release
             p read time
-        div(class="trending-article")
-          div(class="trending-article_content")
-            h4 author 2
-            h2 article title
+        .trending-article
+          h1 02
+          .trending-article_content
+            .trending-author
+              img(src="./images/moon.jpg" width="20" height="20" alt="")
+              h4 Jack Daxter
+            h2 Where are all these people coming from?
             p read time
-        div(class="trending-article")
-          div(class="trending-article_content")
-            h4 author 3
-            h2 article title
+        .trending-article
+          h1 03
+          .trending-article_content
+            .trending-author
+              img(src="./images/moon.jpg" width="20" height="20" alt="")
+              h4 John Jacob
+            h2 Boy do I love my new Socks!
             p read time
-        div(class="trending-article")
-          div(class="trending-article_content")
-            h4 author 4
-            h2 article title
+        .trending-article
+          h1 04
+          .trending-article_content
+            .trending-author
+              img(src="./images/moon.jpg" width="20" height="20" alt="")
+              h4 Blake Harvey
+            h2 Why am I stuck in gold in Valorant?
             p read time
-        div(class="trending-article")
-          div(class="trending-article_content")
-            h4 author 5
-            h2 article title
+        .trending-article
+          h1 05
+          .trending-article_content
+            .trending-author
+              img(src="./images/moon.jpg" width="20" height="20" alt="")
+              h4 Justin Samoy
+            h2 This is my life as someone with a big head
             p read time
-        div(class="trending-article")
-          div(class="trending-article_content")
-            h4 author 6
-            h2 article title
+        .trending-article
+          h1 06
+          .trending-article_content
+            .trending-author
+              img(src="./images/moon.jpg" width="20" height="20" alt="")
+              h4 Mike Jensen
+            h2 I wish I could live on the Moon
             p read time
 
-    div(class="homepage-stream")
-      div(class="homepage-stream_container")
+    .homepage-stream
+      .homepage-stream_container
         each recent in recents
-          div(class="stream-article")
-            div(class="stream-content")
-              div(class="stream-content_author")
+          .stream-article
+            .stream-content
+              .stream-content_author
                 img(src=recent.imageLink width="20" height="20" alt="")
                 h4= recent.author
-              div(class="stream-content_headers")
+              .stream-content_headers
                 h2
                 a(href=`/users/${recent.userId}/stories/${recent.hexId}`)= recent.title
               p= recent.date
-            div(class="stream-article_img")
+            .stream-article_img
                 img(src=recent.imageLink width="100" height="100" alt="")
-    div(class="homepage-bookmarks")
-      div(class="bookmarks-container")
-        div(class="bookmarks-container_content")
+    .homepage-bookmarks
+      .bookmarks-container
+        .bookmarks-container_content
           h4 Bookmark stories for later
           p Start saving stories by clicking the bookmark icon and you’ll find them all here.
