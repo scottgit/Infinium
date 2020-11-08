@@ -7,56 +7,54 @@ const { storyLike, Story } = require('../db/models');
 const { asyncHandler } = require('./utils');
 
 // POST for Likes fetch request
-router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( async (req, res) => {
+router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( async (req, res, next) => {
     let { storyId } = req.body
-    // let test = parseInt(storyId)
-    // console.log(typeof(test));
     let parsedStoryId = parseHexadecimal(storyId);
-    // let parsedStoryId = parseHexadecimal(req.params.storyId);
-    // let parsedUserId = parseInt(res.locals.user.id, 10);
     let likes = await storyLike.findAll({
       where: {
         storyId: parsedStoryId
       }
-    })
+    });
 
-    // let test = await storyLike.findOne({
-      //   where: {
-        //     userId: res.locals.user.id
-        //   }
-        // })
-
-    // console.log("THIS IS HERE", likes,);
-    let counter;
-    // console.log('COUNTER', counter);
-
-    if (!likes.length) {
-      counter = 0;
-      console.log('THIS WORKS')
-    } else {
-      counter = likes[0].dataValues.likesCount;
-    }
-
+    let counter = 0;
 
     if (likes.length) {
-      likes.forEach( async(like) => {
+      //Need to track if this user has ever given a like to this story
+      let thisUsersFirstLike = true;
+      
+      likes.forEach( async (like) => {
         if (like.userId === res.locals.user.id) {
+          thisUsersFirstLike = false; //User gave like before
           like.likesCount += 1;
+          //Need this before await to catch the value
+          counter += like.likesCount;
           await like.save();
         }
-        counter += like.likesCount;
+        else {
+          counter += like.likesCount;
+        }
       });
+      //If the user did not get added during the loop, this is their first like for this story
+      if (thisUsersFirstLike) {
+        firstLikeBetweenUserAndStory();
+      }
     } else {
-      likes = await storyLike.create({
+      //Create the very first like for a story if none existed
+      firstLikeBetweenUserAndStory();
+    }
+    res.json({ likesCount: counter });
+
+    //Helper function since it could be called in either case
+    //of it being the storie's first like or the user's first like
+    async function firstLikeBetweenUserAndStory() {
+      counter += 1;
+      await storyLike.create({
         likesCount: 1,
         userId: res.locals.user.id,
         storyId: parsedStoryId
-      })
+      });
     }
-    console.log(counter);
-    res.json({ likesCount: counter });
 
-    // console.log(parsedUserId, parsedStoryId);
   }));
 
 

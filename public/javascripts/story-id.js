@@ -2,7 +2,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   document.getElementById('upvote').addEventListener('click', (e) => {
     const url = window.location.pathname;
-    console.log(url);
     let storyIdArray = url.split('/');
     let storyId = storyIdArray[storyIdArray.length - 1];
     const body = { storyId }

@@ -46,7 +46,7 @@ app.use('/', indexRouter);
 app.use('/stories/:storyId/comments', commentsRouter);
 app.use('/users/(\\d+)/stories', storiesRouter);
 app.use('/users/:id(\\d+)/follows', followsRouter);
-// app.use('/stories', storiesRouter);
+app.use('/stories', storiesRouter);
 app.use('/users', usersRouter);
 app.use('/comments', commentsRouter);
 app.use('/likes', likesRouter);
