@@ -128,9 +128,6 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     count += likes.likesCount
   })
 
-  // console.log(story);
-  // console.log(storyLikes.length)
-
   const author = story.User.username;
 
   const findAllFollowers = await Follower.findAll({

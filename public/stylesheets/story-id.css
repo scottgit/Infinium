@@ -61,7 +61,8 @@
   color: grey;
 }
 
-.about{
+.about,
+.follow {
   padding: 16px 5px 0 5px;
   font-size: 14px;
   font-family: 'Noto Sans JP', sans-serif;
@@ -69,11 +70,13 @@
   text-decoration: none;
 }
 
-.about:hover{
+.about:hover,
+.follow:hover {
   color: black;
 }
 
-.about_remove{
+.about_remove,
+.follow_remove {
   pointer-events: none;
   cursor: default;
 }
