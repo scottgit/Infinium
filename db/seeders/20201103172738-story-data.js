@@ -44,7 +44,7 @@ const titlesAndSubtitles = [
   ["Book deals","Updated sales on spec fic books"],
   ["Julian May","Revisiting her 'Saga of Pliocene Exile' and 'Galactic Milieu Series'"],
   ["Design your own superhero","New website goes live"],
-  ["Mosters are everywhere","True life stories of fictional narratives"],
+  ["Monsters are everywhere","True life stories of fictional narratives"],
   ["Roleplaying roundup","The best in the latest role-playing games"],
   ["The 'Warhammer Online' world","A look at the popular online game continued by fans"],
   ["'World of Warcraft'","It's history and popularity"],
@@ -61,7 +61,7 @@ function getRandom(max) {
 module.exports = {
   up: (queryInterface, Sequelize) => {
       const stories = [];
-      const number = titlesAndSubtitles.length;
+      const number = titlesAndSubtitles.length; //50
       const users = 20;
 
       for(let i=0; i<number; i++) {

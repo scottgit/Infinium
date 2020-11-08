@@ -27,16 +27,21 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
   })
 
   const followerCount = findAllFollowers.length;
+  let authUser = null;
+  let followCompare = null;
+  if (res.locals.authenticated) { //Only check logged in users
+    authUser = res.locals.user.id;
 
-  const followCompare = await Follower.findOne({
-    where: {
-      [Op.and]: [
-        { userId: userId },
-        { followerId: res.locals.user.id }
-      ]
-    }
-  })
-  const authUser = res.locals.user.id;
+
+    followCompare = await Follower.findOne({
+      where: {
+        [Op.and]: [
+          { userId: userId },
+          { followerId: authUser }
+        ]
+      }
+    })
+  }
   const authCompare = parseInt(authUser, 10) === parseInt(userId, 10);
   const stories = user.Stories.map(story => {
     story.hexId = setHexadecimal(story.id)
