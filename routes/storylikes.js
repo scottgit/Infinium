@@ -26,9 +26,9 @@ router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( asy
         //   }
         // })
 
-    console.log("THIS IS HERE", likes,);
+    // console.log("THIS IS HERE", likes,);
     let counter;
-    console.log('COUNTER', counter);
+    // console.log('COUNTER', counter);
 
     if (!likes.length) {
       counter = 0;
