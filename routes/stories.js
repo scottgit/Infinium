@@ -131,7 +131,14 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     }
   })
 
+  const findAllFollowing = await Follower.findAll({
+    where: {
+      followerId: userId
+    }
+  });
+
   const followerCount = findAllFollowers.length;
+  const followingCount = findAllFollowing.length;
 
   const comments = await Comment.findAll({
     where: { storyId },
@@ -164,7 +171,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
   }
   else {
     res.render('story-id', {
-      ...details, userId, story, comments, followerCount, author, storyId, storyLikes: count
+      ...details, userId, story, comments, followerCount, followingCount, author, storyId, storyLikes: count
     });
   }
 }));

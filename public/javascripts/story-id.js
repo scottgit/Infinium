@@ -1,3 +1,5 @@
+import {postFollow, deleteFollow} from './follow'
+
 window.addEventListener("DOMContentLoaded", (event) => {
   let lightsaber = document.querySelector(".clap-pic")
   lightsaber.addEventListener('click', event => {
@@ -5,7 +7,27 @@ window.addEventListener("DOMContentLoaded", (event) => {
     lightsaber.src = `/images/lightsaber-${randomizer}.png`
   })
 
-  let clapper = document.getElementById('upvote');
+ /* POST request to create a follow relationship */
+
+ const follow = document.querySelector('.follow');
+ const following = document.querySelector('.following');
+ const followersCount = document.querySelector('.followers_count > span');
+ const aboutFollowersCount = document.querySelector('.person_info_follower > span')
+
+ //Follow links will not be visible to non-logged in users
+
+ if (follow) {
+   follow.addEventListener('click', async (event) => {
+     event.preventDefault()
+     postFollow(follow, following, followersCount, aboutFollowersCount);
+   })
+ }
+
+/* DELETE request to remove a follow relationship */
+ following.addEventListener('click', async (event) => {
+   event.preventDefault()
+   deleteFollow(follow, following, followersCount)
+ })
 
   //Check prevents voting by non-logged in users as no id is set on the clapper
   if (clapper) {
