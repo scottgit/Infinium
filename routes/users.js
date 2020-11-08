@@ -24,14 +24,19 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
     where: {
       userId: userId
     }
-  })
+  });
+  const findAllFollowing = await Follower.findAll({
+    where: {
+      followerId: userId
+    }
+  });
 
   const followerCount = findAllFollowers.length;
+  const followingCount = findAllFollowing.length;
   let authUser = null;
   let followCompare = null;
   if (res.locals.authenticated) { //Only check logged in users
     authUser = res.locals.user.id;
-
 
     followCompare = await Follower.findOne({
       where: {
@@ -55,6 +60,7 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
     authCompare,
     followCompare,
     followerCount,
+    followingCount,
     userId,
     name,
   });

@@ -12,16 +12,7 @@ html
     header
       include user-header-include
     section
-      .about_me
-        .person_info.hide
-          .nameplate About #{name}
-            p(class="nameplate_bio") I'm so interesting!
-          .follow_following
-            .person_info_following 13 Following
-            .person_info_dot .
-            .person_info_follower 1 Follower
-        .profilePic.hide
-          img(src="/images/dogs.jpg", alt="doggies" class="profilePic_pic")
+      include user-about-include
       if authCompare
         .question
           p(class="question_ask") Have something to share?

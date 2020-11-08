@@ -39,14 +39,5 @@ html
             //- a(href="")
             //-   img(src="/images/clapping.png" alt="comment" class="clapping")
     section
-      .about_me
-        .person_info.hide
-          .nameplate About #{author}
-            p(class="nameplate_bio") I'm so interesting!
-          .follow_following
-            .person_info_following 13 Following
-            .person_info_dot .
-            .person_info_follower 1 Follower
-        .profilePic.hide
-          img(src="/images/dogs.jpg", alt="doggies" class="profilePic_pic")
+    include user-about-include
     include comments.pug

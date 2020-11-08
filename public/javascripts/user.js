@@ -22,6 +22,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const follow = document.querySelector('.follow');
   const following = document.querySelector('.following');
   const followersCount = document.querySelector('.followers_count > span');
+  const aboutFollowersCount = document.querySelector('.person_info_follower > span')
 
   //Follow links will not be visible to non-logged in users
   if (follow) {
@@ -46,9 +47,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
               console.error(res);
               throw new Error('Failed to complete request.');
           }
-          follow.classList.toggle("hide")
-          following.classList.toggle("hide")
-          followersCount.innerHTML= parseInt(followersCount.innerHTML,10) + 1;
+          follow.classList.toggle("hide");
+          following.classList.toggle("hide");
+          const liveCountUpdate = parseInt(followersCount.innerHTML,10) + 1;
+          followersCount.innerHTML= liveCountUpdate;
+          aboutFollowersCount.innerHTML= liveCountUpdate;
       } catch (err) {
           alert(err.message);
       }
