@@ -1,6 +1,6 @@
 .header
   .title
-    a(href=`/users/${userId}` class= "title_name")= author || name 
+    a(href=`/users/${userId}` class= "title_name")= author || name
     .followers 1 Follower
     .dot .
     a(href="" class="about") About
@@ -11,8 +11,8 @@
         a.rainbow-button(href="/stories/new-story") New Story
     else
       span(class="loggedin")
-        a(class="login" href='/users/login') Login
-        a(class="register" href='/users/register') Register
+        a.rainbow-button(class="login" href='/users/login') Login
+        a.rainbow-button(class="register" href='/users/register') Register
     a(href="/")
       .infinity_image
         img(src="/images/infinity.jpg" alt="Infinity" class="infinity_image_icon")

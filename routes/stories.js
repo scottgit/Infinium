@@ -123,15 +123,14 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
     order: [['createdAt', 'DESC']],
   });
 
-  const loggedInUser = res.locals.user.id
+  let loggedInUser = null;
+  if (res.locals.authenticated) loggedInUser = res.locals.user.id;
 
   comments.forEach(comment => {
       if (comment.userId === loggedInUser) {
           comment.authCompare = true;
       }
   });
-
-  console.log(comments)
 
   if (!story) next(); //Become a 404
   [story] = preProcessStories([story]);
