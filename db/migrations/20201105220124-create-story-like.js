@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       likesCount: {
-        type: Sequelize.INTEGER(0 / 50)
+        type: Sequelize.INTEGER,
+        max: 50,
       },
       storyId: {
         allowNull: false,

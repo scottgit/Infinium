@@ -1,53 +1,57 @@
 window.addEventListener("DOMContentLoaded", (event) => {
 
-  document.querySelector(".about").addEventListener("click", event => {
-    event.preventDefault();
-    // let question = document.querySelector(".question");
-    // if (question) {
-    //   document.querySelector('.question_ask').classList.add("hide")
-    //   document.querySelector('.question_answer').classList.add("hide")
-    // }
-    document.querySelector('.about').style.color = "black"
-    document.querySelector('.about').classList.add("about_remove")
-    document.querySelector('.person_info').classList.remove("hide")
-    document.querySelector('.profilePic').classList.remove("hide")
-    document.querySelectorAll('.recentStories').forEach(function (story) {
-      story.classList.add("hide")
+  let clapper = document.getElementById('upvote');
+  //Check prevents voting by non-logged in users as no id is set on the clapper
+  if (clapper) {
+    clapper.addEventListener('click', (e) => {
+      const url = window.location.pathname;
+      let storyIdArray = url.split('/');
+      let storyId = storyIdArray[storyIdArray.length - 1];
+      const body = { storyId }
+      fetch(`/likes${url}/upvote`, {
+          method: "POST",
+          body: JSON.stringify(body),
+          headers: { 'Content-Type': 'application/json' }
+        })
+        .then (res => {
+            if (!res.ok) throw Error(res.statusText);
+            return res.json();
+        })
+        .then (data => {
+            if (data.limitedOut) {
+              alert('You reached your maximum of 50 likes.')
+            } else {
+              let score = document.getElementById('likesCount');
+              //The likesCount is already the new value of +1
+              score.innerHTML = data.likesCount;
+            }
+        })
+        .catch (err => {
+          alert(err.message);
+        })
+    });
+  }
+  else {
+    clapper = document.querySelector('.clap-pic');
+    clapper.addEventListener('click', e => {
+      if(clapper.id === 'novote') {
+        alert('You cannot clap for your own story!');
+      } else {
+        alert('We\'re sorry, but you must log in to give claps.');
+      }
     })
-  })
+  }
 
-  document.getElementById('upvote').addEventListener('click', (e) => {
-    const url = window.location.pathname;
-    console.log(url);
-    let storyIdArray = url.split('/');
-    let storyId = storyIdArray[storyIdArray.length - 1];
-    const body = { storyId }
-    fetch(`/likes${url}/upvote`, {
-        method: "POST",
-        body: JSON.stringify(body),
-        headers: { 'Content-Type': 'application/json' }
-      })
-      .then (res => {
-          if (!res.ok) throw Error(res.statusText);
-          return res.json();
-      })
-      .then (data => {
-          console.log(data);
-          let score = document.getElementById('likesCount');
-          score.innerHTML = data.likesCount + 1;
-      })
-      .catch (err => {
-        alert(err.message);
-      })
-});
-
-  document.querySelector(".comment_button").addEventListener('click', event => {
-    event.preventDefault()
-    const commentsContainer = document.querySelector('.comments-container');
-    if (commentsContainer.classList.contains("hide")) {
-      commentsContainer.classList.remove("hide")
-    }
-    commentsContainer.classList.toggle("reveal")
-    commentsContainer.classList.toggle("unreveal")
-  })
+  const commentButton = document.querySelector(".comment_button");
+  if (commentButton) {
+    commentButton.addEventListener('click', event => {
+      event.preventDefault()
+      const commentsContainer = document.querySelector('.comments-container');
+      if (commentsContainer.classList.contains("hide")) {
+        commentsContainer.classList.remove("hide")
+      }
+      commentsContainer.classList.toggle("reveal")
+      commentsContainer.classList.toggle("unreveal")
+    })
+  }
 })

@@ -49,12 +49,19 @@
   color: black;
 }
 
-.follow, .following{
+.follow,
+.following,
+.following:hover {
   padding: 15px 5px 0 5px;
   font-family: 'Noto Sans JP', sans-serif;
   text-decoration: none;
   font-size: 14px;
   color: green;
+}
+
+.following,
+.follow:hover {
+  color: black;
 }
 
 .following{

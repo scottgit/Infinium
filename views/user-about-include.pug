@@ -1,0 +1,13 @@
+.about_me
+  .person_info.hide
+    .nameplate= `About ${author || name}`
+      p(class="nameplate_bio") I'm so interesting!
+    .follow_following
+      .person_info_following Following #[span #{followingCount}] people
+      .person_info_dot .
+      if followerCount === 1
+        .person_info_follower #[span #{followerCount}] Follower
+      else
+        .person_info_follower #[span #{followerCount}] Followers
+  .profilePic.hide
+    img(src="/images/dogs.jpg", alt="doggies" class="profilePic_pic")

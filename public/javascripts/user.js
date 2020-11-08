@@ -21,55 +21,72 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   const follow = document.querySelector('.follow');
   const following = document.querySelector('.following');
+  const followersCount = document.querySelector('.followers_count > span');
+  const aboutFollowersCount = document.querySelector('.person_info_follower > span')
 
-  follow.addEventListener('click', async(event) => {
-    event.preventDefault()
-    follow.classList.toggle("hide")
-    following.classList.toggle("hide")
-    const url = window.location.pathname
-    const urlArray = url.split("/")
-    const currentUserId = urlArray[2];
-    const body = { currentUserId }; 
-    try {
+  //Follow links will not be visible to non-logged in users
+  if (follow) {
+    follow.addEventListener('click', async(event) => {
+      event.preventDefault()
+      let url = window.location.pathname
+      const urlArray = url.split("/")
+      const currentUserId = urlArray[2];
+      if(urlArray.length === 5) { //from stories page
+        url = urlArray.slice(0,3).join('/');
+      }
+      const body = { currentUserId };
+      try {
+          const res = await fetch(`${url}/follows`, {
+            method: "POST",
+            body: JSON.stringify(body),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (!res.ok) {
+              console.error(res);
+              throw new Error('Failed to complete request.');
+          }
+          follow.classList.toggle("hide");
+          following.classList.toggle("hide");
+          const liveCountUpdate = parseInt(followersCount.innerHTML,10) + 1;
+          followersCount.innerHTML= liveCountUpdate;
+          aboutFollowersCount.innerHTML= liveCountUpdate;
+      } catch (err) {
+          alert(err.message);
+      }
+    })
+
+
+    /* DELETE request to remove a follow relationship */
+
+    following.addEventListener('click', async (event) => {
+      event.preventDefault()
+      let url = window.location.pathname
+      const urlArray = url.split("/")
+      const currentUserId = urlArray[2];
+      if(urlArray.length === 5) { //from stories page
+        url = urlArray.slice(0,3).join('/');
+      }
+      const body = { currentUserId };
+      try {
         const res = await fetch(`${url}/follows`, {
-          method: "POST", 
+          method: "DELETE",
           body: JSON.stringify(body),
           headers: {
             "Content-Type": "application/json",
           },
-        }); 
+        });
         if (!res.ok) {
-            throw res; 
+          throw new Error('Failed to complete request.');
         }
-    } catch (err) {
-        alert(err.message); 
-    }
-  })
-
-
-  /* DELETE request to remove a follow relationship */
-
-  following.addEventListener('click', async (event) => {
-    event.preventDefault()
-    follow.classList.toggle("hide")
-    following.classList.toggle("hide")
-    const url = window.location.pathname
-    const urlArray = url.split("/")
-    const currentUserId = urlArray[2];
-    const body = { currentUserId }; 
-    try {
-      const res = await fetch(`${url}/follows`, {
-        method: "DELETE", 
-        body: JSON.stringify(body),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }); 
-      if (!res.ok) {
-          throw res; 
+        follow.classList.toggle("hide")
+        following.classList.toggle("hide")
+        followersCount.innerHTML= parseInt(followersCount.innerHTML,10) - 1;
+      } catch (err) {
+        console.error(res);
+        alert(err.message);
       }
-    } catch (err) {
-      alert("Something went wrong. Please try again!"); 
-    }
-  })
+    })
+  }
 })

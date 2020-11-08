@@ -49,6 +49,29 @@
   color: black;
 }
 
+.follow,
+.following,
+.following:hover {
+  padding: 15px 5px 0 5px;
+  font-family: 'Noto Sans JP', sans-serif;
+  text-decoration: none;
+  font-size: 14px;
+  color: green;
+}
+
+.following,
+.follow:hover {
+  color: black;
+}
+
+.followers_count{
+  padding: 15px 5px 0 5px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: black;
+}
+
 .followers{
   padding: 15px 5px 0 5px;
   font-family: 'Noto Sans JP', sans-serif;
@@ -61,7 +84,7 @@
   color: grey;
 }
 
-.about{
+.about {
   padding: 16px 5px 0 5px;
   font-size: 14px;
   font-family: 'Noto Sans JP', sans-serif;
@@ -69,11 +92,11 @@
   text-decoration: none;
 }
 
-.about:hover{
+.about:hover {
   color: black;
 }
 
-.about_remove{
+.about_remove {
   pointer-events: none;
   cursor: default;
 }
@@ -160,26 +183,6 @@
 
 .question_ask{
   color: grey;
-}
-
-.login{
-  text-decoration: none;
-  font-family: 'Noto Sans JP', sans-serif;
-  color: black;
-  padding: 4px 8px;
-  border: .1px solid lightgrey;
-  border-radius: 4px;
-  margin-right: 8px;
-}
-
-.register{
-  text-decoration: none;
-  font-family: 'Noto Sans JP', sans-serif;
-  color: black;
-  padding: 4px 8px;
-  margin-right: 8px;
-  border: .1px solid lightgrey;
-  border-radius: 4px;
 }
 
 .about_me{
@@ -315,7 +318,7 @@
   border-bottom: lightgrey solid 1px;
 }
 
-.likes{
+.likes {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -324,6 +327,10 @@
 .likes img {
   height: 40px;
   width: 40px;
+}
+
+.likes img:hover {
+  cursor: pointer;
 }
 
 .likes p {

@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator'); 
+const { check, validationResult } = require('express-validator');
 const { Op } = require("sequelize");
 
 const db = require('../db/models');
-const { User, Follower } = db; 
-const { asyncHandler } = require('./utils'); 
+const { User, Follower } = db;
+const { asyncHandler } = require('./utils');
 const { sequelize } = require('../db/models');
 const { requireAuth } = require('../auth');
 
@@ -14,8 +14,8 @@ const { requireAuth } = require('../auth');
 
 /* Create a follower */
 
-router.post('/', asyncHandler(async (req, res) => {
-  const { currentUserId } = req.body; 
+router.post('/', requireAuth, asyncHandler(async (req, res) => {
+  const { currentUserId } = req.body;
   const userId = parseInt(currentUserId, 10)
   const followerId = res.locals.user.id;
   const exists = await Follower.findOne({
@@ -52,8 +52,8 @@ router.post('/', asyncHandler(async (req, res) => {
 /* Delete a follower */
 
 
-router.delete('/', asyncHandler(async (req, res) => {
-  const { currentUserId } = req.body; 
+router.delete('/', requireAuth, asyncHandler(async (req, res) => {
+  const { currentUserId } = req.body;
   const userId = parseInt(currentUserId, 10)
   const followerId = res.locals.user.id;
   const follow = await Follower.findOne({
@@ -66,15 +66,14 @@ router.delete('/', asyncHandler(async (req, res) => {
   })
 
   if (follow) {
-      await follow.destroy(); 
-      res.status(204).end(); 
+      await follow.destroy();
+      res.status(204).end();
   } else {
-      const errors = validateErrors.array().map(error => error.msg);  
-      res.render('user', { 
+      const errors = validateErrors.array().map(error => error.msg);
+      res.render('user', {
           errors,
-      });    
+      });
   }
 }));
 
-module.exports = router; 
-
+module.exports = router;

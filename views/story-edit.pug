@@ -14,7 +14,7 @@ block content
       textarea.story-edit-draft(name='draft', placeholder='Tell your story...') #{draft}
   if (contextControls === 'story-edit-with-publish')
     #story-publisher.story-publisher(class=`${publiserMode ? '' : 'hide'}`)
-      .story-publisher-close x
+      .story-publisher-close: img(src='/images/x-men.png')
       form#story-publish-form.story-publish-form(action=`${formAction}/publish`, method='post')
         +validationErrorSummary(publishErrors)
         input(type='hidden' name='_csrf' value=csrfToken)
