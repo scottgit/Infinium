@@ -318,7 +318,7 @@
   border-bottom: lightgrey solid 1px;
 }
 
-.likes{
+.likes {
   display: flex;
   justify-content: start;
   align-items: center;
@@ -327,6 +327,10 @@
 .likes img {
   height: 40px;
   width: 40px;
+}
+
+.likes img:hover {
+  cursor: pointer;
 }
 
 .likes p {

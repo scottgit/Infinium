@@ -1,7 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const storyLike = sequelize.define('storyLike', {
-    likesCount: DataTypes.INTEGER,
+    likesCount: {
+      type: DataTypes.INTEGER,
+      max: 50,
+    },
     storyId: DataTypes.INTEGER,
     userId: DataTypes.INTEGER
   }, {});

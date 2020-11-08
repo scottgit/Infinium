@@ -17,18 +17,26 @@ router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( asy
     });
 
     let counter = 0;
+    const userLimit = 50;
+    let limitedOut = false;
 
     if (likes.length) {
       //Need to track if this user has ever given a like to this story
       let thisUsersFirstLike = true;
-      
+
       likes.forEach( async (like) => {
         if (like.userId === res.locals.user.id) {
           thisUsersFirstLike = false; //User gave like before
-          like.likesCount += 1;
-          //Need this before await to catch the value
-          counter += like.likesCount;
-          await like.save();
+          //Don't add one if the limit is already reached
+          if (like.likesCount < userLimit) {
+            like.likesCount += 1;
+            //Need this before await to catch the value
+            counter += like.likesCount;
+            await like.save();
+          } else {
+            limitedOut = true;
+            counter += like.likesCount;
+          }
         }
         else {
           counter += like.likesCount;
@@ -42,7 +50,7 @@ router.post(`/users/:id/stories/:storyId/upvote`, requireAuth, asyncHandler( asy
       //Create the very first like for a story if none existed
       firstLikeBetweenUserAndStory();
     }
-    res.json({ likesCount: counter });
+    res.json({ likesCount: counter, limitedOut });
 
     //Helper function since it could be called in either case
     //of it being the storie's first like or the user's first like

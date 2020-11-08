@@ -32,7 +32,7 @@ html
             a(href="")
               img(id="comment-pic" src="/images/comment-button.png" alt="comment" class="comment_button")
             .likes
-              img(class="clap-pic" src="/images/clap.png" id="upvote")
+              img(class="clap-pic" src="/images/clap.png" id=`${locals.authenticated ? 'upvote' : ''}`)
               .claps
                 p(id="likesCount")= storyLikes
                 p claps

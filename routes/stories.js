@@ -122,10 +122,9 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
       storyId
     }
   });
-  console.log('In stories****')
+
   let count = 0
   storyLikes.forEach((likes) => {
-    console.log(count, likes.likesCount, count + likes.likesCount)
     count += likes.likesCount
   })
 
