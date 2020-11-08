@@ -177,6 +177,37 @@ h1 {
     grid-column: 3 / 4;
 }
 
+.following-container {
+    height: 100%;
+    width: 450px;
+    padding: 0 0 0 35px;
+    margin-right: 0;
+}
+
+.following-header {
+
+}
+
+.following-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    width: 70%;
+    padding-top: 15px;
+}
+
+.following-profile {
+    padding: 0 18px 0 0;
+}
+
+.following-profile img {
+    border-radius: 50px;
+}
+
+.following-profile p {
+
+}
+
 /* trending section css*/
 /* trending */
 
@@ -185,10 +216,21 @@ h1 {
     border-top: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    flex-wrap: wrap;
+    flex-direction: column;
     /* margin-bottom: 30px; */
     margin: 30px 0;
+}
+
+.homepage-trending > h3 {
+    height: 10%;
+    padding-top: 7px;
+    padding-right: 1000px;
+    padding-bottom: 15px;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 20px;
 }
 
 .homepage-trending_container {
@@ -196,7 +238,7 @@ h1 {
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    height: 280px;
+    height: 90%;
     width: 1100px;
 }
 
@@ -233,6 +275,14 @@ h1 {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 15px;
     height: 15px;
+}
+
+.trending-article > img {
+    padding: 10px 5px 0 0 ;
+}
+
+.trending-article h2 > a {
+    text-decoration: none;
     font-weight: 600;
 }
 

@@ -107,7 +107,7 @@ const sendStoryList = (byJSON, res, stories, title) => {
 const getTrending = (stories, req) => {
     //TODO implement actual trending logic, probably in the db query
     //Just randomly selecting trending stories
-    const limits = req.params[1] ? parseInt(req.params[1],10) : 3;
+    const limits = req.params[1] ? parseInt(req.params[1],10) : 6;
     let limit = Math.min(limits, stories.length);
 
     let trending = [];
