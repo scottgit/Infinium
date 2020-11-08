@@ -139,23 +139,18 @@ body {
   position: absolute;
   top: 5px;
   right: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 20px;
-  color: #333;
   opacity: 0.7;
   cursor: pointer;
-  border: 1px solid #555;
-  padding: 3px 9px;
-  box-shadow: 2px 2px 3px #000;
-  border-radius: 30px;
-  text-align: center;
-  transition: opacity .5s
+  transition: opacity .5s;
 }
 
 .story-publisher-close:hover {
   opacity: 1;
+}
+
+.story-publisher-close > img {
+  width: 40px;
+  height: 40px;
 }
 
 .story-publish-now {

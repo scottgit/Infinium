@@ -6,7 +6,7 @@ block content
         div.comments-container__heading-div
             h2.comments-container__heading-div-h2 Responses (#{comments.length})
             button.comments-container__heading-div-container
-                img(src='/images/x-men.jpg').comments-container__heading-div-button-img
+                img(src='/images/x-men.png').comments-container__heading-div-button-img
         if (locals.authenticated)
             form.comments-container__new-comment(method='post')
                 textarea.comments-container__new-comment-text-box(name="comment", cols="30", rows="10", placeholder='What are your thoughts?')

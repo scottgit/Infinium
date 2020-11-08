@@ -32,7 +32,9 @@ html
             a(href="")
               img(id="comment-pic" src="/images/comment-button.png" alt="comment" class="comment_button")
             .likes
-              img(class="clap-pic" src="/images/clap.png" id=`${locals.authenticated ? 'upvote' : ''}`)
+              //- remove the upvote from non-logged in user and if
+              //- user is the author of the story (cannot upvote self)
+              img(class="clap-pic" src="/images/clap.png" id=`${locals.authenticated ? (userId === authorId ? 'novote' : 'upvote') : ''}`)
               .claps
                 p(id="likesCount")= storyLikes
                 p claps

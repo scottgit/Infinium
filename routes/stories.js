@@ -27,11 +27,6 @@ const { csrfProtection,
 
 const router = express.Router();
 
-/* Redirect /stories to root '/' */
-router.get('/', asyncHandler(async (req, res) => {
-  res.redirect('/');
-}));
-
 /* GET all published stories */
 router.get(`/all`, asyncHandler(async (req, res) => {
   const stories = await getStoryList();
@@ -155,7 +150,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
 
   if (!story) next(); //Become a 404
   [story] = preProcessStories([story]);
-
+  
   const details = {
     title: story.title,
     subtitle: story.subtitle,
@@ -355,5 +350,10 @@ router.delete(
     }
   })
 );
+
+/* Redirect /stories to root '/' */
+router.get('/', asyncHandler(async (req, res) => {
+  res.redirect('/');
+}));
 
 module.exports = router;

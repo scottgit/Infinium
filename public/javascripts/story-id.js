@@ -18,8 +18,13 @@ window.addEventListener("DOMContentLoaded", (event) => {
             return res.json();
         })
         .then (data => {
-            let score = document.getElementById('likesCount');
-            score.innerHTML = data.likesCount + 1;
+            if (data.limitedOut) {
+              alert('You reached your maximum of 50 likes.')
+            } else {
+              let score = document.getElementById('likesCount');
+              //The likesCount is already the new value of +1
+              score.innerHTML = data.likesCount;
+            }
         })
         .catch (err => {
           alert(err.message);
@@ -29,7 +34,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
   else {
     clapper = document.querySelector('.clap-pic');
     clapper.addEventListener('click', e => {
-      alert('We\'re sorry, but you must log in to give claps.')
+      if(clapper.id === 'novote') {
+        alert('You cannot clap for your own story!');
+      } else {
+        alert('We\'re sorry, but you must log in to give claps.');
+      }
     })
   }
 
