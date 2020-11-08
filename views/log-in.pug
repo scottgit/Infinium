@@ -12,6 +12,9 @@ html(lang="en")
                 a(href='/')
                     img(src="/images/infinity-large.jpg" width="60" alt="")
                 h1 Welcome
+                if (errors)
+                    each error in errors
+                        li(class="errors")= error
                 form(class="log-in_form" method="post")
                     input(type="hidden" name="_csrf" value=token)
                     input(class="log-in_input" type="text" placeholder="Username or Email" name="usernameOrEmail" required)
