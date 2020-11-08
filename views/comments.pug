@@ -4,7 +4,7 @@ block content
     script(src="/javascripts/comments.js" type="module")
     div.comments-container.unreveal.hide
         div.comments-container__heading-div
-            h2.comments-container__heading-div-h2 Responses (#{comments.length})
+            h2.comments-container__heading-div-h2 Responses (#[span.response-count #{comments.length}])
             button.comments-container__heading-div-container
                 img(src='/images/x-men.png').comments-container__heading-div-button-img
         if (locals.authenticated)
@@ -34,5 +34,5 @@ block content
                                 button(type="reset").delete-container__inner-button-cancel Cancel
                                 button.delete-container__inner-button-confirm Confirm
             else
-                div.comments-container__heading-div
+                div.no-comments
                     h3= `No comments yet! ${(!locals.authenticated) ? 'Log-in or register and be the first!' : 'Be the first!'}`
