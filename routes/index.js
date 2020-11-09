@@ -1,32 +1,22 @@
 const express = require('express');
-const { Follower, User } = require('../db/models');
-const { includes } = require('../validations/comments');
-const { requireAuth } = require('../auth');
 
 const { csrfProtection,
   asyncHandler,
   getStoryList,
   getHighlights,
-  getTrending,
-  req
+  getTrending
 } = require('./utils');
 
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
-  const followersList = await Follower.findAll({
-    where: {
-      userId: res.locals.user.id
-    }
-  });
-  const userProfile = await User.findAll({});
+router.get('/', asyncHandler(async (req, res, next) => {
   const limits = 5;
   const highlights = await getStoryList({filter: getHighlights});
   const trending = await getStoryList({filter: getTrending, req});
   const recents = await getStoryList({ordering: [['updatedAt', 'DESC']], limits});
   const topStory = highlights.pop();
-  res.render('index', { title: 'Infinium', userProfile, highlights, followersList, trending, recents, topStory });
+  res.render('index', { title: 'Infinium', highlights, trending, recents, topStory });
 }));
 
 module.exports = router;

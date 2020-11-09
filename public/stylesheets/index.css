@@ -192,29 +192,11 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 100%;
+    width: 70%;
     padding-top: 15px;
 }
 
-.following {
-    padding: 10px;
-    display: flex;
-    align-content: center;
-    flex-wrap: wrap;
-    flex-direction: column;
-    align-items: center;
-    width: 100px;
-}
-
-.following > p {
-    font-size: 12px;
-}
-
-.following > img {
-    border-radius: 50px;
-}
-
-/* .following-profile {
+.following-profile {
     padding: 0 18px 0 0;
 }
 
@@ -224,7 +206,7 @@ h1 {
 
 .following-profile p {
 
-} */
+}
 
 /* trending section css*/
 /* trending */

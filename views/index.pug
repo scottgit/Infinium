@@ -10,11 +10,9 @@ block content
   .homepage-container
     .homepage-top-story
       .top-story_content
-        if (topStory.imageLink)
-          img(src=topStory.imageLink alt="")
+        img(src=topStory.imageLink alt="")
         .top-story_author
-          if (topStory.imageLink)
-            img(src=topStory.imageLink width="20" height="20" alt="")
+          img(src=topStory.imageLink width="20" height="20" alt="")
           h4= topStory.author
         h2
           a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
@@ -27,45 +25,37 @@ block content
           .top-stories_article
             .article-content
               .article-content_author
-                if (highlight.imageLink)
-                  img(src=highlight.imageLink width="20" height="20" alt="")
+                img(src=highlight.imageLink width="20" height="20" alt="")
                 h4= highlight.author
               h2
                 a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
               .article-content_date
                 h4= highlight.date
             .article-img
-              if (highlight.imageLink)
-                img(src=highlight.imageLink alt="")
+              img(src=highlight.imageLink alt="")
     .homepage-followers
       .following-container
         .following-header
           h3 Latest From Following
         .following-list
-          each follower in followersList
-            each profile in userProfile
-              if (follower.followerId === profile.id)
-                .following
-                  img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-                  p= profile.username
-          //- .following-profile
-          //-   img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-          //-   p Michael
-          //- .following-profile
-          //-   img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-          //-   p Michael
-          //- .following-profile
-          //-   img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-          //-   p Michael
-          //- .following-profile
-          //-   img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-          //-   p Michael
-          //- .following-profile
-          //-   img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-          //-   p Michael
-          //- .following-profile
-          //-   img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-          //-   p Michael
+          .following-profile
+            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+            p Michael
+          .following-profile
+            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+            p Michael
+          .following-profile
+            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+            p Michael
+          .following-profile
+            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+            p Michael
+          .following-profile
+            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+            p Michael
+          .following-profile
+            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+            p Michael
     .homepage-trending
       h3 Trending on Infinium
       .homepage-trending_container
@@ -74,8 +64,7 @@ block content
             img(src='/images/trending.svg' width="42" height="42" alt="")
             .trending-article_content
               .trending-author
-                if (trend.imageLink)
-                  img(src=trend.imageLink width="20" height="20" alt="")
+                img(src=trend.imageLink width="20" height="20" alt="")
                 h4= trend.author
               h2
                 a(href=`/users/${trend.userId}/stories/${trend.hexId}`)= trend.title
@@ -86,15 +75,13 @@ block content
           .stream-article
             .stream-content
               .stream-content_author
-                if (recent.imageLink)
-                  img(src=recent.imageLink width="20" height="20" alt="")
+                img(src=recent.imageLink width="20" height="20" alt="")
                 h4= recent.author
               .stream-content_headers
                 h2
-                  a(href=`/users/${recent.userId}/stories/${recent.hexId}`)= recent.title
+                a(href=`/users/${recent.userId}/stories/${recent.hexId}`)= recent.title
               p= recent.date
             .stream-article_img
-              if (recent.imageLink)
                 img(src=recent.imageLink width="100" height="100" alt="")
     .homepage-bookmarks
       .bookmarks-container
