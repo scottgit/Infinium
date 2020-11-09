@@ -3,59 +3,71 @@ extends layout
 append head
   //- add page specific styles by appending to the head
   link(rel="stylesheet" href="/stylesheets/index.css")
+  link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap")
   link(href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+KR&display=swap" rel="stylesheet")
   //- add page specific js
 
 block content
   .homepage-container
-    .homepage-top-story
-      .top-story_content
-        img(src=topStory.imageLink alt="")
-        .top-story_author
-          img(src=topStory.imageLink width="20" height="20" alt="")
-          h4= topStory.author
-        h2
-          a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
-        p= topStory.subtitle
-        .top-story_readtime
-          a(href="") Read more
-    .homepage-top-stories
-      .stories-container
-        each highlight in highlights
-          .top-stories_article
-            .article-content
-              .article-content_author
-                img(src=highlight.imageLink width="20" height="20" alt="")
-                h4= highlight.author
-              h2
-                a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
-              .article-content_date
-                h4= highlight.date
-            .article-img
-              img(src=highlight.imageLink alt="")
-    .homepage-followers
-      .following-container
-        .following-header
-          h3 Latest From Following
-        .following-list
-          .following-profile
-            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-            p Michael
-          .following-profile
-            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-            p Michael
-          .following-profile
-            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-            p Michael
-          .following-profile
-            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-            p Michael
-          .following-profile
-            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-            p Michael
-          .following-profile
-            img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
-            p Michael
+    if (!locals.user)
+      .noUser_overlay
+        .noUser_welcome
+          h1 Where your ideas
+          h1 are out of this world
+        .noUser_text
+          p Read and share your speculative fan fiction.
+          p Everyone's welcome! 
+            a(href="/about") Learn more
+        img(src="./images/abduction.png" class="abduction")
+    else
+      .homepage-top-story
+        .top-story_content
+          img(src=topStory.imageLink alt="")
+          .top-story_author
+            img(src=topStory.imageLink width="20" height="20" alt="")
+            h4= topStory.author
+          h2
+            a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
+          p= topStory.subtitle
+          .top-story_readtime
+            a(href="") Read more
+      .homepage-top-stories
+        .stories-container
+          each highlight in highlights
+            .top-stories_article
+              .article-content
+                .article-content_author
+                  img(src=highlight.imageLink width="20" height="20" alt="")
+                  h4= highlight.author
+                h2
+                  a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
+                .article-content_date
+                  h4= highlight.date
+              .article-img
+                img(src=highlight.imageLink alt="")
+      .homepage-followers
+        .following-container
+          .following-header
+            h3 Latest From Following
+          .following-list
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
     .homepage-trending
       h3 Trending on Infinium
       .homepage-trending_container
