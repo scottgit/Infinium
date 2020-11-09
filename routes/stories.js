@@ -171,7 +171,7 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
 
   if (!story) next(); //Become a 404
   [story] = preProcessStories([story]);
-  
+
   const details = {
     title: story.title,
     subtitle: story.subtitle,
@@ -238,7 +238,7 @@ router.get(
       const storyId = parseHexadecimal(req.params[0]);
 
       let story = await Story.findOne({
-        where: isDraft(userId, storyId),
+        where: {id: storyId},
         include: getAuthor(),
       });
 

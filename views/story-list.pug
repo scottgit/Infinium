@@ -14,7 +14,7 @@ mixin story-list(story, finalUrl, storySet)
         .story-options-wrapper
           .story-options-dropdown ^
           .story-options.hide
-            a(href=`/users/${story.userId}/stories/${story.hexId}${finalUrl}`) Edit
+            a(href=`/users/${story.userId}/stories/${story.hexId}/draft`) Edit
             a.delete-story(href=`/users/${story.userId}/stories/${story.hexId}`) Delete
 
 
