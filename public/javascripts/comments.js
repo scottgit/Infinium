@@ -231,6 +231,7 @@ window.addEventListener('DOMContentLoaded', e => {
                     }
 
                     updateButton.addEventListener('click', async (e) => {
+                        e.preventDefault()
                         e.stopPropagation();
                         const oldComment = comment;
                         const formData = new FormData(form);
@@ -251,7 +252,6 @@ window.addEventListener('DOMContentLoaded', e => {
                                     "Content-Type": "application/json",
                                 },
                             });
-alert("JUST AFTER FETCH")
                             if (!res.ok) {
                                 throw res;
                             }
@@ -267,7 +267,8 @@ alert("JUST AFTER FETCH")
                         cleanUpForm();
                     })
                 })
-            } else {
+            }
+            else {
                 dropdown.classList.add('comments-container__comment-nav-menu-dropdown--hidden');
                 doingEdit = false;
             }
