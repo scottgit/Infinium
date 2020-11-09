@@ -33,7 +33,7 @@ Stories provided some interesting challenges in order to:
     ```
 
     However, remembering to do that at times (and do it correctly or at the correct place) were the source of some bugs in the earlier part of the week.
-    
+
 * Provide more consistent data to the front end. For this, more helper functions were setup, a primary one being the preprocess to get the details for sending to the pug, while keeping unneeded `User` data from going to the front end:
 
     ```js
@@ -119,9 +119,9 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
     }
 }));
 ```
-There were some unique challenges with the comments, causing three of us to spend considerable time in various capacities on them. A number of insidious bugs were present in that last few days before deployement. Two big ones were the update of a comment `fetch` for a `PUT` (shown above) request was not just doing that, but also initiating *something* after one of the pushes suddenly causing a `GET` to immediately follow with an attached query string of what the newly revised comment was.
+There were some unique challenges with the comments, causing three of us to spend considerable time in various capacities on them. A number of insidious bugs were present in that last few days before deployment. Two big ones were the update of a comment `fetch` for a `PUT` (shown above) request was not *just* doing that, but also initiating *something* after one of the pushes suddenly causing a `GET` to immediately follow with an attached query string of what the newly revised comment was. It turned out that a key placement of `event.preventDefault()` was needed to fix that.
 
-There was also some bug also that was a combo: after *updating* the comment, doing a delete was causing "extra" deletions from the "Responses" count.
+There was also some bug that was a combo: after *updating* the comment and/or *canceling* a delete, going through with a delete was causing "extra" deletions from the "Responses" count based on the number of times buttons were hit. This turned out to finally be solved (1) by unnesting some of the `addEventListener()` calls and (2) making those calls named functions and explicitly calling `removeEventListener()` on them when they were no longer needed.
 
 ## FAQ
 
@@ -132,6 +132,10 @@ You will first need to sign-up for an account. Once you are logged in, you will 
 ### How can I follow my favorite writers?
 
 See a story you like? You can click on the follow link at the top of any story page to begin following that writer.
+
+### Why lightsabers?
+
+Because they are cool.
 
 ## Links
 
