@@ -149,45 +149,56 @@ window.addEventListener('DOMContentLoaded', e => {
             if (dropdown.classList.contains('comments-container__comment-nav-menu-dropdown--hidden')) {
                 dropdown.classList.remove('comments-container__comment-nav-menu-dropdown--hidden');
 
-                remove.addEventListener('click', (e) => {
+                remove.addEventListener('click', deleteComment);
+                function deleteComment (e) {
                     dropdown.classList.add('comments-container__comment-nav-menu-dropdown--hidden');
                     e.stopPropagation();
                     if (doingEdit) return;
                     doingEdit = true;
-                    const commentId = commentBlock.getAttribute('id');
                     const deleteContainer = commentBlock.querySelector('.delete-container');
-                    const confirmButton = commentBlock.querySelector('.delete-container__inner-button-confirm');
-                    const cancelButton = commentBlock.querySelector('.delete-container__inner-button-cancel');
                     deleteContainer.classList.remove('delete-container--hidden');
+                }
 
-                    confirmButton.addEventListener('click', async (e) => {
-
-                        try {
-                            const res = await fetch(`/stories/${storiesId}/comments/${commentId}`, {
-                                method: 'DELETE',
-                            });
-                            if (!res.ok) {
-                                throw res;
-                            }
-                            commentBlock.remove();
-                            //Dynamically update the count for the delete
-                            const responseCount = document.querySelector('.response-count');
-                            if (responseCount) {
-                                responseCount.innerHTML = parseInt(responseCount.innerHTML, 10) - 1;
-                            }
-                            doingEdit = false;
-                        } catch (err) {
-                            alert("Something went wrong. Please try again!");
-                            doingEdit = false;
+                const confirmButton = commentBlock.querySelector('.delete-container__inner-button-confirm');
+                confirmButton.addEventListener('click', confirmDelete);
+                async function confirmDelete (e) {
+                    e.stopPropagation();
+                    try {
+                        const res = await fetch(`/stories/${storiesId}/comments/${commentId}`, {
+                            method: 'DELETE',
+                        });
+                        if (!res.ok) {
+                            throw res;
                         }
-                    })
-
-                    cancelButton.addEventListener('click', (e) => {
-                        deleteContainer.classList.add('delete-container--hidden');
+                        commentBlock.remove();
+                        //Dynamically update the count for the delete
+                        const responseCount = document.querySelector('.response-count');
+                        if (responseCount) {
+                            responseCount.innerHTML = parseInt(responseCount.innerHTML, 10) - 1;
+                        }
                         doingEdit = false;
-                    })
-                })
+                        removeDeleteEvents()
+                    } catch (err) {
+                        alert("Something went wrong. Please try again!");
+                        doingEdit = false;
+                        removeDeleteEvents()
+                    }
+                }
 
+                const cancelButton = commentBlock.querySelector('.delete-container__inner-button-cancel');
+                cancelButton.addEventListener('click', cancelDelete);
+                function cancelDelete (e) {
+                    const deleteContainer = commentBlock.querySelector('.delete-container');
+                    deleteContainer.classList.add('delete-container--hidden');
+                    doingEdit = false;
+                    removeDeleteEvents();
+                }
+
+                function removeDeleteEvents() {
+                    confirmButton.removeEventListener('click', confirmDelete);
+                    cancelButton.removeEventListener('click', cancelDelete);
+                    remove.removeEventListener('click', deleteComment);
+                }
 
                 edit.addEventListener('click', async (e) => {
                     dropdown.classList.add('comments-container__comment-nav-menu-dropdown--hidden');
@@ -228,6 +239,10 @@ window.addEventListener('DOMContentLoaded', e => {
                         container.remove();
                         cancelButton.remove();
                         updateButton.remove();
+                        doingEdit = false;
+                        updateButton.removeEventListener('click');
+                        cancelButton.removeEventListener('click');
+                        edit.removeEventListener('click');
                     }
 
                     updateButton.addEventListener('click', async (e) => {
