@@ -260,7 +260,6 @@ window.addEventListener('DOMContentLoaded', e => {
                         if(comment === oldComment) {
                             //return original comment
                             cleanUpForm();
-                            doingEdit = false;
                             return;
                         }
 
@@ -280,14 +279,12 @@ window.addEventListener('DOMContentLoaded', e => {
                             alert("Something went wrong. Please try again!");
                         }
                         currentText.innerHTML = comment;
-                        doingEdit = false;
                         cleanUpForm();
                     })
 
                     cancelButton.addEventListener('click', (e) => {
                         currentText.innerHTML = comment;
                         cleanUpForm();
-                        doingEdit = false;
                     })
                 })
             }
