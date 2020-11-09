@@ -141,10 +141,8 @@ window.addEventListener('DOMContentLoaded', e => {
         menu.addEventListener('click', async (e) => {
             if (doingEdit) return;
             const commentId = menu.getAttribute('data-commentId');
-            alert(commentId)
             const dropdown = menu.querySelector('.comments-container__comment-nav-menu-dropdown');
             const commentBlock = document.getElementById(commentId);
-alert(commentBlock.classList)
             const remove = commentBlock.querySelector('.delete');
             const edit = commentBlock.querySelector('.edit');
 
@@ -163,7 +161,7 @@ alert(commentBlock.classList)
                     deleteContainer.classList.remove('delete-container--hidden');
 
                     confirmButton.addEventListener('click', async (e) => {
-                        alert(commentId)
+
                         try {
                             const res = await fetch(`/stories/${storiesId}/comments/${commentId}`, {
                                 method: 'DELETE',
@@ -175,9 +173,7 @@ alert(commentBlock.classList)
                             //Dynamically update the count for the delete
                             const responseCount = document.querySelector('.response-count');
                             if (responseCount) {
-alert('before ' + responseCount.innerHTML)
                                 responseCount.innerHTML = parseInt(responseCount.innerHTML, 10) - 1;
-alert('after ' + responseCount.innerHTML)
                             }
                             doingEdit = false;
                         } catch (err) {
@@ -237,7 +233,7 @@ alert('after ' + responseCount.innerHTML)
                     }
 
                     updateButton.addEventListener('click', async (e) => {
-                        e.preventDefault();
+                        e.stopPropagation();
                         const oldComment = comment;
                         const formData = new FormData(form);
                         comment = formData.get("comment");

@@ -16,27 +16,6 @@ const commentNotFoundError = (id) => {
     return error;
 }
 
-// router.get('/', asyncHandler(async (req, res) => {
-//     const storyId = 3; //parseInt(req.params.id, 10);
-//     const comments = await Comment.findAll({
-//         where: { storyId },
-//         include: User,
-//         order: [['createdAt', 'DESC']],
-//     });
-
-//     const loggedInUser = 2; //res.locals.user.id;
-
-//     comments.forEach(comment => {
-//         if (comment.userId === loggedInUser) {
-//             comment.authCompare = true;
-//         }
-//     });
-
-//     res.render('comments', {
-//         comments,
-//     })
-// }));
-
 router.post('/', commentValidator, asyncHandler(async (req, res) => {
     const { comment, storiesId } = req.body;
     const storyId = parseHexadecimal(storiesId)
