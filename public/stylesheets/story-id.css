@@ -64,6 +64,10 @@
   color: black;
 }
 
+.following{
+  color: black;
+}
+
 .followers_count{
   padding: 15px 5px 0 5px;
   font-family: 'Noto Sans JP', sans-serif;

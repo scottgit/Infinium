@@ -28,7 +28,7 @@ p{
 }
 .sign-up_container {
     /* background-color: white; */
-    height: 600px;
+    height: 620px;
     width: 420px;
     display: flex;
     box-sizing: border-box;
@@ -44,7 +44,7 @@ p{
 }
 
 .form-holder{
-    height: 600px;
+    height: 620px;
     width: 420px;
     display: inline-flexbox;
     box-shadow: 1px 1px 8px lightgrey;
