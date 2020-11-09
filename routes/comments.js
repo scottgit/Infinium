@@ -67,7 +67,8 @@ router.put('/:id(\\d+)', commentValidator, requireAuth, asyncHandler(async (req,
         oldComment.comment = comment;
         await oldComment.save();
         res.status(204).end();
-    } else {
+    }
+    else {
         const errors = validateErrors.array().map(error => error.msg);
         res.render('comments', {
             errors,
