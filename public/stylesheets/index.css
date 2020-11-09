@@ -222,21 +222,30 @@ h1 {
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    width: 70%;
+    width: 100%;
     padding-top: 15px;
 }
 
-.following-profile {
-    padding: 0 18px 0 0;
+.following {
+    padding: 10px;
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
 }
 
-.following-profile img {
+.following a {
+    font-size: 11px;
+    text-decoration: none;
+    padding: 7px 0 0 0;
+}
+
+.following > img {
     border-radius: 50px;
 }
 
-.following-profile p {
-
-}
 
 /* trending section css*/
 /* trending */
@@ -256,9 +265,10 @@ h1 {
 
 .homepage-trending > h3 {
     height: 10%;
+    width: 300px;
     padding-top: 7px;
-    padding-right: 1000px;
-    padding-bottom: 15px;
+    /* padding-right: 1000px; */
+    padding-bottom: 20px;
     font-family: 'Noto Sans KR', sans-serif;
     font-size: 20px;
 }
