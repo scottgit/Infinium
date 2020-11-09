@@ -1,33 +1,14 @@
 import {postFollow, deleteFollow} from './follow.js'
 
 window.addEventListener("DOMContentLoaded", (event) => {
-  let lightsaber = document.querySelector(".clap-pic")
-  lightsaber.addEventListener('click', event => {
-    let randomizer = Math.floor(Math.random() * 4.99);
-    lightsaber.src = `/images/lightsaber-${randomizer}.png`
-  })
 
- /* POST request to create a follow relationship */
-
- const follow = document.querySelector('.follow');
- const following = document.querySelector('.following');
- const followersCount = document.querySelector('.followers_count > span');
- const aboutFollowersCount = document.querySelector('.person_info_follower > span')
-
- //Follow links will not be visible to non-logged in users
-
- if (follow) {
-   follow.addEventListener('click', async (event) => {
-     event.preventDefault()
-     postFollow(follow, following, followersCount, aboutFollowersCount);
-   })
- }
-
-/* DELETE request to remove a follow relationship */
- following.addEventListener('click', async (event) => {
-   event.preventDefault()
-   deleteFollow(follow, following, followersCount)
+ let lightsaber = document.querySelector(".clap-pic")
+ lightsaber.addEventListener('click', event => {
+   let randomizer = Math.floor(Math.random() * 4.99);
+   lightsaber.src = `/images/lightsaber-${randomizer}.png`
  })
+
+ let clapper = document.getElementById('upvote');
 
   //Check prevents voting by non-logged in users as no id is set on the clapper
   if (clapper) {
@@ -82,4 +63,28 @@ window.addEventListener("DOMContentLoaded", (event) => {
       commentsContainer.classList.toggle("unreveal")
     })
   }
+
+  /* POST request to create a follow relationship */
+
+const follow = document.querySelector('.follow');
+const following = document.querySelector('.following');
+console.log("LOOK LOOK LOOK!!!!!!!!!!!!", following)
+const followersCount = document.querySelector('.followers_count > span');
+const aboutFollowersCount = document.querySelector('.person_info_follower > span')
+
+//Follow links will not be visible to non-logged in users
+
+if (follow) {
+  follow.addEventListener('click', async (event) => {
+    event.preventDefault()
+    postFollow(follow, following, followersCount, aboutFollowersCount);
+  })
+}
+
+/* DELETE request to remove a follow relationship */
+following.addEventListener('click', async (event) => {
+  event.preventDefault()
+  deleteFollow(follow, following, followersCount)
+})
+ 
 })

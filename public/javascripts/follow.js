@@ -1,6 +1,5 @@
 /* POST request to create a follow relationship */
 
-
 //Follow links will not be visible to non-logged in users
 export async function postFollow(follow, following, followersCount, aboutFollowersCount) {
       let urlPath = window.location.pathname
