@@ -1,11 +1,14 @@
-window.addEventListener("DOMContentLoaded", (event) => {
-  let lightsaber = document.querySelector(".clap-pic")
-  lightsaber.addEventListener('click', event => {
-    let randomizer = Math.floor(Math.random() * 4.99);
-    lightsaber.src = `/images/lightsaber-${randomizer}.png`
-  })
+import {postFollow, deleteFollow} from './follow.js'
 
-  let clapper = document.getElementById('upvote');
+window.addEventListener("DOMContentLoaded", (event) => {
+
+ let lightsaber = document.querySelector(".clap-pic")
+ lightsaber.addEventListener('click', event => {
+   let randomizer = Math.floor(Math.random() * 4.99);
+   lightsaber.src = `/images/lightsaber-${randomizer}.png`
+ })
+
+ let clapper = document.getElementById('upvote');
 
   //Check prevents voting by non-logged in users as no id is set on the clapper
   if (clapper) {
@@ -25,7 +28,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         })
         .then (data => {
             if (data.limitedOut) {
-              alert('You reached your maximum of 50 likes.')
+              alert('You reached your maximum of 50 lightsabers.')
             } else {
               let score = document.getElementById('likesCount');
               //The likesCount is already the new value of +1

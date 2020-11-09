@@ -29,4 +29,10 @@ router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
   res.render('index', { title: 'Infinium', userProfile, highlights, followersList, trending, recents, topStory });
 }));
 
+/* GET about page. */
+router.get('/about', asyncHandler(async (req, res, next) => {
+
+  res.render('about', { title: 'Infinium', contextControls: 'not-home', aboutPage: true });
+}));
+
 module.exports = router;
