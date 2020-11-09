@@ -23,6 +23,8 @@ html
             .title_name Infinium
           if contextMessage
             .title_greeting= contextMessage
+          else if !aboutPage
+            a(href='/about').title_greeting-link Live Long and Prosper
           else
             .title_greeting Live Long and Prosper
           if contextControls
