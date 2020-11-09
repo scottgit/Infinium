@@ -14,12 +14,17 @@ const { csrfProtection,
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', requireAuth, asyncHandler(async (req, res, next) => {
-  const followersList = await Follower.findAll({
-    where: {
-      userId: res.locals.user.id
-    }
-  });
+router.get('/', asyncHandler(async (req, res, next) => {
+  let followersList = null;
+
+  if (res.locals.authenticated) {
+    followersList = await Follower.findAll({
+      where: {
+        userId: res.locals.user.id
+      }
+    });
+  }
+
   const userProfile = await User.findAll({});
   const limits = 5;
   const highlights = await getStoryList({filter: getHighlights});
