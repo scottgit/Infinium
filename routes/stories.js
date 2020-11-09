@@ -248,7 +248,7 @@ router.get(
       if (!story.draft) {
         story.draft = story.published;
         story.published = '';
-        await story.update({ published: '' })
+        await story.update({ published: '', draft: story.draft })
       }
 
       const details = prepareStoryEditorDetails(req, story);
