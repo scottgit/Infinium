@@ -1,6 +1,15 @@
+import {postFollow, deleteFollow} from './follow.js'
+
 window.addEventListener("DOMContentLoaded", (event) => {
 
-  let clapper = document.getElementById('upvote');
+ let lightsaber = document.querySelector(".clap-pic")
+ lightsaber.addEventListener('click', event => {
+   let randomizer = Math.floor(Math.random() * 4.99);
+   lightsaber.src = `/images/lightsaber-${randomizer}.png`
+ })
+
+ let clapper = document.getElementById('upvote');
+
   //Check prevents voting by non-logged in users as no id is set on the clapper
   if (clapper) {
     clapper.addEventListener('click', (e) => {
@@ -19,7 +28,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         })
         .then (data => {
             if (data.limitedOut) {
-              alert('You reached your maximum of 50 likes.')
+              alert('You reached your maximum of 50 lightsabers.')
             } else {
               let score = document.getElementById('likesCount');
               //The likesCount is already the new value of +1
@@ -35,9 +44,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
     clapper = document.querySelector('.clap-pic');
     clapper.addEventListener('click', e => {
       if(clapper.id === 'novote') {
-        alert('You cannot clap for your own story!');
+        alert('You cannot ignite a lightsaber for your own story!');
       } else {
-        alert('We\'re sorry, but you must log in to give claps.');
+        alert('We\'re sorry, but you must log in to give lightsabers.');
       }
     })
   }

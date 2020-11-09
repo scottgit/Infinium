@@ -57,6 +57,11 @@ body{
     box-sizing: border-box;
 }
 
+.errors{
+    font-size: 12px;
+    color: red;
+}
+
 /* Converted button to "rainbow-button" css */
 /* button{
     font-family: 'Lato', sans-serif;

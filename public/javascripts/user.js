@@ -1,3 +1,5 @@
+import {postFollow, deleteFollow} from './follow.js'
+
 window.addEventListener("DOMContentLoaded", (event) => {
 
   document.querySelector(".about").addEventListener("click", event => {
@@ -25,68 +27,19 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const aboutFollowersCount = document.querySelector('.person_info_follower > span')
 
   //Follow links will not be visible to non-logged in users
+
   if (follow) {
-    follow.addEventListener('click', async(event) => {
+    follow.addEventListener('click', async (event) => {
       event.preventDefault()
-      let url = window.location.pathname
-      const urlArray = url.split("/")
-      const currentUserId = urlArray[2];
-      if(urlArray.length === 5) { //from stories page
-        url = urlArray.slice(0,3).join('/');
-      }
-      const body = { currentUserId };
-      try {
-          const res = await fetch(`${url}/follows`, {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          if (!res.ok) {
-              console.error(res);
-              throw new Error('Failed to complete request.');
-          }
-          follow.classList.toggle("hide");
-          following.classList.toggle("hide");
-          const liveCountUpdate = parseInt(followersCount.innerHTML,10) + 1;
-          followersCount.innerHTML= liveCountUpdate;
-          aboutFollowersCount.innerHTML= liveCountUpdate;
-      } catch (err) {
-          alert(err.message);
-      }
+      postFollow(follow, following, followersCount, aboutFollowersCount);
     })
+  }
 
-
-    /* DELETE request to remove a follow relationship */
-
+/* DELETE request to remove a follow relationship */
+  if (following) {
     following.addEventListener('click', async (event) => {
       event.preventDefault()
-      let url = window.location.pathname
-      const urlArray = url.split("/")
-      const currentUserId = urlArray[2];
-      if(urlArray.length === 5) { //from stories page
-        url = urlArray.slice(0,3).join('/');
-      }
-      const body = { currentUserId };
-      try {
-        const res = await fetch(`${url}/follows`, {
-          method: "DELETE",
-          body: JSON.stringify(body),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (!res.ok) {
-          throw new Error('Failed to complete request.');
-        }
-        follow.classList.toggle("hide")
-        following.classList.toggle("hide")
-        followersCount.innerHTML= parseInt(followersCount.innerHTML,10) - 1;
-      } catch (err) {
-        console.error(res);
-        alert(err.message);
-      }
+      deleteFollow(follow, following, followersCount)
     })
   }
 })

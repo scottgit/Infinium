@@ -3,88 +3,84 @@ extends layout
 append head
   //- add page specific styles by appending to the head
   link(rel="stylesheet" href="/stylesheets/index.css")
+  link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap")
   link(href="https://fonts.googleapis.com/css2?family=Lato&family=Noto+Sans+KR&display=swap" rel="stylesheet")
   //- add page specific js
 
 block content
   .homepage-container
-    .homepage-top-story
-      .top-story_content
-        img(src=topStory.imageLink alt="")
-        .top-story_author
-          img(src=topStory.imageLink width="20" height="20" alt="")
-          h4= topStory.author
-        h2
-          a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
-        p= topStory.subtitle
-        .top-story_readtime
-          a(href="") Read more
-    .homepage-top-stories
-      .stories-container
-        each highlight in highlights
-          .top-stories_article
-            .article-content
-              .article-content_author
-                img(src=highlight.imageLink width="20" height="20" alt="")
-                h4= highlight.author
-              h2
-                a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
-              .article-content_date
-                h4= highlight.date
-            .article-img
-              img(src=highlight.imageLink alt="")
-    .homepage-followers
+    if (!locals.user)
+      .noUser_overlay
+        .noUser_welcome
+          h1 Where your ideas
+          h1 are out of this world
+        .noUser_text
+          p Read and share your speculative fan fiction.
+          p Everyone's welcome! 
+            a(href="/about") Learn more
+        img(src="./images/abduction.png" class="abduction")
+    else
+      .homepage-top-story
+        .top-story_content
+          img(src=topStory.imageLink alt="")
+          .top-story_author
+            img(src=topStory.imageLink width="20" height="20" alt="")
+            h4= topStory.author
+          h2
+            a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
+          p= topStory.subtitle
+          .top-story_readtime
+            a(href="") Read more
+      .homepage-top-stories
+        .stories-container
+          each highlight in highlights
+            .top-stories_article
+              .article-content
+                .article-content_author
+                  img(src=highlight.imageLink width="20" height="20" alt="")
+                  h4= highlight.author
+                h2
+                  a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
+                .article-content_date
+                  h4= highlight.date
+              .article-img
+                img(src=highlight.imageLink alt="")
+      .homepage-followers
+        .following-container
+          .following-header
+            h3 Latest From Following
+          .following-list
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
+            .following-profile
+              img(src='/images/records.jpg' width='55' height="55" alt="prof pic")
+              p Michael
     .homepage-trending
+      h3 Trending on Infinium
       .homepage-trending_container
-        .trending-article
-          h1 01
-          .trending-article_content
-            .trending-author
-              img(src="./images/moon.jpg" width="20" height="20" alt="")
-              h4 Jimmy Jones
-            h2 New Movie release
-            p read time
-        .trending-article
-          h1 02
-          .trending-article_content
-            .trending-author
-              img(src="./images/moon.jpg" width="20" height="20" alt="")
-              h4 Jack Daxter
-            h2 Where are all these people coming from?
-            p read time
-        .trending-article
-          h1 03
-          .trending-article_content
-            .trending-author
-              img(src="./images/moon.jpg" width="20" height="20" alt="")
-              h4 John Jacob
-            h2 Boy do I love my new Socks!
-            p read time
-        .trending-article
-          h1 04
-          .trending-article_content
-            .trending-author
-              img(src="./images/moon.jpg" width="20" height="20" alt="")
-              h4 Blake Harvey
-            h2 Why am I stuck in gold in Valorant?
-            p read time
-        .trending-article
-          h1 05
-          .trending-article_content
-            .trending-author
-              img(src="./images/moon.jpg" width="20" height="20" alt="")
-              h4 Justin Samoy
-            h2 This is my life as someone with a big head
-            p read time
-        .trending-article
-          h1 06
-          .trending-article_content
-            .trending-author
-              img(src="./images/moon.jpg" width="20" height="20" alt="")
-              h4 Mike Jensen
-            h2 I wish I could live on the Moon
-            p read time
-
+        each trend in trending
+          .trending-article
+            img(src='/images/trending.svg' width="42" height="42" alt="")
+            .trending-article_content
+              .trending-author
+                img(src=trend.imageLink width="20" height="20" alt="")
+                h4= trend.author
+              h2
+                a(href=`/users/${trend.userId}/stories/${trend.hexId}`)= trend.title
+              p= trend.date
     .homepage-stream
       .homepage-stream_container
         each recent in recents

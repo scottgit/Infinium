@@ -14,6 +14,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  
 }
 
 .icons{
@@ -61,6 +62,10 @@
 
 .following,
 .follow:hover {
+  color: black;
+}
+
+.following{
   color: black;
 }
 
@@ -372,6 +377,7 @@
 }
 
 .comment_button{
+  margin-left: 10px;
   height: 30px;
   width: 30px;
 }

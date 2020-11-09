@@ -8,17 +8,15 @@ html(lang="en")
         title Account Registration
     body
         div(class="sign-up_container")
-            //- div(class="sign-up_welcome")
-            //-     div(class="welcome_container")
-                    //- h2 hello world
-                    //- p this is a cool test
             div(class="form-holder")
                 form(class="sign-up_form" method="post")
                     a(href='/')
                         img(src="/images/infinity-large.jpg" width="60" alt="")
                     h1 Create an Account
                     p Don't have an account? No worries, signing up takes under a minute
-
+                    if (errors)
+                        each error in errors
+                            li(class="errors")= error
                     input(type="hidden" name="_csrf" value=token)
                     input(class="sign-up_input" includes type="email" name="email" placeholder="Email" required)
                     input(class="sign-up_input" type="text" name="username" placeholder="Username" required)
@@ -27,6 +25,5 @@ html(lang="en")
                     button.rainbow-button(type="submit") Sign Up!
                 div(class="log-in_button")
                     p Already have an Account?
-                    div
                     a(href="/users/login")
                         button.rainbow-button Log in
