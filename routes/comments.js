@@ -16,28 +16,7 @@ const commentNotFoundError = (id) => {
     return error;
 }
 
-// router.get('/', asyncHandler(async (req, res) => {
-//     const storyId = 3; //parseInt(req.params.id, 10);
-//     const comments = await Comment.findAll({
-//         where: { storyId },
-//         include: User,
-//         order: [['createdAt', 'DESC']],
-//     });
-
-//     const loggedInUser = 2; //res.locals.user.id;
-
-//     comments.forEach(comment => {
-//         if (comment.userId === loggedInUser) {
-//             comment.authCompare = true;
-//         }
-//     });
-
-//     res.render('comments', {
-//         comments,
-//     })
-// }));
-
-router.post('/', commentValidator, asyncHandler(async (req, res) => {
+router.post('/', commentValidator, requireAuth, asyncHandler(async (req, res) => {
     const { comment, storiesId } = req.body;
     const storyId = parseHexadecimal(storiesId)
 
@@ -77,7 +56,7 @@ router.post('/', commentValidator, asyncHandler(async (req, res) => {
     }
 }));
 
-router.put('/:id(\\d+)', commentValidator, asyncHandler(async (req, res) => {
+router.put('/:id(\\d+)', commentValidator, requireAuth, asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id, 10);
     const oldComment = await Comment.findByPk(id);
 
@@ -96,7 +75,7 @@ router.put('/:id(\\d+)', commentValidator, asyncHandler(async (req, res) => {
     }
 }));
 
-router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
+router.delete('/:id(\\d+)', requireAuth, asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id, 10);
     const comment = await Comment.findByPk(id);
 
