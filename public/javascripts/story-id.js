@@ -63,28 +63,4 @@ window.addEventListener("DOMContentLoaded", (event) => {
       commentsContainer.classList.toggle("unreveal")
     })
   }
-
-  /* POST request to create a follow relationship */
-
-const follow = document.querySelector('.follow');
-const following = document.querySelector('.following');
-const followersCount = document.querySelector('.followers_count > span');
-const aboutFollowersCount = document.querySelector('.person_info_follower > span')
-
-//Follow links will not be visible to non-logged in users
-
-if (follow) {
-  follow.addEventListener('click', async (event) => {
-    event.preventDefault()
-    postFollow(follow, following, followersCount, aboutFollowersCount);
-  })
-}
-
-/* DELETE request to remove a follow relationship */
-  if (following){
-    following.addEventListener('click', async (event) => {
-      event.preventDefault()
-      deleteFollow(follow, following, followersCount)
-    })
-  }
 })
