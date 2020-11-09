@@ -68,7 +68,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 const follow = document.querySelector('.follow');
 const following = document.querySelector('.following');
-console.log("LOOK LOOK LOOK!!!!!!!!!!!!", following)
 const followersCount = document.querySelector('.followers_count > span');
 const aboutFollowersCount = document.querySelector('.person_info_follower > span')
 
@@ -82,9 +81,10 @@ if (follow) {
 }
 
 /* DELETE request to remove a follow relationship */
-following.addEventListener('click', async (event) => {
-  event.preventDefault()
-  deleteFollow(follow, following, followersCount)
-})
- 
+  if (following){
+    following.addEventListener('click', async (event) => {
+      event.preventDefault()
+      deleteFollow(follow, following, followersCount)
+    })
+  }
 })

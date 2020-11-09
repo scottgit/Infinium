@@ -36,8 +36,10 @@ window.addEventListener("DOMContentLoaded", (event) => {
   }
 
 /* DELETE request to remove a follow relationship */
-  following.addEventListener('click', async (event) => {
-    event.preventDefault()
-    deleteFollow(follow, following, followersCount)
-  })
+  if (following) {
+    following.addEventListener('click', async (event) => {
+      event.preventDefault()
+      deleteFollow(follow, following, followersCount)
+    })
+  }
 })

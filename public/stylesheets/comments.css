@@ -9,6 +9,7 @@
     max-height: 100%;
     overflow: scroll;
     box-sizing: border-box;
+    z-index: 10;
 }
 
 .reveal{
