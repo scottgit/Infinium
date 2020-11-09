@@ -1,24 +1,31 @@
 ![Logo of the project](./public/images/infinium-logo.JPG)
 
 # Infinium
-> Welcome to Infinium! 
+> Welcome to Infinium!
 
-A website created so that the ordinary human can escape from their own reality and enter a world of science fiction and fantasy. Browse endlessly through the countless tales of magic and wonder or create your own world with the story creation tools available. Follow your friends and interact with their recounts of heroism and adventure by liking and commenting.    
+A website created so that the ordinary human can escape from their own reality and enter a world of science fiction and fantasy. Browse endlessly through the countless tales of magic and wonder or create your own world with the story creation tools available. Follow your friends and interact with their recounts of heroism and adventure by liking and commenting.
 
 ## Features
 
-### Stories 
+### Stories
 
-### Comments 
+Stories provided some interesting challenges in order to:
 
-* Access and leave comments on any story 
-* Comments dynamically update on your page after you publish, edit or delete them 
+* Allow for multiple revisions in a draft state before publication
+* Allow for inclusion of an image (and previewing that image)
+* Allow for re-editing after publication
 
-Comments functionality on the front-end were created with the use of the Fetch API to provide real-time site updates without the need for a page refresh.  
+### Comments
+
+* Access and leave comments on any story
+* Comments dynamically update on your page after you publish, edit or delete them
+* Comments slide into the screen and slide out
+
+Comments functionality on the front-end were created with the use of the Fetch API to provide real-time site updates without the need for a page refresh.
 
 Example: Dynamically editing a comment with Fetch
 
-```bash
+```js
 const body = { comment };
 try {
     const res = await fetch(`/stories/${storiesId}/comments/${commentId}`, {
@@ -35,11 +42,11 @@ try {
     alert("Something went wrong. Please try again!");
 }
 ```
-PostgreSQL utilization for database storage of all comments, available for any Fetch method request. 
+PostgreSQL utilization for database storage of all comments, available for any Fetch method request.
 
-Example: Back-end routing established for accessing and deleting a comment from the database. 
+Example: Back-end routing established for accessing and deleting a comment from the database.
 
-```bash
+```js
 router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
     const id = parseInt(req.params.id, 10);
     const comment = await Comment.findByPk(id);
@@ -58,24 +65,23 @@ router.delete('/:id(\\d+)', asyncHandler(async (req, res) => {
 
 ## FAQ
 
-### How can I write a story or leave a comment? 
+### How can I write a story or leave a comment?
 
-You will first need to sign-up for an account. Once you are logged in, you will have access to all features on the website, which include writing a story or leaving a comment. 
+You will first need to sign-up for an account. Once you are logged in, you will have access to all features on the website, which include writing a story or leaving a comment.
 
-### How can I follow my favourite writers? 
+### How can I follow my favorite writers?
 
-See a story you like? You can click on the follow link at the top of any story page to begin following that writer.  
+See a story you like? You can click on the follow link at the top of any story page to begin following that writer.
 
 ## Links
 
-Your destiny awaits...follow this link to enter Infinium:
+Your destiny awaits... follow this link to enter Infinium:
 
 https://infinium.herokuapp.com/
 
-## Contributing 
+## Contributing
 
-* Dale Sakamoto - DaleTsakamoto @ GitHub 
+* Dale Sakamoto - DaleTsakamoto @ GitHub
 * Michael Jensen - Mjensen24 @ GitHub
-* Scott Smith - scottgit @ GitHub 
-* Rhys Previte - Preezey24 @ GitHub 
-
+* Rhys Previte - Preezey24 @ GitHub
+* Scott Smith - scottgit @ GitHub

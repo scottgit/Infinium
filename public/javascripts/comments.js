@@ -213,7 +213,6 @@ window.addEventListener('DOMContentLoaded', e => {
                     const updateButton = document.createElement('button');
                     cancelButton.innerHTML = 'Cancel';
                     updateButton.setAttribute('class', 'comments-container__new-comment-button-respond');
-                    //updateButton.setAttribute('type', 'submit');
                     updateButton.innerHTML = 'Update';
 
                     currentText.classList.add('hide');
@@ -229,7 +228,6 @@ window.addEventListener('DOMContentLoaded', e => {
                         container.remove();
                         cancelButton.remove();
                         updateButton.remove();
-                        doingEdit = false;
                     }
 
                     updateButton.addEventListener('click', async (e) => {
@@ -253,6 +251,7 @@ window.addEventListener('DOMContentLoaded', e => {
                                     "Content-Type": "application/json",
                                 },
                             });
+alert("JUST AFTER FETCH")
                             if (!res.ok) {
                                 throw res;
                             }

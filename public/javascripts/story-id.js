@@ -1,10 +1,7 @@
-import {postFollow, deleteFollow} from './follow.js'
-
 window.addEventListener("DOMContentLoaded", (event) => {
-
  let lightsaber = document.querySelector(".clap-pic")
  lightsaber.addEventListener('click', event => {
-   let randomizer = Math.floor(Math.random() * 4.99);
+   let randomizer = Math.floor(Math.random() * 5);
    lightsaber.src = `/images/lightsaber-${randomizer}.png`
  })
 
