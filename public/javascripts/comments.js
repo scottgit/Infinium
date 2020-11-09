@@ -54,7 +54,6 @@ window.addEventListener('DOMContentLoaded', e => {
             commentNavBarUser.setAttribute('class', 'comments-container__comment-nav-user');
             const commentNavBarMenu = document.createElement('div');
             commentNavBarMenu.setAttribute('class', 'comments-container__comment-nav-menu');
-            commentNavBarMenu.id = commentId;
             const commentNavBarMenuImage = document.createElement('img');
             commentNavBarMenuImage.setAttribute('src', '/images/3-dot-icon.jpg');
             commentNavBarMenuImage.setAttribute('class', 'comments-container__comment-nav-menu-image');
@@ -141,6 +140,7 @@ window.addEventListener('DOMContentLoaded', e => {
             const commentId = menu.getAttribute('id');
             const dropdown = menu.querySelector('.comments-container__comment-nav-menu-dropdown');
             const commentBlock = document.getElementById(commentId);
+alert(commentBlock.classList)
             const remove = commentBlock.querySelector('.delete');
             const edit = commentBlock.querySelector('.edit');
 
@@ -166,7 +166,9 @@ window.addEventListener('DOMContentLoaded', e => {
                             //Dynamically update the count for the delete
                             const responseCount = document.querySelector('.response-count');
                             if (responseCount) {
+alert('before ' + responseCount.innerHTML)
                                 responseCount.innerHTML = parseInt(responseCount.innerHTML, 10) - 1;
+alert('after ' + responseCount.innerHTML)
                             }
                         } catch (err) {
                             alert("Something went wrong. Please try again!");

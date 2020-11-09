@@ -25,7 +25,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         })
         .then (data => {
             if (data.limitedOut) {
-              alert('You reached your maximum of 50 likes.')
+              alert('You reached your maximum of 50 lightsabers.')
             } else {
               let score = document.getElementById('likesCount');
               //The likesCount is already the new value of +1

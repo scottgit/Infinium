@@ -26,38 +26,6 @@
   margin-right: 50px;
   padding: 7px 0 0 0;
 }
-/* Converted buttons to the "rainbow-button" css */
-/* .logout{
-  font-family: 'Noto Sans JP', sans-serif;
-  font-weight: 500;
-  background: linear-gradient(-45deg, #06c5c5, #a71bca);
-  background-size: 100% 100%;
-  border: .1px solid lightgrey;
-  padding: 4px 8px;
-  margin-right: 8px;
-  border-radius: 4px;
-  color: white;
-}
-
-.login{
-  text-decoration: none;
-  font-family: 'Noto Sans JP', sans-serif;
-  color: black;
-  padding: 4px 8px;
-  border: .1px solid lightgrey;
-  border-radius: 4px;
-  margin-right: 8px;
-}
-
-.register{
-  text-decoration: none;
-  font-family: 'Noto Sans JP', sans-serif;
-  color: black;
-  padding: 4px 8px;
-  margin-right: 8px;
-  border: .1px solid lightgrey;
-  border-radius: 4px;
-} */
 
 .title_name{
   padding: 0 15px 0 5px;
@@ -65,7 +33,8 @@
   font-size: 42px;
 }
 
-.title_greeting{
+.title_greeting,
+.title_greeting-link {
   padding: 7px 15px 0 15px;
   font-size: 16px;
   font-weight: bold;
@@ -73,6 +42,19 @@
   border-left-width: .5px;
   border-color: lightgrey;
   font-family: 'Noto Sans JP', sans-serif;
+  text-decoration: none;
+  position: relative;
+}
+
+.title_greeting-link:hover::after {
+  content: 'Beam me to the about page!';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top:100%;
+  color: #1658c4;
+  text-align: center;
+  font-size: .7em;
 }
 
 .infinity_image{
