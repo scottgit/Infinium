@@ -19,7 +19,6 @@ const commentNotFoundError = (id) => {
 router.post('/', commentValidator, requireAuth, asyncHandler(async (req, res) => {
     const { comment, storiesId } = req.body;
     const storyId = parseHexadecimal(storiesId)
-    console.log("THE STORY ID!!!", storyId);
 
     const userId = res.locals.user.id;
 
@@ -44,7 +43,6 @@ router.post('/', commentValidator, requireAuth, asyncHandler(async (req, res) =>
         });
         //Grabbing newest comment from this user on this story
         getComment = getComment[getComment.length - 1];
-        console.log("THIS IS THE COMMENT", getComment)
         const username = getComment.User.username;
         const commentId = getComment.id;
 
