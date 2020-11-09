@@ -194,6 +194,10 @@
     border-radius: 3px;
 }
 
+.comments-container__comment-text-box {
+
+}
+
 /* Delete box styling */
 .delete-container--hidden {
     display: none;
@@ -261,4 +265,10 @@
     font-weight: 400;
     border: none;
     margin-right: 5px;
+}
+
+.delete-container__inner-button-confirm,
+.delete-container__inner-button-cancel {
+    cursor: pointer;
+    opacity: 0.8;
 }

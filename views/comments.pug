@@ -20,7 +20,7 @@ block content
                     div.comments-container__comment-nav
                         div.comments-container__comment-nav-user= comment.User.username
                         if comment.authCompare
-                            div(class="comments-container__comment-nav-menu" id=comment.id)
+                            div(class="comments-container__comment-nav-menu" data-commentId=comment.id)
                                 img(src='/images/3-dot-icon.jpg').comments-container__comment-nav-menu-image
                                 div.comments-container__comment-nav-menu-dropdown.comments-container__comment-nav-menu-dropdown--hidden
                                     button.edit Edit this response

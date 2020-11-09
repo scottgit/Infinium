@@ -54,7 +54,11 @@ window.addEventListener('DOMContentLoaded', e => {
             commentNavBarUser.setAttribute('class', 'comments-container__comment-nav-user');
             const commentNavBarMenu = document.createElement('div');
             commentNavBarMenu.setAttribute('class', 'comments-container__comment-nav-menu');
+<<<<<<< Updated upstream
             commentNavBarMenu.id = commentId;
+=======
+            commentNavBarMenu.setAttribute('data-commentId', commentId);
+>>>>>>> Stashed changes
             const commentNavBarMenuImage = document.createElement('img');
             commentNavBarMenuImage.setAttribute('src', '/images/3-dot-icon.jpg');
             commentNavBarMenuImage.setAttribute('class', 'comments-container__comment-nav-menu-image');
@@ -137,8 +141,11 @@ window.addEventListener('DOMContentLoaded', e => {
 
     //Helper function to be able to also create a menu event dynamically on new comment creation
     function menuAddEvents(menu) {
+        let doingEdit;
         menu.addEventListener('click', async (e) => {
-            const commentId = menu.getAttribute('id');
+            if (doingEdit) return;
+            const commentId = menu.getAttribute('data-commentId');
+            alert(commentId)
             const dropdown = menu.querySelector('.comments-container__comment-nav-menu-dropdown');
             const commentBlock = document.getElementById(commentId);
             const remove = commentBlock.querySelector('.delete');
@@ -148,6 +155,10 @@ window.addEventListener('DOMContentLoaded', e => {
                 dropdown.classList.remove('comments-container__comment-nav-menu-dropdown--hidden');
 
                 remove.addEventListener('click', (e) => {
+                    dropdown.classList.add('comments-container__comment-nav-menu-dropdown--hidden');
+                    e.stopPropagation();
+                    if (doingEdit) return;
+                    doingEdit = true;
                     const commentId = commentBlock.getAttribute('id');
                     const deleteContainer = commentBlock.querySelector('.delete-container');
                     const confirmButton = commentBlock.querySelector('.delete-container__inner-button-confirm');
@@ -155,6 +166,7 @@ window.addEventListener('DOMContentLoaded', e => {
                     deleteContainer.classList.remove('delete-container--hidden');
 
                     confirmButton.addEventListener('click', async (e) => {
+                        alert(commentId)
                         try {
                             const res = await fetch(`/stories/${storiesId}/comments/${commentId}`, {
                                 method: 'DELETE',
@@ -168,18 +180,25 @@ window.addEventListener('DOMContentLoaded', e => {
                             if (responseCount) {
                                 responseCount.innerHTML = parseInt(responseCount.innerHTML, 10) - 1;
                             }
+                            doingEdit = false;
                         } catch (err) {
                             alert("Something went wrong. Please try again!");
+                            doingEdit = false;
                         }
                     })
 
                     cancelButton.addEventListener('click', (e) => {
                         deleteContainer.classList.add('delete-container--hidden');
+                        doingEdit = false;
                     })
                 })
 
 
                 edit.addEventListener('click', async (e) => {
+                    dropdown.classList.add('comments-container__comment-nav-menu-dropdown--hidden');
+                    e.stopPropagation();
+                    if (doingEdit) return;
+                    doingEdit = true;
                     const currentText = commentBlock.querySelector('.comments-container__comment-text-box');
                     let comment = currentText.innerHTML;
                     //create form & attributes
@@ -202,12 +221,21 @@ window.addEventListener('DOMContentLoaded', e => {
                     //updateButton.setAttribute('type', 'submit');
                     updateButton.innerHTML = 'Update';
 
-                    currentText.remove();
+                    currentText.classList.add('hide');
                     commentBlock.appendChild(form);
                     form.appendChild(textBox);
                     form.appendChild(container);
                     container.appendChild(cancelButton);
                     container.appendChild(updateButton);
+
+                    function cleanUpForm() {
+                        currentText.classList.remove('hide');
+                        form.remove();
+                        container.remove();
+                        cancelButton.remove();
+                        updateButton.remove();
+                        doingEdit = false;
+                    }
 
                     updateButton.addEventListener('click', async (e) => {
                         e.preventDefault();
@@ -217,9 +245,7 @@ window.addEventListener('DOMContentLoaded', e => {
                         //check for no change
                         if(comment === oldComment) {
                             //return original comment
-                            const newComment = document.createElement('div');
-                            newComment.setAttribute('class', 'comments-container__comment-text-box');
-                            newComment.innerHTML = oldComment;
+                            cleanUpForm();
                             return;
                         }
 
@@ -238,28 +264,18 @@ window.addEventListener('DOMContentLoaded', e => {
                         } catch (err) {
                             alert("Something went wrong. Please try again!");
                         }
-                        const newComment = document.createElement('div');
-                        newComment.setAttribute('class', 'comments-container__comment-text-box');
-                        newComment.innerHTML = comment;
-                        form.remove();
-                        container.remove();
-                        cancelButton.remove();
-                        updateButton.remove();
-                        commentBlock.appendChild(newComment);
+                        currentText.innerHTML = comment;
+                        cleanUpForm();
                     })
 
                     cancelButton.addEventListener('click', (e) => {
-                        form.remove();
-                        cancelButton.remove();
-                        updateButton.remove();
-                        const textBox = document.createElement('div');
-                        textBox.setAttribute('class', 'comments-container__comment-text-box');
-                        textBox.innerHTML = comment;
-                        commentBlock.appendChild(textBox);
+                        currentText.innerHTML = comment;
+                        cleanUpForm();
                     })
                 })
             } else {
                 dropdown.classList.add('comments-container__comment-nav-menu-dropdown--hidden');
+                doingEdit = false;
             }
         });
     }
