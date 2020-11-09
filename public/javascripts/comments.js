@@ -260,6 +260,7 @@ window.addEventListener('DOMContentLoaded', e => {
                         if(comment === oldComment) {
                             //return original comment
                             cleanUpForm();
+                            doingEdit = false;
                             return;
                         }
 
