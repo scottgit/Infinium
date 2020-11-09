@@ -271,6 +271,7 @@ window.addEventListener('DOMContentLoaded', e => {
                     cancelButton.addEventListener('click', (e) => {
                         currentText.innerHTML = comment;
                         cleanUpForm();
+                        doingEdit = false;
                     })
                 })
             }
