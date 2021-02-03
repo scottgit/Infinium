@@ -44,9 +44,6 @@ document.addEventListener("DOMContentLoaded", e => {
       try {
         const res = await fetch(`${target.href}`, {
             method: "DELETE",
-            // headers: {
-            //     "Content-Type": "application/json",
-            // },
         });
         if (!res.ok) {
             throw new Error('Deletion failed' + res);

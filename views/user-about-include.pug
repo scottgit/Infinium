@@ -1,5 +1,5 @@
-.about_me
-  .person_info.hide
+.about_me.hide
+  .person_info
     .nameplate= `About ${author || name}`
       p(class="nameplate_bio") I'm so interesting!
     .follow_following
@@ -9,5 +9,5 @@
         .person_info_follower #[span #{followerCount}] Follower
       else
         .person_info_follower #[span #{followerCount}] Followers
-  .profilePic.hide
+  .profilePic
     img(src="/images/ET.jpg", alt="doggies" class="profilePic_pic")

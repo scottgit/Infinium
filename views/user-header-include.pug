@@ -1,6 +1,6 @@
 .header
   .title
-    a(href=`/users/${userId}` class= "title_name")= author || name
+    span(class= "title_name")= author || name
     if followerCount === 1
       .followers_count #[span #{followerCount}] Follower
     else
