@@ -1,3 +1,5 @@
+import { showModal } from "./modal.js";
+
 document.addEventListener("DOMContentLoaded", e => {
   const draftsTab = document.querySelector('.tab-drafts');
   const publishedTab = document.querySelector('.tab-published');
@@ -51,7 +53,7 @@ document.addEventListener("DOMContentLoaded", e => {
         }
         target.closest('.story').remove();
       } catch (err) {
-          alert(err.message);
+          showModal(err.message);
       }
     }
   });
