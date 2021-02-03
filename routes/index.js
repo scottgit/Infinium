@@ -14,7 +14,7 @@ const { csrfProtection,
 const router = express.Router();
 
 /* GET home page. */
-router.get('/', asyncHandler(async (req, res, next) => {
+router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
   let followersList = null;
 
   if (res.locals.authenticated) {
@@ -31,7 +31,7 @@ router.get('/', asyncHandler(async (req, res, next) => {
   const trending = await getStoryList({filter: getTrending, req});
   const recents = await getStoryList({ordering: [['updatedAt', 'DESC']], limits});
   const topStory = highlights.pop();
-  res.render('index', { title: 'Infinium', userProfile, highlights, followersList, trending, recents, topStory });
+  res.render('index', { title: 'Infinium', userProfile, highlights, followersList, trending, recents, topStory, token: req.csrfToken() });
 }));
 
 /* GET about page. */

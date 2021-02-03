@@ -110,6 +110,7 @@ router.post('/register', csrfProtection, userRegValidators, asyncHandler(async (
 
 /* GET user log-in. */
 router.get('/login', csrfProtection, (req, res) => {
+  console.log('in login route')
   res.render('log-in', {
     title: 'Log-in',
     token: req.csrfToken()

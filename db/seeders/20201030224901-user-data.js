@@ -10,6 +10,7 @@ module.exports = {
       { username: "Dale", email: "dale@dale.com", hashedPassword: bcrypt.hashSync("Pas$w0rd", 10), avatar: "", description: "All around helper, a real 'user' guide and 'follower' guy", createdAt: faker.date.past(3), updatedAt: new Date() },
       { username: "Rhys", email: "rhys@rhys.com", hashedPassword: bcrypt.hashSync("Pas$w0rd", 10), avatar: "", description: "'Comments'? Leave it to me!", createdAt: faker.date.past(3), updatedAt: new Date() },
       { username: "Ian", email: "ian@ian.com", hashedPassword: bcrypt.hashSync("Pas$w0rd", 10), avatar: "", description: "A an expert a/A instructor and motivator", createdAt: faker.date.past(3), updatedAt: new Date() },
+      { username: "Demo", email: "demo@demo.com", hashedPassword: bcrypt.hashSync("Some5&#Ha", 10), avatar: "", description: "A user to experience the site as a demonstration", createdAt: faker.date.past(3), updatedAt: new Date() },
     ];
 
     const extraUsers = 30;
