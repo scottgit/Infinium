@@ -130,11 +130,3 @@
 .alert-danger ul {
   padding-left: 20px;
 }
-
-.loggedout {
-  white-space: nowrap;
-}
-
-.demo-log-in_form {
-  display: inline-block;
-}

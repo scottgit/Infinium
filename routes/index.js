@@ -35,9 +35,9 @@ router.get('/', csrfProtection, asyncHandler(async (req, res, next) => {
 }));
 
 /* GET about page. */
-router.get('/about', asyncHandler(async (req, res, next) => {
+router.get('/about', csrfProtection, asyncHandler(async (req, res, next) => {
 
-  res.render('about', { title: 'Infinium', contextControls: 'not-home', aboutPage: true });
+  res.render('about', { title: 'Infinium', contextControls: 'not-home', aboutPage: true, token: req.csrfToken() });
 }));
 
 module.exports = router;
