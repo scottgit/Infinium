@@ -104,7 +104,7 @@ router.post('/new-story', requireAuth, csrfProtection, storyDraftValidators, asy
 
 /* USER route integrated story display */
 /* GET for ANY user to see a single user story to read */
-router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
+router.get(/\/([0-9a-f]+)$/, csrfProtection, asyncHandler(async (req, res, next) => {
   const userId = getRouteUserId(req);
   const storyId = parseHexadecimal(req.params[0]);
   let story = await Story.findOne({
@@ -195,7 +195,8 @@ router.get(/\/([0-9a-f]+)$/, asyncHandler(async (req, res, next) => {
       authCompare,
       author,
       storyId,
-      storyLikes: count
+      storyLikes: count,
+      token: req.csrfToken()
     });
   }
 }));

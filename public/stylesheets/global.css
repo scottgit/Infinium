@@ -49,3 +49,11 @@
 .hide {
   display: none;
 }
+
+.loggedout {
+  white-space: nowrap;
+}
+
+.demo-log-in_form {
+  display: inline-block;
+}
