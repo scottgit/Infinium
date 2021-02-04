@@ -1,19 +1,20 @@
 @import "global.css";
 
 .footer {
-    position: relative;
+    position: fixed;
     border-top: 1px solid lightgrey;
-    height: 80px;
+    height: 70px;
     left:0;
     right: 0;
+    bottom: 0;
+    background-color: white;
     font-family: 'Lato', sans-serif;
 }
 
 .github-ind-container {
-  display: inline-block;
   max-width: 1600px;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   flex-direction: row;
   margin: 0 auto;
   padding: 10px 12px;
@@ -33,21 +34,29 @@
 .github-ind-header{
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
-.github-ind-header img {
+.github-ind-header > img {
   border-radius: 5px;
 }
 
-.github-ind-header h4 {
+.github-ind-header > div {
   padding: 0 0 0 7px;
   font-family: 'Noto Sans KR', sans-serif;
   color: gray;
-  font-size: 13px;
+  font-size: 14px;
   align-content: center;
   margin-bottom: 4px;
+  padding-top: 4px;
 }
 
-.github-ind-content a{
+.github-ind-content > a{
   text-decoration: none;
+}
+
+.github-ind-phrase{
+  text-decoration: none;
+  color: black;
+  margin-top: 5px;
 }
