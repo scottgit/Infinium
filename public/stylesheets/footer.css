@@ -1,0 +1,10 @@
+@import "global.css";
+
+.footer {
+    position: relative;
+    height: 200px;
+    left:0;
+    right: 0;
+    font-family: 'Lato', sans-serif;
+    background-color: red;
+}
