@@ -91,6 +91,7 @@ block content
                 p= recent.date
               .stream-article_img
                 if (recent.imageLink)
+<<<<<<< HEAD
                   img(src=recent.imageLink width="100" height="100" alt="")
       .homepage-notation
         .notation-container
@@ -101,3 +102,19 @@ block content
             p Sign up or log in to create stories.
             h4 Leave feedback
             p Sign up or log in to add lightsabers and comments.
+=======
+                  img(src=recent.imageLink width="20" height="20" alt="")
+                h4= recent.author
+              .stream-content_headers
+                h2
+                  a(href=`/users/${recent.userId}/stories/${recent.hexId}`)= recent.title
+              p= recent.date
+            .stream-article_img
+              if (recent.imageLink)
+                img(src=recent.imageLink width="100" height="100" alt="")
+    .homepage-bookmarks
+      .bookmarks-container
+        .bookmarks-container_content
+          h4 Bookmark stories for later
+          p Start saving stories by clicking the bookmark icon and you’ll find them all here.
+>>>>>>> master
