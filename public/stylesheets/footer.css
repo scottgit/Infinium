@@ -11,10 +11,10 @@
 
 .github-ind-container {
   display: inline-block;
-  max-width: 1600px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
+  justify-content: space-evenly;
   margin: 0 auto;
   padding: 10px 12px;
 }
