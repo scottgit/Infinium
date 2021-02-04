@@ -2,20 +2,34 @@ import {postFollow, deleteFollow} from './follow.js'
 
 window.addEventListener("DOMContentLoaded", (event) => {
 
+  let showAbout = false;
+
   document.querySelector(".about").addEventListener("click", event => {
     event.preventDefault();
-    let question = document.querySelector(".question");
+    showAbout = !showAbout;
+    const question = document.querySelector(".question");
+    const aboutButton = document.querySelector('.about');
+    const aboutBlock = document.querySelector('.about_me');
+    const storiesBlock = document.querySelector('.recentStories');
+
     if (question) {
-      document.querySelector('.question_ask').classList.add("hide")
-      document.querySelector('.question_answer').classList.add("hide")
+      if (showAbout) {
+        question.classList.add("hide")
+      }
+      else {
+        question.classList.remove("hide")
+      }
     }
-    document.querySelector('.about').style.color = "black"
-    document.querySelector('.about').classList.add("about_remove")
-    document.querySelector('.person_info').classList.remove("hide")
-    document.querySelector('.profilePic').classList.remove("hide")
-    document.querySelectorAll('.recentStories').forEach(function (story) {
-    story.classList.add("hide")
-    })
+    if (showAbout) {
+      aboutButton.innerHTML = 'Stories';
+      aboutBlock.classList.remove("hide")
+      storiesBlock.classList.add("hide")
+    }
+    else {
+      aboutButton.innerHTML = 'About';
+      aboutBlock.classList.add("hide")
+      storiesBlock.classList.remove("hide")
+    }
   })
 
 

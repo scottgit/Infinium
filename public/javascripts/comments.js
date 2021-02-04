@@ -1,3 +1,5 @@
+import {showModal} from './modal.js';
+
 window.addEventListener('DOMContentLoaded', e => {
     const respond = document.querySelector('.comments-container__new-comment');
     const url = window.location.pathname
@@ -17,7 +19,7 @@ window.addEventListener('DOMContentLoaded', e => {
             const formData = new FormData(respond);
             const comment = formData.get("comment");
             if (!comment) {
-                alert("You must input text in order to respond")
+                showModal("You must input text in order to respond.")
                 return
             } else {
                 const body = { comment, storiesId };
@@ -41,7 +43,7 @@ window.addEventListener('DOMContentLoaded', e => {
                         throw res;
                     }
                 } catch (err) {
-                    alert(err.message);
+                    showModal(err.message);
                 }
 
                 /*clear form */
@@ -184,7 +186,7 @@ window.addEventListener('DOMContentLoaded', e => {
                         doingEdit = false;
                         removeDeleteEvents()
                     } catch (err) {
-                        alert("Something went wrong. Please try again!");
+                        showModal("Something went wrong. Please try again!");
                         doingEdit = false;
                         removeDeleteEvents()
                     }
@@ -276,7 +278,7 @@ window.addEventListener('DOMContentLoaded', e => {
                                 throw res;
                             }
                         } catch (err) {
-                            alert("Something went wrong. Please try again!");
+                            showModal("Something went wrong. Please try again!");
                         }
                         currentText.innerHTML = comment;
                         cleanUpForm();

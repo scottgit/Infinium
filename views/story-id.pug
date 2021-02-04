@@ -10,35 +10,36 @@ html
         script(src="/javascripts/user.js" type="module" defer)
         script(src="/javascripts/follow.js" type="module" defer)
         script(src="/javascripts/story-id.js" type="module" defer)
+        script(src="/javascripts/modal.js" type="module" defer)
   body
     header
       include user-header-include
-      .storyholder
-        .recentStories
-          .recentStory
-            h2(class="recentStory_title")= title
-            h3(class="recentStory_subtitle")= subtitle
-            a(href=`/users/${userId}`)
-              .author_info
-                img(src="/images/ET.jpg" alt="dogs" class="author_info_icon")
-                a(href=`/users/${userId}` class="author_info_name")= author
-                p(class="author_info_date")= date
-          if (story.imageLink)
-            .storyImage
-              img(src= story.imageLink, alt="doggies" class="storyImage_recent")
-          .storyBody
-            p= story.published
+    .storyholder
+      .recentStories
+        .recentStory
+          h2(class="recentStory_title")= title
+          h3(class="recentStory_subtitle")= subtitle
+          a(href=`/users/${userId}`)
+            .author_info
+              img(src="/images/ET.jpg" alt="dogs" class="author_info_icon")
+              a(href=`/users/${userId}` class="author_info_name")= author
+              p(class="author_info_date")= date
+        if (story.imageLink)
+          .storyImage
+            img(src= story.imageLink, alt="doggies" class="storyImage_recent")
+        .storyBody
+          p= story.published
 
-          .footer_info
-            .likes
-              //- remove the upvote from non-logged in user and if
-              //- user is the author of the story (cannot upvote self)
-              img(class="clap-pic" src="/images/lightsaber-0.png" id=`${!locals.authenticated ? "" : (locals.user.id === authorId ? 'novote' : 'upvote')}`)
-              .claps
-                p(id="likesCount")= storyLikes
-                p lightsabers
-            a(href="")
-              img(id="comment-pic" src="/images/comment-button.png" alt="comment" class="comment_button")
-    section
+        .footer_info
+          .likes
+            //- remove the upvote from non-logged in user and if
+            //- user is the author of the story (cannot upvote self)
+            img(class="clap-pic" src="/images/lightsaber-0.png" id=`${!locals.authenticated ? "" : (locals.user.id === authorId ? 'novote' : 'upvote')}`)
+            .claps
+              p(id="likesCount")= storyLikes
+              p lightsabers
+          a(href="")
+            img(id="comment-pic" src="/images/comment-button.png" alt="comment" class="comment_button")
     include user-about-include
     include comments.pug
+    include modal-include

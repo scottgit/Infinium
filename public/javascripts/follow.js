@@ -1,5 +1,7 @@
 /* POST request to create a follow relationship */
 
+import { showModal } from "./modal.js";
+
 //Follow links will not be visible to non-logged in users
 export async function postFollow(follow, following, followersCount, aboutFollowersCount) {
       let urlPath = window.location.pathname
@@ -18,7 +20,6 @@ export async function postFollow(follow, following, followersCount, aboutFollowe
           },
         });
         if (!res.ok) {
-          console.error(res);
           throw new Error('Failed to complete request.');
         }
         follow.classList.toggle("hide");
@@ -27,7 +28,7 @@ export async function postFollow(follow, following, followersCount, aboutFollowe
         followersCount.innerHTML = liveCountUpdate;
         aboutFollowersCount.innerHTML = liveCountUpdate;
       } catch (err) {
-        alert(err.message);
+        showModal(err.message);
       }
 }
 
@@ -56,7 +57,6 @@ export async function deleteFollow(follow, following, followersCount) {
       following.classList.toggle("hide")
       followersCount.innerHTML = parseInt(followersCount.innerHTML, 10) - 1;
     } catch (err) {
-      console.error(res);
-      alert(err.message);
+      showModal(err.message);
     }
   }
