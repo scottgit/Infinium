@@ -43,6 +43,7 @@ body {
   font-family: inherit;
   color: inherit;
   font-size: 1.3em;
+  margin-bottom: 20px;
 }
 
 .story-edit-title::placeholder,
