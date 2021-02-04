@@ -2,9 +2,52 @@
 
 .footer {
     position: relative;
-    height: 200px;
+    border-top: 1px solid lightgrey;
+    height: 80px;
     left:0;
     right: 0;
     font-family: 'Lato', sans-serif;
-    background-color: red;
+}
+
+.github-ind-container {
+  display: inline-block;
+  max-width: 1600px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin: 0 auto;
+  padding: 10px 12px;
+}
+
+.github-ind-container > a > img{
+  margin-right: 40px;
+}
+
+.github-ind-content {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  margin-right: 40px;
+}
+
+.github-ind-header{
+  display: flex;
+  flex-direction: row;
+}
+
+.github-ind-header img {
+  border-radius: 5px;
+}
+
+.github-ind-header h4 {
+  padding: 0 0 0 7px;
+  font-family: 'Noto Sans KR', sans-serif;
+  color: gray;
+  font-size: 13px;
+  align-content: center;
+  margin-bottom: 4px;
+}
+
+.github-ind-content a{
+  text-decoration: none;
 }
