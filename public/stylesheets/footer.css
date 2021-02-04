@@ -12,11 +12,7 @@
 }
 
 .github-ind-container {
-<<<<<<< HEAD
   display: inline-block;
-=======
-  max-width: 1600px;
->>>>>>> master
   display: flex;
   /* flex-wrap: wrap; */
   flex-direction: row;

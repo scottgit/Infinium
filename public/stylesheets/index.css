@@ -11,7 +11,7 @@ h1 {
 .homepage-container{
     display: grid;
     grid-template-rows: 570px minmax(350px, auto) auto;
-    margin: 10px 200px;
+    margin: 10px 200px 90px;
 }
 
 
