@@ -42,7 +42,7 @@ const storyData = [
   ["Upcoming Movie Release: Avatar 2","", "https://cdn.pixabay.com/photo/2018/07/05/07/18/fantasy-3517649_960_720.jpg"],
   ["What is speculative fiction?","A broad category for fantasy and sci-fi","https://cdn.pixabay.com/photo/2017/10/06/19/20/fantasy-2824304_960_720.jpg"],
   ["Book deals","Updated sales on spec fic books","https://cdn.pixabay.com/photo/2016/03/09/09/14/books-1245690_960_720.jpg"],
-  ["Julian May","Revisiting her 'Saga of Pliocene Exile' and 'Galactic Milieu Series'", "https://cdn.pixabay.com/photo/2016/03/09/09/14/books-1245690_960_720.jpg"],
+  ["Julian May","Revisiting her 'Saga of Pliocene Exile' and 'Galactic Milieu Series'", "https://cdn.pixabay.com/photo/2017/12/03/17/23/fantasy-2995326_960_720.jpg"],
   ["Design your own superhero","New website goes live","https://cdn.pixabay.com/photo/2019/09/22/13/11/superhero-4496015_960_720.jpg"],
   ["Monsters are everywhere","True life stories of fictional narratives","https://cdn.pixabay.com/photo/2018/09/20/06/53/horror-3690119_960_720.jpg"],
   ["Roleplaying roundup","The best in the latest role-playing games","https://cdn.pixabay.com/photo/2014/12/14/18/33/cube-568105_960_720.jpg"],
