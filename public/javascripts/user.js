@@ -34,14 +34,30 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   /* Edit the user description */ 
   document.querySelector(".nameplate_bio_edit").addEventListener("click", event => {
-    const parent = document.querySelector(".nameplate"); 
+    //remove the original text and add a new text box for editing 
+    console.log("HEYY")
+    const editButton = document.querySelector(".nameplate_bio_edit");
+    editButton.innerHTML = "Cancel"; 
     const description = document.querySelector(".nameplate_bio"); 
     const originalText = description.innerHTML;
     description.remove(); 
-    const newDescription = document.createElement("input"); 
+    const newDescription = document.createElement("textarea"); 
     newDescription.setAttribute("class", "nameplate_bio_edit_textbox");
+    newDescription.setAttribute("rows", "7");
+    newDescription.setAttribute("cols", "40");
+    newDescription.setAttribute("maxlength", "250");
     newDescription.value = originalText;   
-    parent.prepend(newDescription); 
+    editButton.before(newDescription); 
+    editButton.remove(); 
+    //add cancel & save button  
+    const cancelButton = document.createElement("button"); 
+    cancelButton.setAttribute("class", "nameplate_bio_cancel"); 
+    cancelButton.innerHTML = "Cancel"; 
+    newDescription.after(cancelButton); 
+    const saveButton = document.createElement("button"); 
+    saveButton.setAttribute("class", "nameplate_bio_save");
+    saveButton.innerHTML = "Save";  
+    cancelButton.after(saveButton); 
   });
 
 

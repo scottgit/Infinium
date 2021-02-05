@@ -213,10 +213,28 @@
 }
 
 .nameplate_bio_edit_textbox { 
-  min-height: 100px;
-  border: none;
+  display: block; 
+  margin-top: 5px;
+  border-radius: 5px;
   resize: none;
-  outline: none;
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.nameplate_bio_cancel {
+  display: inline-block; 
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.nameplate_bio_save {
+  display: inline-block; 
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+  margin-left: 10px;
 }
 
 .follow_following{
