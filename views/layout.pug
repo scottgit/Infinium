@@ -15,30 +15,31 @@ html
   body
     header
       .header
-        .title
-          if (contextControls === 'story-edit' || contextControls === 'story-edit-with-publish' || contextControls === 'not-home')
-            a.logo-anchor(href="/")
+        .header-inside-container
+          .title
+            if (contextControls === 'story-edit' || contextControls === 'story-edit-with-publish' || contextControls === 'not-home')
+              a.logo-anchor(href="/")
+                img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
+                .title_name Infinium
+            else
               img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
               .title_name Infinium
-          else
-            img(src="/images/infinity.jpg", alt="Infinity" class="infinity_image")
-            .title_name Infinium
-          if contextMessage
-            .title_greeting= contextMessage
-          else if !aboutPage
-            a(href='/about').title_greeting-link Live Long and Prosper
-          else
-            .title_greeting Live Long and Prosper
-          if contextControls
-            if (contextControls === 'story-edit' || contextControls === 'story-edit-with-publish')
-              button.story-save.rainbow-button(type='submit' form='story-edit-form' value="Save") Save
-            if (contextControls === 'story-edit-with-publish')
-              button.story-publish.rainbow-button(type='button' value="Publish") Publish
-        .icons
-          if locals.authenticated
-            include user-loggedin-dropdown-include
-          else
-            include user-logged-out-include
+            if contextMessage
+              .title_greeting= contextMessage
+            else if !aboutPage
+              a(href='/about').title_greeting-link Live Long and Prosper
+            else
+              .title_greeting Live Long and Prosper
+            if contextControls
+              if (contextControls === 'story-edit' || contextControls === 'story-edit-with-publish')
+                button.story-save.rainbow-button(type='submit' form='story-edit-form' value="Save") Save
+              if (contextControls === 'story-edit-with-publish')
+                button.story-publish.rainbow-button(type='button' value="Publish") Publish
+          .icons
+            if locals.authenticated
+              include user-loggedin-dropdown-include
+            else
+              include user-logged-out-include
     block content
     include modal-include
     include footer
