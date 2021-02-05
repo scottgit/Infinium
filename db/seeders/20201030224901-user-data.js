@@ -14,17 +14,26 @@ module.exports = {
     ];
 
     const extraUsers = 30;
+    const descriptions = [
+      "Just your average fantasy lover.",
+      "Sci-fi, all the time, that's what keeps me going!",
+      "I like speculative fiction in all its forms.",
+      "Roleplaying, movies, and Magic: The Gathering are my interests.",
+      "Superheros are my super delight!"
+    ]
 
     for(let i = 0; i < extraUsers; i++) {
+      const gender = i % 2 ? 'male' : 'female';
+      const genderGroup = i % 2 ? 'men' : 'women';
       const createdAt = faker.date.past(3);
-      const first = faker.name.firstName();
-      const last = faker.name.lastName();
+      const first = faker.name.firstName(gender);
+      const last = faker.name.lastName(gender);
       users.push({
         username: faker.internet.userName(first, last),
         email: faker.internet.email(first, last),
         hashedPassword: bcrypt.hashSync(faker.internet.password(8, false, null, 'Ca!7'), 10),
-        avatar: '',
-        description: '',
+        avatar: `https://randomuser.me/api/portraits/${genderGroup}/${99-i}.jpg`, //0-99 max on pics,
+        description: descriptions[i % 5],
         createdAt,
         updatedAt: faker.date.between(createdAt, faker.date.recent()),
       });
