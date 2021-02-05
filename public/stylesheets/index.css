@@ -9,9 +9,11 @@ h1 {
 }
 
 .homepage-container{
-    display: grid;
-    grid-template-rows: 570px minmax(350px, auto) auto;
-    margin: 10px 200px 90px;
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
 }
 
 
@@ -42,7 +44,8 @@ h1 {
 /* homepage uppper css */
 .homepage-upper {
     display: grid;
-    grid-template-columns: 40% 40% 20%;
+    grid-template-columns: 38% 38% 24%;
+    margin: 0 50px;
 }
 
 /* top section css*/
@@ -58,11 +61,13 @@ h1 {
 }
 
 .top-story_content > img {
-    width: 100%;
+    width: 95%;
+    margin-bottom: 5px;
 }
 
 .top-story_author > img {
     border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .top-story_author > h4 {
@@ -241,35 +246,59 @@ h1 {
 /* trending section css*/
 /* trending */
 
-.homepage-trending {
+.homepage-trending-outside{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    padding: 30px 0;
     border-top: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin: 30px 0;
 }
 
-.homepage-trending > h3 {
-    padding-top: 7px;
+.homepage-trending {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 50px;
     padding-bottom: 20px;
+    max-width: 1100px;
+}
+
+.homepage-trending-header{
+    display: flex;
+    flex-direction: row;
+    max-width: 1100px;
+    align-items: flex-start;
+    padding: 12px;
+}
+
+.homepage-trending-header > h3 {
     font-family: 'Noto Sans KR', sans-serif;
-    font-size: 20px;
+    font-size: 14px;
+    font-weight: 900;
+}
+
+.homepage-trending-header > img {
+    margin-right: 5px;
+    height: 22px;
+    width: 22px;
 }
 
 .homepage-trending_container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1100px;
 }
 
 .trending-article {
     display: inline-block;
-    display: flex;
-    flex-direction: row;
-    margin: 0;
+    margin-bottom: 6px;
     padding: 12px;
     min-height: 100px;
+    width: 320px;
 }
 
 .trending-author {
@@ -331,6 +360,7 @@ h1 {
 .homepage-lower {
     display: flex;
     justify-content: space-between;
+    margin: 60px 50px;
 }
 
 /* stream section css*/
@@ -456,4 +486,67 @@ h1 {
 .notation-container_content p {
     margin: 0;
     font-size: 11px;
+}
+
+
+/*********** MEDIA QUERIES ***************/
+
+@media only screen and (max-width: 1080px) {
+    .homepage-upper{
+        grid-template-columns: 50% 50%;
+    }
+    .homepage-top-stories{
+        border-right: none;
+    }
+    .homepage-followers {
+        display: none;
+    }
+    .trending-article{
+        width: 380px;
+    }
+    /* .homepage-notation {
+        display: none;
+    }
+    .homepage-stream{
+        width: 100%;
+    } */
+  }
+
+@media only screen and (max-width: 728px) {
+    .homepage-top-stories{
+        display: none;
+    }
+
+    .homepage-top-story{
+        padding-right: 0;
+    }
+
+    .top-story_content > img{
+        width: 100%;
+    }
+
+    .homepage-upper{
+        grid-template-columns: 100%;
+        margin: 0 20px;
+    }
+
+    .homepage-trending{
+        margin: 0 20px;
+    }
+
+    .trending-article{
+        width: 100%;
+    }
+
+    .homepage-lower{
+        margin: 60px 20px;
+    }
+
+    .homepage-stream{
+        width: 100%
+    }
+
+    .homepage-notation{
+        display: none;
+    }
 }
