@@ -39,7 +39,7 @@
 
 .title_greeting,
 .title_greeting-link {
-  padding: 7px 15px 0 15px;
+  padding: 0 15px;
   font-size: 16px;
   font-weight: bold;
   border-left-style: solid;
@@ -48,6 +48,7 @@
   font-family: 'Noto Sans JP', sans-serif;
   text-decoration: none;
   position: relative;
+  margin-top: 7px;
 }
 
 .title_greeting-link:hover::after {
