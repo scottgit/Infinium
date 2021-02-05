@@ -8,90 +8,91 @@ append head
   //- add page specific js
 
 block content
-  .homepage-container
-    if (!locals.user)
-      .noUser_overlay
-        .noUser_welcome
-          h1 Where your ideas
-          h1 are out of this world
-        .noUser_text
-          p Read and share your speculative fan fiction.
-          p Everyone's welcome!
-            a(href="/about") Learn more
-        img(src="./images/abduction.png" class="abduction")
-    else
-      .homepage-top-story
-        .top-story_content
-          if (topStory.imageLink)
-            img(src=topStory.imageLink alt="")
-          .top-story_author
+  .homepage-holder
+    .homepage-container
+      if (!locals.user)
+        .noUser_overlay
+          .noUser_welcome
+            h1 Where your ideas
+            h1 are out of this world
+          .noUser_text
+            p Read and share your speculative fan fiction.
+            p Everyone's welcome!
+              a(href="/about") Learn more
+          img(src="./images/abduction.png" class="abduction")
+      else
+        .homepage-top-story
+          .top-story_content
             if (topStory.imageLink)
-              img(src=topStory.imageLink width="20" height="20" alt="")
-            h4= topStory.author
-          h2
-            a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
-          p= topStory.subtitle
-          .top-story_readtime
-            a(href="") Read more
-      .homepage-top-stories
-        .stories-container
-          each highlight in highlights
-            .top-stories_article
-              .article-content
-                .article-content_author
+              img(src=topStory.imageLink alt="")
+            .top-story_author
+              if (topStory.imageLink)
+                img(src=topStory.imageLink width="20" height="20" alt="")
+              h4= topStory.author
+            h2
+              a(href=`/users/${topStory.userId}/stories/${topStory.hexId}`)= topStory.title
+            p= topStory.subtitle
+            .top-story_readtime
+              a(href="") Read more
+        .homepage-top-stories
+          .stories-container
+            each highlight in highlights
+              .top-stories_article
+                .article-content
+                  .article-content_author
+                    if (highlight.imageLink)
+                      img(src=highlight.imageLink width="20" height="20" alt="")
+                    h4= highlight.author
+                  .article-content_story
+                    a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
+                  .article-content_date
+                    h4= highlight.date
+                .article-img
                   if (highlight.imageLink)
-                    img(src=highlight.imageLink width="20" height="20" alt="")
-                  h4= highlight.author
-                h2
-                  a(href=`/users/${highlight.userId}/stories/${highlight.hexId}`)= highlight.title
-                .article-content_date
-                  h4= highlight.date
-              .article-img
-                if (highlight.imageLink)
-                  img(src=highlight.imageLink alt="")
-      .homepage-followers
-        .following-container
-          .following-header
-            h3 Latest From Following
-          .following-list
-            each follower in followersList
-              each profile in userProfile
-                if (follower.followerId === profile.id)
-                  .following
-                    img(src='/images/ET.jpg' width='55' height="55" alt="prof pic")
-                    a(href=`/users/${profile.id}`)= profile.username
-    .homepage-trending
-      h3 Trending on Infinium
-      .homepage-trending_container
-        each trend in trending
-          .trending-article
-            img(src='/images/trending.svg' width="42" height="42" alt="")
-            .trending-article_content
-              .trending-author
-                if (trend.imageLink)
-                  img(src=trend.imageLink width="20" height="20" alt="")
-                h4= trend.author
-              h2
-                a(href=`/users/${trend.userId}/stories/${trend.hexId}`)= trend.title
-              p= trend.date
-    .homepage-stream
-      .homepage-stream_container
-        each recent in recents
-          .stream-article
-            .stream-content
-              .stream-content_author
+                    img(src=highlight.imageLink alt="")
+        .homepage-followers
+          .following-container
+            .following-header
+              h3 Latest From Following
+            .following-list
+              each follower in followersList
+                each profile in userProfile
+                  if (follower.followerId === profile.id)
+                    .following
+                      img(src='/images/ET.jpg' width='55' height="55" alt="prof pic")
+                      a(href=`/users/${profile.id}`)= profile.username
+      .homepage-trending
+        h3 Trending on Infinium
+        .homepage-trending_container
+          each trend in trending
+            .trending-article
+              .trending-article_content
+                .trending-author
+                  if (trend.imageLink)
+                    img(src=trend.imageLink width="20" height="20" alt="")
+                  h4= trend.author
+                  img(class='trending-article-trending-image' src='/images/trending.svg' alt="")
+                div
+                  a(href=`/users/${trend.userId}/stories/${trend.hexId}`)= trend.title
+                p= trend.date
+      .homepage-stream
+        .homepage-stream_container
+          each recent in recents
+            .stream-article
+              .stream-content
+                .stream-content_author
+                  if (recent.imageLink)
+                    img(src=recent.imageLink width="20" height="20" alt="")
+                  h4= recent.author
+                .stream-content_headers
+                  h2
+                    a(href=`/users/${recent.userId}/stories/${recent.hexId}`)= recent.title
+                p= recent.date
+              .stream-article_img
                 if (recent.imageLink)
-                  img(src=recent.imageLink width="20" height="20" alt="")
-                h4= recent.author
-              .stream-content_headers
-                h2
-                  a(href=`/users/${recent.userId}/stories/${recent.hexId}`)= recent.title
-              p= recent.date
-            .stream-article_img
-              if (recent.imageLink)
-                img(src=recent.imageLink width="100" height="100" alt="")
-    .homepage-bookmarks
-      .bookmarks-container
-        .bookmarks-container_content
-          h4 Bookmark stories for later
-          p Start saving stories by clicking the bookmark icon and you’ll find them all here.
+                  img(src=recent.imageLink width="100" height="100" alt="")
+      .homepage-bookmarks
+        .bookmarks-container
+          .bookmarks-container_content
+            h4 Bookmark stories for later
+            p Start saving stories by clicking the bookmark icon and you’ll find them all here.
