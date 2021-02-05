@@ -88,6 +88,8 @@
   font-family: 'Noto Sans JP', sans-serif;
   color: grey;
   text-decoration: none;
+  display: inline-block;
+  min-width: 3em;
 }
 
 .about:hover{
@@ -183,9 +185,6 @@
   color: grey;
 }
 
-.storyholder{
-  margin-top: -75px;
-}
 
 .about_me{
   margin: 50px 200px;

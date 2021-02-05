@@ -5,10 +5,12 @@ html
         title="Infinium"
         link(rel='stylesheet' href='/stylesheets/reset.css')
         link(rel='stylesheet' href='/stylesheets/layout.css')
+        link(rel='stylesheet' href='/stylesheets/footer.css')
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap")
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap")
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;900&display=swap")
         script(src="/javascripts/layout.js" type="module" defer)
+        script(src="/javascripts/modal.js" type="module" defer)
       block head_trailer
   body
     header
@@ -36,9 +38,7 @@ html
           if locals.authenticated
             include user-loggedin-dropdown-include
           else
-            span(class="loggedin")
-              a(class="login" href='/users/login')
-                button.rainbow-button Login
-              a(class="register" href='/users/register')
-                button.rainbow-button Register
+            include user-logged-out-include
     block content
+    include modal-include
+    include footer

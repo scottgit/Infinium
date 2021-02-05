@@ -15,7 +15,7 @@ const { csrfProtection,
 
 
 /* GET the main user page */
-router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
+router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const userId = req.params.userId
   const user = await User.findByPk(userId, {
     include: Story
@@ -63,6 +63,7 @@ router.get('/:userId(\\d+)', asyncHandler(async (req, res) => {
     followingCount,
     userId,
     name,
+    token: req.csrfToken()
   });
 }));
 

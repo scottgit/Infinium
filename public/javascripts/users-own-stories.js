@@ -1,3 +1,5 @@
+import { showModal } from "./modal.js";
+
 document.addEventListener("DOMContentLoaded", e => {
   const draftsTab = document.querySelector('.tab-drafts');
   const publishedTab = document.querySelector('.tab-published');
@@ -42,16 +44,13 @@ document.addEventListener("DOMContentLoaded", e => {
       try {
         const res = await fetch(`${target.href}`, {
             method: "DELETE",
-            // headers: {
-            //     "Content-Type": "application/json",
-            // },
         });
         if (!res.ok) {
             throw new Error('Deletion failed' + res);
         }
         target.closest('.story').remove();
       } catch (err) {
-          alert(err.message);
+          showModal(err.message);
       }
     }
   });

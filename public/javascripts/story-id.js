@@ -1,3 +1,5 @@
+import { showModal } from "./modal.js";
+
 window.addEventListener("DOMContentLoaded", (event) => {
  let lightsaber = document.querySelector(".clap-pic")
  lightsaber.addEventListener('click', event => {
@@ -25,7 +27,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         })
         .then (data => {
             if (data.limitedOut) {
-              alert('You reached your maximum of 50 lightsabers.')
+              showModal('You reached your maximum of 50 lightsabers.')
             } else {
               let score = document.getElementById('likesCount');
               //The likesCount is already the new value of +1
@@ -33,7 +35,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
             }
         })
         .catch (err => {
-          alert(err.message);
+          showModal(err.message);
         })
     });
   }
@@ -41,9 +43,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
     clapper = document.querySelector('.clap-pic');
     clapper.addEventListener('click', e => {
       if(clapper.id === 'novote') {
-        alert('You cannot ignite a lightsaber for your own story!');
+        showModal('You cannot ignite a lightsaber for your own story!');
       } else {
-        alert('We\'re sorry, but you must log in to give lightsabers.');
+        showModal('We\'re sorry, but you must log in to give lightsabers.');
       }
     })
   }

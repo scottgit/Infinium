@@ -4,6 +4,7 @@ html
       block head
         title="Infinium"
         link(rel='stylesheet' href='/stylesheets/user.css')
+        link(rel='stylesheet' href='/stylesheets/footer.css')
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@900&display=swap")
         link(rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;900&display=swap")
         script(src="/javascripts/layout.js" type="module" defer)
@@ -30,3 +31,5 @@ html
                   img(src= sto.imageLink, alt="doggies" class="storyImage_recent")
               .storyBody
                 p= sto.published
+    include modal-include
+    include footer

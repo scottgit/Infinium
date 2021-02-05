@@ -1,6 +1,6 @@
 .header
   .title
-    a(href=`/users/${userId}` class= "title_name")= author || name
+    span(class= "title_name")= author || name
     if followerCount === 1
       .followers_count #[span #{followerCount}] Follower
     else
@@ -20,11 +20,7 @@
       if authCompare
         a.rainbow-button(href="/stories/new-story") New Story
     else
-      span(class="loggedin")
-        a(class="login" href='/users/login')
-          button.rainbow-button Login
-        a(class="register" href='/users/register')
-          button.rainbow-button Register
+      include user-logged-out-include
     a(href="/")
       .infinity_image
         img(src="/images/infinity.jpg" alt="Infinity" class="infinity_image_icon")
