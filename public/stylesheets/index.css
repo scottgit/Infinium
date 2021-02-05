@@ -20,11 +20,11 @@ h1 {
 .noUser_welcome{
     position: absolute;
     font-family: 'Playfair Display', serif;
-    font-size: 60px;
     margin-top: 140px;
 }
+
 .noUser_welcome > h1{
-    font-size: 44px;
+    font-size:44px;
 }
 
 .noUser_text{
@@ -34,6 +34,15 @@ h1 {
     margin-top: 280px;
     padding-top: -10px;
     color: black;
+}
+
+.noUser_text > p > a{
+    font-size: 16px;
+}
+
+.abduction-holder{
+    max-height: 530px;
+    max-width: 1000px;
 }
 
 .abduction{
@@ -262,7 +271,7 @@ h1 {
     flex-wrap: wrap;
     margin: 0 50px;
     padding-bottom: 20px;
-    max-width: 1100px;
+    max-width: 1000px;
 }
 
 .homepage-trending-header{
@@ -296,7 +305,7 @@ h1 {
 .trending-article {
     display: inline-block;
     margin-bottom: 6px;
-    padding: 12px;
+    padding-top: 12px;
     min-height: 100px;
     width: 320px;
 }
@@ -510,6 +519,26 @@ h1 {
     .homepage-stream{
         width: 100%;
     } */
+
+    .noUser_welcome{
+        margin-top: 120px;
+        margin-left: 20px
+    }
+    
+    .noUser_welcome > h1{
+        font-size: 32px;
+    }
+
+    .noUser_text{
+        font-size: 12px;
+        margin-top: 220px;
+        padding-top: -10px;
+        margin-left: 20px;
+    }
+
+    .noUser_text > p > a{
+        font-size: 12px;
+    }
   }
 
 @media only screen and (max-width: 728px) {
@@ -548,5 +577,25 @@ h1 {
 
     .homepage-notation{
         display: none;
+    }
+
+    .noUser_welcome{
+        margin-top: 80px;
+        margin-left: 10px
+    }
+    
+    .noUser_welcome > h1{
+        font-size: 20px;
+    }
+
+    .noUser_text{
+        font-size: 8px;
+        margin-top: 160px;
+        padding-top: -10px;
+        margin-left: 10px;
+    }
+
+    .noUser_text > p > a{
+        font-size: 8px;
     }
 }
