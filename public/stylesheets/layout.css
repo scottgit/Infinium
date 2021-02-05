@@ -27,6 +27,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  margin-right: 28px;
   padding: 7px 0 0 0;
 }
 
@@ -137,6 +138,14 @@
 @media only screen and (max-width: 728px) {
   .title_greeting-link{
     display: none;
+  }
+
+  .icons{
+    margin-right: 0;
+  }
+
+  .header-inside-container{
+    margin: 30px 20px;
   }
 
 }
