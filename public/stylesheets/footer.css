@@ -12,10 +12,11 @@
 }
 
 .github-ind-container {
-  max-width: 1600px;
+  display: inline-block;
   display: flex;
   /* flex-wrap: wrap; */
   flex-direction: row;
+  justify-content: space-evenly;
   margin: 0 auto;
   padding: 10px 12px;
 }
