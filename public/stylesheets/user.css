@@ -1,13 +1,24 @@
 @import "global.css";
 
-.header{
-  height: 100px;
-  padding: 65px 200px 90px 200px;
-  display: grid;
-  grid-template-columns: 80%, 20%;
-  grid-template-rows: 100%;
-  box-sizing: border-box;
+.header-outside-container{
+  width: 100vw;
   border-bottom: lightgrey solid 1px;
+}
+
+.header{
+  max-width: 1100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.header-inside-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 30px 5px;
 }
 
 .title{
@@ -22,7 +33,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  padding: 7px 0 0 0;
+  padding: 7px 10px 0 0;
 }
 
 .new_story{
@@ -41,7 +52,7 @@
 }
 
 .title_name{
-  padding: 7px 15px 0 15px;
+  padding: 7px 15px 0 5px;
   font-size: 26px;
   font-weight: bold;
   font-family: 'Noto Sans JP', sans-serif;
@@ -243,11 +254,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin: 0 10px;
+  margin-bottom: 50px;
 }
 
 .recentStory{
-  width: 650px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 640px;
   min-height: 100px;
+  margin-top: 20px;
 }
 
 .recentStory_title{
@@ -268,8 +285,7 @@
 
 .storyImage{
   margin-top: 10px;
-  width: 650px;
-  height: 500px;
+  max-width: 640px;
 }
 
 .storyImage_recent{
@@ -278,7 +294,8 @@
 }
 
 .storyBody{
-  width: 650px;
+  max-width: 640px;
+  font-size: 18px;
   padding: 20px 0;
   border-bottom: lightgrey solid 1px;
 }
@@ -289,4 +306,23 @@
 
 .hide{
   display: none;
+}
+
+@media only screen and (max-width: 660px) {
+  .recentStory{
+    width: auto;
+    align-self: flex-start;
+  }
+
+  .storyBody{
+    font-size: 16px;
+  }
+
+  .followers_count{
+    display: none;
+  }
+
+  .dot{
+    display: none;
+  }
 }
