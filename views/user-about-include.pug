@@ -1,7 +1,11 @@
 .about_me.hide
   .person_info
-    .nameplate= `About ${author || name}`
-      p(class="nameplate_bio") I'm so interesting!
+    .nameplate= `About ${name || author}`
+      if authCompare 
+        p.nameplate_bio= `Write something about yourself here ${name}!` 
+        button Edit 
+      else
+        p(class="nameplate_bio") I'm so interesting!
     .follow_following
       .person_info_following Following #[span #{followingCount}] people
       .person_info_dot .
