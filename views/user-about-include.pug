@@ -3,7 +3,7 @@
     .nameplate= `About ${name || author}`
       if authCompare 
         p.nameplate_bio= `Write something about yourself here ${name}!` 
-        button Edit 
+        button.nameplate_bio_edit Edit 
       else
         p(class="nameplate_bio") I'm so interesting!
     .follow_following

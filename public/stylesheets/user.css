@@ -185,7 +185,6 @@
   color: grey;
 }
 
-
 .about_me{
   margin: 50px 200px;
   display: grid;
@@ -205,6 +204,19 @@
   font-size: 18px;
   font-weight: normal;
   font-family: 'Noto Sans JP', sans-serif;
+}
+
+.nameplate_bio_edit{
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.nameplate_bio_edit_textbox { 
+  min-height: 100px;
+  border: none;
+  resize: none;
+  outline: none;
 }
 
 .follow_following{

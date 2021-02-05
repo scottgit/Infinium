@@ -32,6 +32,18 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
   })
 
+  /* Edit the user description */ 
+  document.querySelector(".nameplate_bio_edit").addEventListener("click", event => {
+    const parent = document.querySelector(".nameplate"); 
+    const description = document.querySelector(".nameplate_bio"); 
+    const originalText = description.innerHTML;
+    description.remove(); 
+    const newDescription = document.createElement("input"); 
+    newDescription.setAttribute("class", "nameplate_bio_edit_textbox");
+    newDescription.value = originalText;   
+    parent.prepend(newDescription); 
+  });
+
 
   /* POST request to create a follow relationship */
 
