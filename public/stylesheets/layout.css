@@ -1,29 +1,33 @@
 @import "global.css";
 
 .header{
-  height: 50px;
-  padding: 5px 110px;
-  display: grid;
-  grid-template-columns: 80%, 20%;
-  grid-template-rows: 100%;
-  box-sizing: border-box;
-  margin: 30px;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.header-inside-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 30px 50px;
 }
 
 .title{
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding-left: 60px;
 }
 
 .icons{
   align-items: center;
-  grid-column-start: 2;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  margin-right: 50px;
+  margin-right: 28px;
   padding: 7px 0 0 0;
 }
 
@@ -35,7 +39,7 @@
 
 .title_greeting,
 .title_greeting-link {
-  padding: 7px 15px 0 15px;
+  padding: 0 15px;
   font-size: 16px;
   font-weight: bold;
   border-left-style: solid;
@@ -44,6 +48,7 @@
   font-family: 'Noto Sans JP', sans-serif;
   text-decoration: none;
   position: relative;
+  margin-top: 7px;
 }
 
 .title_greeting-link:hover::after {
@@ -65,8 +70,8 @@
 
 .icons_image{
   align-self: center;
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
 }
 
@@ -129,4 +134,19 @@
 
 .alert-danger ul {
   padding-left: 20px;
+}
+
+@media only screen and (max-width: 728px) {
+  .title_greeting-link{
+    display: none;
+  }
+
+  .icons{
+    margin-right: 0;
+  }
+
+  .header-inside-container{
+    margin: 30px 20px;
+  }
+
 }

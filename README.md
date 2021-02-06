@@ -1,7 +1,8 @@
 ![Logo of the project](./public/images/infinium-logo.JPG)
 
 # Infinium
-> Welcome to Infinium!
+
+**Welcome to Infinium!**
 
 A website created so that the ordinary human can escape from their own reality and enter a world of science fiction and fantasy. Browse endlessly through the countless tales of magic and wonder or create your own world with the story creation tools available. Follow your friends and interact with their recounts of heroism and adventure by liking and commenting.
 
@@ -123,6 +124,54 @@ There were some unique challenges with the comments, causing three of us to spen
 
 There was also some bug that was a combo: after *updating* the comment and/or *canceling* a delete, going through with a delete was causing "extra" deletions from the "Responses" count based on the number of times buttons were hit. This turned out to finally be solved (1) by unnesting some of the `addEventListener()` calls and (2) making those calls named functions and explicitly calling `removeEventListener()` on them when they were no longer needed.
 
+## Local Installation
+
+Guidelines to run the app locally for development and testing purposes.
+
+### Installation Prerequisites
+
+For local installation you need Git, node.js (and its package manager that comes with it, npm) and a PostgreSQL database.
+
+### Installation Instructions
+
+1. Clone the repository:
+
+    ```
+    $ git clone https://github.com/scottgit/Infinium.git
+    ```
+2. Create a postgres user infinium_app with CREATEDB privileges
+3. Create a .env file at the root of this project, add environment variables provided in .env.example to .env file (make sure the database password is set correctly and you create a SESSION_SECRET)
+4. At the root of the repository, install the dependencies
+
+    ```
+    $ npm install
+    ```
+5. Still at the root, run the sequelize commands to create the database, migrate models, and seed the database:
+
+    ```
+    $ npx dotenv sequelize db:create
+    $ npx dotenv sequelize db:migrate
+    $ npx dotenv sequelize db:seed:all
+    ```
+
+### Running the App
+
+Still at the root, run the app with:
+
+```
+$ npm start
+```
+Then open a browser and navigate to `localhost:8080`
+
+## Technologies Used
+
+A list of some primary technologies used for Infinium are:
+
+- Node.js
+- Express.js
+- Sequelize
+- Pug templates
+
 ## FAQ
 
 ### How can I write a story or leave a comment?
@@ -145,7 +194,7 @@ https://infinium.herokuapp.com/
 
 ## Contributing
 
-* Dale Sakamoto - DaleTsakamoto @ GitHub
-* Michael Jensen - Mjensen24 @ GitHub
-* Rhys Previte - Preezey24 @ GitHub
-* Scott Smith - scottgit @ GitHub
+* Dale Sakamoto - [DaleTsakamoto @ GitHub](https://daletsakamoto.github.io/)
+* Michael Jensen - [Mjensen24 @ GitHub](https://github.com/Mjensen24)
+* Rhys Previte - [Preezey24 @ GitHub](https://github.com/Preezey24)
+* Scott Smith - [scottgit @ GitHub](https://github.com/scottgit)

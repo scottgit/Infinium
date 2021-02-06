@@ -61,3 +61,30 @@
   color: black;
   margin-top: 5px;
 }
+
+@media only screen and (max-width: 1080px) {
+  .github-ind-phrase{
+    margin-top: 4px;
+    font-size: 12px;
+  }
+
+  .github-ind-header > div {
+    font-size: 12px;
+  }
+  
+}
+
+@media only screen and (max-width: 728px) {
+  .github-ind-phrase{
+    display: none;
+  }
+
+  .github-ind-header > div {
+    font-size: 10px;
+  }
+
+  .github-ind-container > a > img{
+    margin-right: 20px;
+  }
+
+}
