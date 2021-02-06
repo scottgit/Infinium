@@ -67,6 +67,22 @@ window.addEventListener("DOMContentLoaded", (event) => {
     description.style.display = "block"; 
   }); 
 
+  //save description 
+  document.querySelector(".nameplate_bio_save").addEventListener('click', event => {
+    const cancelButton = document.querySelector(".nameplate_bio_cancel"); 
+    cancelButton.style.display = "none";  
+    const saveButton = document.querySelector(".nameplate_bio_save"); 
+    saveButton.style.display = "none";  
+    const textBox = document.querySelector(".nameplate_bio_edit_textbox");
+    const newDescription = textBox.value; 
+    textBox.style.display = "none";  
+    const editButton = document.querySelector(".nameplate_bio_edit"); 
+    editButton.style.display = "inline-block"; 
+    const description = document.querySelector(".nameplate_bio");
+    description.innerHTML = newDescription; 
+    description.style.display = "block"; 
+  }); 
+
   /* POST request to create a follow relationship */
 
   const follow = document.querySelector('.follow');
