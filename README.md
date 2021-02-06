@@ -166,10 +166,10 @@ Then open a browser and navigate to `localhost:8080`
 
 A list of some primary technologies used for Infinium are:
 
-    - Node.js
-    - Express.js
-    - Sequelize
-    - Pug templates
+- Node.js
+- Express.js
+- Sequelize
+- Pug templates
 
 ## FAQ
 
