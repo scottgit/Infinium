@@ -213,7 +213,7 @@
 }
 
 .nameplate_bio_edit_textbox { 
-  display: block; 
+  display: none; 
   margin-top: 5px;
   border-radius: 5px;
   resize: none;
@@ -223,14 +223,14 @@
 }
 
 .nameplate_bio_cancel {
-  display: inline-block; 
+  display: none; 
   font-size: 18px;
   font-weight: normal;
   font-family: 'Noto Sans JP', sans-serif;
 }
 
 .nameplate_bio_save {
-  display: inline-block; 
+  display: none; 
   font-size: 18px;
   font-weight: normal;
   font-family: 'Noto Sans JP', sans-serif;

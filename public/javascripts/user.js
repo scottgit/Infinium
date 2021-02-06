@@ -35,31 +35,37 @@ window.addEventListener("DOMContentLoaded", (event) => {
   /* Edit the user description */ 
   document.querySelector(".nameplate_bio_edit").addEventListener("click", event => {
     //remove the original text and add a new text box for editing 
-    console.log("HEYY")
-    const editButton = document.querySelector(".nameplate_bio_edit");
-    editButton.innerHTML = "Cancel"; 
     const description = document.querySelector(".nameplate_bio"); 
     const originalText = description.innerHTML;
-    description.remove(); 
-    const newDescription = document.createElement("textarea"); 
-    newDescription.setAttribute("class", "nameplate_bio_edit_textbox");
+    description.style.display = "none";  
+    const newDescription = document.querySelector(".nameplate_bio_edit_textbox"); 
+    newDescription.style.display = "block"; 
     newDescription.setAttribute("rows", "7");
     newDescription.setAttribute("cols", "40");
     newDescription.setAttribute("maxlength", "250");
     newDescription.value = originalText;   
-    editButton.before(newDescription); 
-    editButton.remove(); 
+    const editButton = document.querySelector(".nameplate_bio_edit"); 
+    editButton.style.display = "none"; 
     //add cancel & save button  
-    const cancelButton = document.createElement("button"); 
-    cancelButton.setAttribute("class", "nameplate_bio_cancel"); 
-    cancelButton.innerHTML = "Cancel"; 
-    newDescription.after(cancelButton); 
-    const saveButton = document.createElement("button"); 
-    saveButton.setAttribute("class", "nameplate_bio_save");
-    saveButton.innerHTML = "Save";  
-    cancelButton.after(saveButton); 
+    const cancelButton = document.querySelector(".nameplate_bio_cancel"); 
+    cancelButton.style.display = "inline-block"; 
+    const saveButton = document.querySelector(".nameplate_bio_save"); 
+    saveButton.style.display = "inline-block"; 
   });
-
+  
+  //cancel editing 
+  document.querySelector(".nameplate_bio_cancel").addEventListener('click', event => {
+    const cancelButton = document.querySelector(".nameplate_bio_cancel"); 
+    cancelButton.style.display = "none";  
+    const saveButton = document.querySelector(".nameplate_bio_save"); 
+    saveButton.style.display = "none";  
+    const textBox = document.querySelector(".nameplate_bio_edit_textbox");
+    textBox.style.display = "none";  
+    const editButton = document.querySelector(".nameplate_bio_edit"); 
+    editButton.style.display = "inline-block"; 
+    const description = document.querySelector(".nameplate_bio");
+    description.style.display = "block"; 
+  }); 
 
   /* POST request to create a follow relationship */
 
