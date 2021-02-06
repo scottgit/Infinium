@@ -1,14 +1,17 @@
 .about_me.hide
   .person_info
     .nameplate= `About ${name || author}`
-      if authCompare 
-        p.nameplate_bio= `Write something about yourself here ${name}!` 
+      if authCompare
+        if description 
+          p.nameplate_bio= `${description}`
+        else  
+          p.nameplate_bio= `Write something about yourself here ${name}!` 
         textarea.nameplate_bio_edit_textbox
         button.nameplate_bio_edit Edit 
         button.nameplate_bio_cancel Cancel 
         button.nameplate_bio_save Save         
       else
-        p(class="nameplate_bio") I'm so interesting!
+        p.nameplate_bio= `${description}`
     .follow_following
       .person_info_following Following #[span #{followingCount}] people
       .person_info_dot .
