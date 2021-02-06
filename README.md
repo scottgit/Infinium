@@ -1,7 +1,8 @@
 ![Logo of the project](./public/images/infinium-logo.JPG)
 
 # Infinium
-> Welcome to Infinium!
+
+**Welcome to Infinium!**
 
 A website created so that the ordinary human can escape from their own reality and enter a world of science fiction and fantasy. Browse endlessly through the countless tales of magic and wonder or create your own world with the story creation tools available. Follow your friends and interact with their recounts of heroism and adventure by liking and commenting.
 
@@ -193,7 +194,7 @@ https://infinium.herokuapp.com/
 
 ## Contributing
 
-* Dale Sakamoto - DaleTsakamoto @ GitHub
-* Michael Jensen - Mjensen24 @ GitHub
-* Rhys Previte - Preezey24 @ GitHub
-* Scott Smith - scottgit @ GitHub
+* Dale Sakamoto - [DaleTsakamoto @ GitHub](https://daletsakamoto.github.io/)
+* Michael Jensen - [Mjensen24 @ GitHub](https://github.com/Mjensen24)
+* Rhys Previte - [Preezey24 @ GitHub](https://github.com/Preezey24)
+* Scott Smith - [scottgit @ GitHub](https://github.com/scottgit)
