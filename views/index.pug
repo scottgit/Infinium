@@ -16,9 +16,10 @@ block content
           h1 are out of this world
         .noUser_text
           p Read and share your speculative fan fiction.
-          p Everyone's welcome!
+          p Everyone's welcome! 
             a(href="/about") Learn more
-        img(src="./images/abduction.png" class="abduction")
+        .abduction-holder
+          img(src="./images/abduction.png" class="abduction")
     else
       .homepage-upper
         .homepage-top-story
@@ -61,20 +62,22 @@ block content
                     .following
                       img(src='/images/ET.jpg' width='55' height="55" alt="prof pic")
                       a(href=`/users/${profile.id}`)= profile.username
-    .homepage-trending
-      h3 Trending on Infinium
-      .homepage-trending_container
-        each trend in trending
-          .trending-article
-            img(src='/images/trending.svg' width="42" height="42" alt="")
-            .trending-article_content
-              .trending-author
-                if (trend.imageLink)
-                  img(src=trend.imageLink width="20" height="20" alt="")
-                h4= trend.author
-              h2
-                a(href=`/users/${trend.userId}/stories/${trend.hexId}`)= trend.title
-              p= trend.date
+    .homepage-trending-outside
+      .homepage-trending-header
+        img(src='/images/trending.svg' alt="")
+        h3 TRENDING ON INFINIUM
+      .homepage-trending
+        .homepage-trending_container
+          each trend in trending
+            .trending-article
+              .trending-article_content
+                .trending-author
+                  if (trend.imageLink)
+                    img(src=trend.imageLink width="20" height="20" alt="")
+                  h4= trend.author
+                h2
+                  a(href=`/users/${trend.userId}/stories/${trend.hexId}`)= trend.title
+                p= trend.date
     .homepage-lower
       .homepage-stream
         .homepage-stream_container
