@@ -3,7 +3,12 @@ import {postFollow, deleteFollow} from './follow.js'
 window.addEventListener("DOMContentLoaded", (event) => {
   const url = window.location.pathname;
   const urlArray = url.split('/'); 
-  const userId = urlArray[urlArray.length - 1]; 
+  let userId; 
+  if (urlArray.length === 3) {
+    userId = urlArray[urlArray.length - 1]; 
+  } else {
+    userId = urlArray[2]; 
+  }
   let showAbout = false;
 
   document.querySelector(".about").addEventListener("click", event => {
