@@ -1,7 +1,9 @@
 import {postFollow, deleteFollow} from './follow.js'
 
 window.addEventListener("DOMContentLoaded", (event) => {
-
+  const url = window.location.pathname;
+  const urlArray = url.split('/'); 
+  const userId = urlArray[urlArray.length - 1]; 
   let showAbout = false;
 
   document.querySelector(".about").addEventListener("click", event => {
@@ -68,7 +70,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   }); 
 
   //save description 
-  document.querySelector(".nameplate_bio_save").addEventListener('click', event => {
+  document.querySelector(".nameplate_bio_save").addEventListener('click', async event => {
     const cancelButton = document.querySelector(".nameplate_bio_cancel"); 
     cancelButton.style.display = "none";  
     const saveButton = document.querySelector(".nameplate_bio_save"); 
@@ -81,6 +83,21 @@ window.addEventListener("DOMContentLoaded", (event) => {
     const description = document.querySelector(".nameplate_bio");
     description.innerHTML = newDescription; 
     description.style.display = "block"; 
+    const body = {'description': newDescription};
+    try {
+        const res = await fetch(`/users/${userId}/description`, {
+            method: 'PUT', 
+            body: JSON.stringify(body),
+            headers: {
+              "Content-Type": "application/json",
+            },
+        });
+        if (!res.ok) {
+          throw res; 
+        }
+    } catch (err) {
+        console.log(err); 
+    }
   }); 
 
   /* POST request to create a follow relationship */
