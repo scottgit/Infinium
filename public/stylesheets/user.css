@@ -196,7 +196,6 @@
   color: grey;
 }
 
-
 .about_me{
   margin: 50px 200px;
   display: grid;
@@ -216,6 +215,47 @@
   font-size: 18px;
   font-weight: normal;
   font-family: 'Noto Sans JP', sans-serif;
+}
+
+.nameplate_bio_edit{
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.nameplate_bio_edit_textbox { 
+  display: none; 
+  margin-top: 5px;
+  border-radius: 5px;
+  resize: none;
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.nameplate_bio_cancel {
+  display: none; 
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.nameplate_bio_save {
+  display: none; 
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+  margin-left: 10px;
+  background: rgb(26, 137, 23);
+  color: rgb(255, 255, 255);
+  border-color: rgb(26, 137, 23);
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 3px;
+}
+
+.nameplate_bio_save:hover {
+  opacity: 0.8;
 }
 
 .follow_following{

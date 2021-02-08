@@ -195,10 +195,6 @@
     border-radius: 3px;
 }
 
-.comments-container__comment-text-box {
-
-}
-
 /* Delete box styling */
 .delete-container--hidden {
     display: none;
