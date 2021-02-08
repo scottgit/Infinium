@@ -24,10 +24,11 @@
         if avatar  
           img(src=`${avatar}`, alt="profilePic" class="profilePic_pic")
         else 
-          p= `Upload a photo of yourself here ${name}!`
-        form#image-form(method="PUT" enctype="multipart/form-data")
-        input(type="file" name="avatar")
-        button#image-form_button Submit 
+          p.profilePic_text= `Upload a photo of yourself here ${name}!`
+        form#image-form(enctype="multipart/form-data")
+          input(type="file" id="avatar")
+          button.image-form_upload Upload
+          button.image-form_submit Submit 
       else 
         img(src=`${avatar}`, alt="profilePic" class="profilePic_pic")
   

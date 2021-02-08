@@ -289,6 +289,20 @@
   height: 100%;
 }
 
+.profilePic_text {
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.image-form_upload {
+  display: block; 
+}
+
+.image-form_submit {
+  display: none; 
+}
+
 .recentStories{
   font-family: 'Noto Sans JP', sans-serif;
   display: flex;

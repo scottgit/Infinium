@@ -1,4 +1,5 @@
 const express = require('express');
+const multer = require('multer'); 
 const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
 const { validationResult } = require('express-validator');
@@ -12,7 +13,6 @@ const { csrfProtection,
         asyncHandler,
         setHexadecimal,
       } = require('./utils');
-
 
 /* GET the main user page */
 router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
@@ -81,13 +81,26 @@ router.put('/:userId(\\d+)/description', requireAuth, asyncHandler(async (req, r
 }));
 
 /*PUT user image*/ 
-router.put('/:userId(\\d+)/image', requireAuth, asyncHandler(async (req, res) => { 
-  const userId = req.params.userId;
-  const newImage = req.body.image; 
-  const user = await User.findByPk(userId); 
-  user.avatar = newImage; 
-  await user.save(); 
-}));
+// define multer middleware for use specifically on this image route 
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, './public/images/user_image/');
+//   }
+// });
+
+const storage = multer.disk
+const upload = multer({dest: './public/images/user_image/'})
+
+router.put('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
+  return res.json({ status: 'OK'});   
+})); 
+// router.put('/:userId(\\d+)/image', requireAuth, asyncHandler(async (req, res) => { 
+//   const userId = req.params.userId;
+//   const newImage = req.body.image; 
+//   const user = await User.findByPk(userId); 
+//   user.avatar = newImage; 
+//   await user.save(); 
+// }));
 
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {

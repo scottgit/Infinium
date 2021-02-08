@@ -1,4 +1,4 @@
-import {postFollow, deleteFollow} from './follow.js'
+import {postFollow, deleteFollow} from './follow.js';
 
 window.addEventListener("DOMContentLoaded", (event) => {
   const url = window.location.pathname;
@@ -105,21 +105,18 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
   }); 
 
-  /* PUT request to upload new user image */ 
-  document.getElementById("image-form_button").addEventListener('submit', async (e) => {
-    e.preventDefault(); 
-    document.getElementById("image-form");
-    const form = document.getElementById("image-form"); 
-    const imageData = new FormData(form).get("avatar");
-    const body = {"image": imageData}; 
+  /* PUT request to upload new user image */
+  const form = document.getElementById("image-form");  
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();  
+    const inpFile = document.getElementById('avatar'); 
+    const formData = new FormData();
+    formData.append('inpFile', inpFile.files[0]);
     try {
-      const res = await fetch(`/users/${userId}/image`, {
+      const res = await fetch('/users/image', {
         method: 'PUT', 
-        body: JSON.stringify(body), 
-        headers: {
-          "Content-Type": "application/json", 
-        },
-      }); 
+        body: formData, 
+      });  
       if (!res.ok) {
         throw res; 
       }
