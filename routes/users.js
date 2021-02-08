@@ -20,7 +20,8 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const user = await User.findByPk(userId, {
     include: Story
   })
-  const description = user.description;  
+  const description = user.description; 
+  const avatar = user.avatar;  
   const findAllFollowers = await Follower.findAll({
     where: {
       userId: userId
@@ -65,6 +66,7 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
     userId,
     name,
     description, 
+    avatar, 
     token: req.csrfToken()
   });
 }));

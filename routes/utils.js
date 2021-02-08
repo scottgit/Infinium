@@ -86,7 +86,7 @@ const isDraft = (userId, storyId) => {
 const getAuthor = () => {
     return [{
         model: User,
-        attributes: ['username', 'id', 'description']
+        attributes: ['username', 'id', 'description', 'avatar']
     }];
 }
 
