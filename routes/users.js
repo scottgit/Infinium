@@ -88,8 +88,16 @@ router.put('/:userId(\\d+)/description', requireAuth, asyncHandler(async (req, r
 //   }
 // });
 
-const storage = multer.disk
-const upload = multer({dest: './public/images/user_image/'})
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/images/user_image/');
+  }, 
+  filename: (req, file, cb) => {
+    const {originalname} = file; 
+    cb(null, originalname); 
+  }
+}); 
+const upload = multer({ storage })
 
 router.put('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
   return res.json({ status: 'OK'});   
