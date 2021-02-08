@@ -105,6 +105,29 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
   }); 
 
+  /* PUT request to upload new user image */ 
+  document.getElementById("image-form_button").addEventListener('submit', async (e) => {
+    e.preventDefault(); 
+    document.getElementById("image-form");
+    const form = document.getElementById("image-form"); 
+    const imageData = new FormData(form).get("avatar");
+    const body = {"image": imageData}; 
+    try {
+      const res = await fetch(`/users/${userId}/image`, {
+        method: 'PUT', 
+        body: JSON.stringify(body), 
+        headers: {
+          "Content-Type": "application/json", 
+        },
+      }); 
+      if (!res.ok) {
+        throw res; 
+      }
+    } catch (err) {
+        console.log(err); 
+    }
+  });
+
   /* POST request to create a follow relationship */
 
   const follow = document.querySelector('.follow');

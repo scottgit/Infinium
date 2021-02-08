@@ -80,6 +80,15 @@ router.put('/:userId(\\d+)/description', requireAuth, asyncHandler(async (req, r
   await user.save(); 
 }));
 
+/*PUT user image*/ 
+router.put('/:userId(\\d+)/image', requireAuth, asyncHandler(async (req, res) => { 
+  const userId = req.params.userId;
+  const newImage = req.body.image; 
+  const user = await User.findByPk(userId); 
+  user.avatar = newImage; 
+  await user.save(); 
+}));
+
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {
   const user = User.build();
