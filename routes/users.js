@@ -6,6 +6,7 @@ const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const{loginUser, logoutUser, requireAuth, checkUserRouteAccess} = require('../auth');
 const { Op } = require("sequelize");
+const path = require('path'); 
 
 
 const { User, Story, Follower } = require('../db/models')
@@ -100,15 +101,14 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 router.put('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
-  return res.json({ status: 'OK'});   
+  const userId = req.body.userId; 
+  const user = await User.findByPk(userId); 
+  const fileName = req.file.originalname; 
+  const imageURL = `/images/user_image/${fileName}`; 
+  user.avatar = imageURL;  
+  user.save(); 
+  return res.json({ image: imageURL});   
 })); 
-// router.put('/:userId(\\d+)/image', requireAuth, asyncHandler(async (req, res) => { 
-//   const userId = req.params.userId;
-//   const newImage = req.body.image; 
-//   const user = await User.findByPk(userId); 
-//   user.avatar = newImage; 
-//   await user.save(); 
-// }));
 
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {

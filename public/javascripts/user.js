@@ -109,9 +109,16 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const form = document.getElementById("image-form");  
   form.addEventListener('submit', async (e) => {
     e.preventDefault();  
+    let imageURL; 
+    //append file to form data obj to send
     const inpFile = document.getElementById('avatar'); 
     const formData = new FormData();
     formData.append('inpFile', inpFile.files[0]);
+    formData.append('userId', userId); 
+    //check to see actual file has been chosen 
+    const imageData = new FormData(form).get('avatar'); 
+    console.log(imageData); 
+    if (!imageData.name) return;  
     try {
       const res = await fetch('/users/image', {
         method: 'PUT', 
@@ -120,6 +127,9 @@ window.addEventListener("DOMContentLoaded", (event) => {
       if (!res.ok) {
         throw res; 
       }
+      const data = await res.json(); 
+      const image = document.querySelector(".profilePic_pic");
+      image.src = data.image; 
     } catch (err) {
         console.log(err); 
     }

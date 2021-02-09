@@ -295,12 +295,12 @@
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-.image-form_upload {
+.image-form_input {
   display: block; 
 }
 
-.image-form_submit {
-  display: none; 
+.image-form_upload {
+  display: block; 
 }
 
 .recentStories{
