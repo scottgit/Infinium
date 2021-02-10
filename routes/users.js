@@ -4,10 +4,10 @@ const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const{loginUser, logoutUser, requireAuth, checkUserRouteAccess} = require('../auth');
+const{loginUser, logoutUser, requireAuth} = require('../auth');
 const { Op } = require("sequelize");
-const path = require('path'); 
-
+const path = require('path');
+const fs = require('fs'); 
 
 const { User, Story, Follower } = require('../db/models')
 const { csrfProtection,
@@ -83,12 +83,6 @@ router.put('/:userId(\\d+)/description', requireAuth, asyncHandler(async (req, r
 
 /*PUT user image*/ 
 // define multer middleware for use specifically on this image route 
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, './public/images/user_image/');
-//   }
-// });
-
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './public/images/user_image/');
