@@ -117,7 +117,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
     formData.append('userId', userId); 
     //check to see actual file has been chosen 
     const imageData = new FormData(form).get('avatar'); 
-    console.log(imageData); 
     if (!imageData.name) return;  
     try {
       const res = await fetch('/users/image', {

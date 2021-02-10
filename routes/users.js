@@ -93,8 +93,8 @@ const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './public/images/user_image/');
   }, 
-  filename: (req, file, cb) => {
-    const {originalname} = file; 
+  filename: (req, file, cb) => { 
+    const {originalname} = file;  
     cb(null, originalname); 
   }
 }); 

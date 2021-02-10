@@ -297,10 +297,27 @@
 
 .image-form_input {
   display: block; 
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+  margin-bottom: 10px;
 }
 
 .image-form_upload {
   display: block; 
+  font-size: 18px;
+  font-weight: normal;
+  font-family: 'Noto Sans JP', sans-serif;
+  background: rgb(26, 137, 23);
+  color: rgb(255, 255, 255);
+  border-color: rgb(26, 137, 23);
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 3px;
+}
+
+.image-form_upload:hover {
+  opacity: 0.8;
 }
 
 .recentStories{
