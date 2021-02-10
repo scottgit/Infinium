@@ -20,5 +20,14 @@
       else
         .person_info_follower #[span #{followerCount}] Followers
   .profilePic
-    img(src=`${avatar}`, alt="profilePic" class="profilePic_pic")
+      if authCompare
+        if avatar  
+          img(src=`${avatar}`, alt="profilePic" class="profilePic_pic")
+        else 
+          p.profilePic_text= `Upload a photo of yourself here ${name}!`
+        form#image-form(enctype="multipart/form-data")
+          input(type="file" id="avatar" name="avatar" class="image-form_input")
+          button.image-form_upload Upload
+      else 
+        img(src=`${avatar}`, alt="profilePic" class="profilePic_pic")
   

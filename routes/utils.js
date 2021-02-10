@@ -1,6 +1,7 @@
 const csrf = require('csurf');
 const { User, Story } = require('../db/models');
 const { Op } = require("sequelize");
+const fs = require('fs'); 
 
 const csrfProtection = csrf({cookie: true});
 
@@ -232,5 +233,5 @@ module.exports = {
     getTrending,
     buildMissingStoryTitle,
     prepareStoryEditorDetails,
-    checkEmpty,
+    checkEmpty, 
 }

@@ -1,18 +1,19 @@
 const express = require('express');
+const multer = require('multer'); 
 const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
 const { validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const{loginUser, logoutUser, requireAuth, checkUserRouteAccess} = require('../auth');
+const{loginUser, logoutUser, requireAuth} = require('../auth');
 const { Op } = require("sequelize");
-
+const path = require('path');
+const fs = require('fs'); 
 
 const { User, Story, Follower } = require('../db/models')
 const { csrfProtection,
         asyncHandler,
         setHexadecimal,
       } = require('./utils');
-
 
 /* GET the main user page */
 router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
@@ -79,6 +80,29 @@ router.put('/:userId(\\d+)/description', requireAuth, asyncHandler(async (req, r
   user.description = newDescription; 
   await user.save(); 
 }));
+
+/*PUT user image*/ 
+// define multer middleware for use specifically on this image route 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/images/user_image/');
+  }, 
+  filename: (req, file, cb) => { 
+    const {originalname} = file;  
+    cb(null, originalname); 
+  }
+}); 
+const upload = multer({ storage })
+
+router.put('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
+  const userId = req.body.userId; 
+  const user = await User.findByPk(userId); 
+  const fileName = req.file.originalname; 
+  const imageURL = `/images/user_image/${fileName}`; 
+  user.avatar = imageURL;  
+  user.save(); 
+  return res.json({ image: imageURL});   
+})); 
 
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {
