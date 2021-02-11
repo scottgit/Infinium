@@ -2,12 +2,12 @@ import {postFollow, deleteFollow} from './follow.js';
 
 window.addEventListener("DOMContentLoaded", (event) => {
   const url = window.location.pathname;
-  const urlArray = url.split('/'); 
-  let userId; 
+  const urlArray = url.split('/');
+  let userId;
   if (urlArray.length === 3) {
-    userId = urlArray[urlArray.length - 1]; 
+    userId = urlArray[urlArray.length - 1];
   } else {
-    userId = urlArray[2]; 
+    userId = urlArray[2];
   }
   let showAbout = false;
 
@@ -27,101 +27,102 @@ window.addEventListener("DOMContentLoaded", (event) => {
         question.classList.remove("hide")
       }
     }
+
     if (showAbout) {
       aboutButton.innerHTML = 'Stories';
-      aboutBlock.classList.remove("hide")
-      storiesBlock.classList.add("hide")
+      if (aboutBlock) aboutBlock.classList.remove("hide")
+      if (storiesBlock) storiesBlock.classList.add("hide")
     }
     else {
       aboutButton.innerHTML = 'About';
-      aboutBlock.classList.add("hide")
-      storiesBlock.classList.remove("hide")
+      if (aboutBlock) aboutBlock.classList.add("hide")
+      if (storiesBlock) storiesBlock.classList.remove("hide")
     }
   })
 
-  /* Edit the user description */ 
+  /* Edit the user description */
   document.querySelector(".nameplate_bio_edit").addEventListener("click", event => {
-    //remove the original text and add a new text box for editing 
-    const description = document.querySelector(".nameplate_bio"); 
+    //remove the original text and add a new text box for editing
+    const description = document.querySelector(".nameplate_bio");
     const originalText = description.innerHTML;
-    description.style.display = "none";  
-    const newDescription = document.querySelector(".nameplate_bio_edit_textbox"); 
-    newDescription.style.display = "block"; 
+    description.style.display = "none";
+    const newDescription = document.querySelector(".nameplate_bio_edit_textbox");
+    newDescription.style.display = "block";
     newDescription.setAttribute("rows", "7");
     newDescription.setAttribute("cols", "40");
     newDescription.setAttribute("maxlength", "250");
-    newDescription.value = originalText;   
-    const editButton = document.querySelector(".nameplate_bio_edit"); 
-    editButton.style.display = "none"; 
-    //add cancel & save button  
-    const cancelButton = document.querySelector(".nameplate_bio_cancel"); 
-    cancelButton.style.display = "inline-block"; 
-    const saveButton = document.querySelector(".nameplate_bio_save"); 
-    saveButton.style.display = "inline-block"; 
+    newDescription.value = originalText;
+    const editButton = document.querySelector(".nameplate_bio_edit");
+    editButton.style.display = "none";
+    //add cancel & save button
+    const cancelButton = document.querySelector(".nameplate_bio_cancel");
+    cancelButton.style.display = "inline-block";
+    const saveButton = document.querySelector(".nameplate_bio_save");
+    saveButton.style.display = "inline-block";
   });
-  
-  //cancel editing 
-  document.querySelector(".nameplate_bio_cancel").addEventListener('click', event => {
-    const cancelButton = document.querySelector(".nameplate_bio_cancel"); 
-    cancelButton.style.display = "none";  
-    const saveButton = document.querySelector(".nameplate_bio_save"); 
-    saveButton.style.display = "none";  
-    const textBox = document.querySelector(".nameplate_bio_edit_textbox");
-    textBox.style.display = "none";  
-    const editButton = document.querySelector(".nameplate_bio_edit"); 
-    editButton.style.display = "inline-block"; 
-    const description = document.querySelector(".nameplate_bio");
-    description.style.display = "block"; 
-  }); 
 
-  //save description 
-  document.querySelector(".nameplate_bio_save").addEventListener('click', async event => {
-    const cancelButton = document.querySelector(".nameplate_bio_cancel"); 
-    cancelButton.style.display = "none";  
-    const saveButton = document.querySelector(".nameplate_bio_save"); 
-    saveButton.style.display = "none";  
+  //cancel editing
+  document.querySelector(".nameplate_bio_cancel").addEventListener('click', event => {
+    const cancelButton = document.querySelector(".nameplate_bio_cancel");
+    cancelButton.style.display = "none";
+    const saveButton = document.querySelector(".nameplate_bio_save");
+    saveButton.style.display = "none";
     const textBox = document.querySelector(".nameplate_bio_edit_textbox");
-    const newDescription = textBox.value; 
-    textBox.style.display = "none";  
-    const editButton = document.querySelector(".nameplate_bio_edit"); 
-    editButton.style.display = "inline-block"; 
+    textBox.style.display = "none";
+    const editButton = document.querySelector(".nameplate_bio_edit");
+    editButton.style.display = "inline-block";
     const description = document.querySelector(".nameplate_bio");
-    description.innerHTML = newDescription; 
-    description.style.display = "block"; 
+    description.style.display = "block";
+  });
+
+  //save description
+  document.querySelector(".nameplate_bio_save").addEventListener('click', async event => {
+    const cancelButton = document.querySelector(".nameplate_bio_cancel");
+    cancelButton.style.display = "none";
+    const saveButton = document.querySelector(".nameplate_bio_save");
+    saveButton.style.display = "none";
+    const textBox = document.querySelector(".nameplate_bio_edit_textbox");
+    const newDescription = textBox.value;
+    textBox.style.display = "none";
+    const editButton = document.querySelector(".nameplate_bio_edit");
+    editButton.style.display = "inline-block";
+    const description = document.querySelector(".nameplate_bio");
+    description.innerHTML = newDescription;
+    description.style.display = "block";
     const body = {'description': newDescription};
     try {
         const res = await fetch(`/users/${userId}/description`, {
-            method: 'PUT', 
+            method: 'PUT',
             body: JSON.stringify(body),
             headers: {
               "Content-Type": "application/json",
             },
         });
         if (!res.ok) {
-          throw res; 
+          throw res;
         }
     } catch (err) {
-        console.log(err); 
+        console.log(err);
     }
-  }); 
+  });
 
   /* PUT request to upload new user image */
-  const form = document.getElementById("image-form");  
+  const form = document.getElementById("image-form");
   form.addEventListener('submit', async (e) => {
-    e.preventDefault();  
-    let imageURL; 
+    e.preventDefault();
+    let imageURL;
     //append file to form data obj to send
-    const inpFile = document.getElementById('avatar'); 
+    const inpFile = document.getElementById('avatar');
     const formData = new FormData();
     formData.append('inpFile', inpFile.files[0]);
-    formData.append('userId', userId); 
-    //check to see actual file has been chosen 
-    const imageData = new FormData(form).get('avatar'); 
+    formData.append('userId', userId);
+    //check to see actual file has been chosen
+    const imageData = new FormData(form).get('avatar');
     if (!imageData.name) return;
     //check to see if folder is empty or not. If not empty, replace current file with new file
     // readFile('./public/images/user_image', (err, files) => {
     //   if (err) {
-    //     console.log(err); 
+    //     console.log(err);
     //   } else {
     //     if (!files.length) {
     //       console.log("Hello");
@@ -129,20 +130,20 @@ window.addEventListener("DOMContentLoaded", (event) => {
     //       console.log("FILES", files);
     //     }
     //   }
-    // });  
+    // });
     try {
       const res = await fetch('/users/image', {
-        method: 'PUT', 
-        body: formData, 
-      });  
+        method: 'PUT',
+        body: formData,
+      });
       if (!res.ok) {
-        throw res; 
+        throw res;
       }
-      const data = await res.json(); 
+      const data = await res.json();
       const image = document.querySelector(".profilePic_pic");
-      image.src = data.image; 
+      image.src = data.image;
     } catch (err) {
-        console.log(err); 
+        console.log(err);
     }
   });
 

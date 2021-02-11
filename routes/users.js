@@ -1,5 +1,5 @@
 const express = require('express');
-const multer = require('multer'); 
+const multer = require('multer');
 const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
 const { validationResult } = require('express-validator');
@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const{loginUser, logoutUser, requireAuth} = require('../auth');
 const { Op } = require("sequelize");
 const path = require('path');
-const fs = require('fs'); 
+const fs = require('fs');
 
 const { User, Story, Follower } = require('../db/models')
 const { csrfProtection,
@@ -21,8 +21,8 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   const user = await User.findByPk(userId, {
     include: Story
   })
-  const description = user.description; 
-  const avatar = user.avatar;  
+  const description = user.description;
+  const avatar = user.avatar;
   const findAllFollowers = await Follower.findAll({
     where: {
       userId: userId
@@ -66,43 +66,43 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
     followingCount,
     userId,
     name,
-    description, 
-    avatar, 
+    description,
+    avatar,
     token: req.csrfToken()
   });
 }));
 
 /*PUT user description*/
 router.put('/:userId(\\d+)/description', requireAuth, asyncHandler(async (req, res) => {
-  const userId = req.params.userId;  
-  const newDescription = req.body.description;  
-  const user = await User.findByPk(userId); 
-  user.description = newDescription; 
-  await user.save(); 
+  const userId = req.params.userId;
+  const newDescription = req.body.description;
+  const user = await User.findByPk(userId);
+  user.description = newDescription;
+  await user.save();
 }));
 
-/*PUT user image*/ 
-// define multer middleware for use specifically on this image route 
+/*PUT user image*/
+// define multer middleware for use specifically on this image route
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, './public/images/user_image/');
-  }, 
-  filename: (req, file, cb) => { 
-    const {originalname} = file;  
-    cb(null, originalname); 
+  },
+  filename: (req, file, cb) => {
+    const {originalname} = file;
+    cb(null, originalname);
   }
-}); 
+});
 const upload = multer({ storage })
 
 router.put('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
-  const userId = req.body.userId; 
-  const user = await User.findByPk(userId); 
-  const fileName = req.file.originalname; 
-  const imageURL = `/images/user_image/${fileName}`; 
-  user.avatar = imageURL;  
-  user.save(); 
-  return res.json({ image: imageURL});   
-})); 
+  const userId = req.body.userId;
+  const user = await User.findByPk(userId);
+  const fileName = req.file.originalname;
+  const imageURL = `/images/user_image/${fileName}`;
+  user.avatar = imageURL;
+  user.save();
+  return res.json({ image: imageURL});
+}));
 
 /* GET register form. */
 router.get('/register', csrfProtection, (req, res) => {
