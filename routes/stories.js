@@ -125,7 +125,7 @@ router.get(/\/([0-9a-f]+)$/, csrfProtection, asyncHandler(async (req, res, next)
 
   const author = story.User.username;
   const description = story.User.description;
-  const avatar = story.User.avatar;  
+  const avatar = story.User.avatar;
 
   const findAllFollowers = await Follower.findAll({
     where: {
@@ -179,6 +179,7 @@ router.get(/\/([0-9a-f]+)$/, csrfProtection, asyncHandler(async (req, res, next)
     subtitle: story.subtitle,
     author: story.author,
     authorId: story.authorId,
+    authorAvatar: story.authorAvatar,
     date: story.date,
     storyBody: story.published,
   };
@@ -198,8 +199,8 @@ router.get(/\/([0-9a-f]+)$/, csrfProtection, asyncHandler(async (req, res, next)
       author,
       storyId,
       storyLikes: count,
-      description, 
-      avatar, 
+      description,
+      avatar,
       token: req.csrfToken()
     });
   }

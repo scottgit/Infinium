@@ -1,9 +1,15 @@
 .dropdown
   a(href="" class="icons_image_holder")
-    img(src="/images/ET.jpg", alt="Doggies!" class="icons_image")
+    if (locals.user.avatar)
+      img(src=`${locals.user.avatar}`, alt="User image" class="icons_image")
+    else
+      img(src=`/images/ET.jpg` alt="Default user image" class="icons_image" )
   div(class="dropdown_content" id="myDropdown")
     .header_mini
-      img(src="/images/ET.jpg", alt="Doggies!" class="icons_image")
+      if (locals.user.avatar)
+        img(src=`${locals.user.avatar}`, alt="User image" class="icons_image")
+      else
+        img(src=`/images/ET.jpg` alt="Default user image" class="icons_image" )
       .naming_info
         a(href=`/users/${locals.user.id}` class="naming_info_list1")= locals.user.username
         a(href=`/users/${locals.user.id}` class="naming_info_list2") @#{locals.user.username}

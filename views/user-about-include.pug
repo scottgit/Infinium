@@ -2,14 +2,14 @@
   .person_info
     .nameplate= `About ${name || author}`
       if authCompare
-        if description 
+        if description
           p.nameplate_bio= `${description}`
-        else  
-          p.nameplate_bio= `Write something about yourself here ${name}!` 
+        else
+          p.nameplate_bio= `Write something about yourself here ${name}!`
         textarea.nameplate_bio_edit_textbox
-        button.nameplate_bio_edit Edit 
-        button.nameplate_bio_cancel Cancel 
-        button.nameplate_bio_save Save         
+        button.nameplate_bio_edit Edit
+        button.nameplate_bio_cancel Cancel
+        button.nameplate_bio_save Save
       else
         p.nameplate_bio= `${description}`
     .follow_following
@@ -21,13 +21,12 @@
         .person_info_follower #[span #{followerCount}] Followers
   .profilePic
       if authCompare
-        if avatar  
-          img(src=`${avatar}`, alt="profilePic" class="profilePic_pic")
-        else 
+        if avatar
+          img(src=`${avatar}`, alt="Profile pic" class="profilePic_pic")
+        else
           p.profilePic_text= `Upload a photo of yourself here ${name}!`
         form#image-form(enctype="multipart/form-data")
           input(type="file" id="avatar" name="avatar" class="image-form_input")
           button.image-form_upload Upload
-      else 
-        img(src=`${avatar}`, alt="profilePic" class="profilePic_pic")
-  
+      else
+        img(src=`${avatar}`, alt="Profile pic" class="profilePic_pic")

@@ -1,7 +1,7 @@
 const csrf = require('csurf');
 const { User, Story } = require('../db/models');
 const { Op } = require("sequelize");
-const fs = require('fs'); 
+const fs = require('fs');
 
 const csrfProtection = csrf({cookie: true});
 
@@ -23,7 +23,8 @@ const preProcessStories = (stories, username) => {
         story = story.toJSON();
         story.hexId = story.id ? setHexadecimal(story.id) : null;
         story.author = username || story.User.username;
-        story.authorId = story.User? story.User.id : null;
+        story.authorId = story.User ? story.User.id : null;
+        story.authorAvatar = story.User ? story.User.avatar : null;
         story.date = story.updatedAt ? story.updatedAt.toLocaleDateString("en-US", dateOptions) : null;
         delete story.User;
         return story;
@@ -170,7 +171,7 @@ const buildMissingStoryTitle = (draft) => {
 
     //Get length of string or first 100 characters
     let title = draft.slice(0, Math.min(draft.length - 1, 100));
-    
+
     if (title.length === 100) {
         //Break at last whitespace character that is at least 3 spaces from end
         while(title.length > 97) {
@@ -205,6 +206,7 @@ const prepareStoryEditorDetails = (req, story, name) => {
       subtitle: story.subtitle,
       author: name,
       authorId: story.authorId,
+      authorAvatar: story.authorAvatar,
       date: story.date,
       draft: story.draft,
       imageLink: story.imageLink,
@@ -233,5 +235,5 @@ module.exports = {
     getTrending,
     buildMissingStoryTitle,
     prepareStoryEditorDetails,
-    checkEmpty, 
+    checkEmpty,
 }

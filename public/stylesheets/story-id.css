@@ -1,7 +1,6 @@
 @import "global.css";
 
 .header-outside-container{
-  width: 100vw;
   border-bottom: lightgrey solid 1px;
 }
 
@@ -228,8 +227,8 @@
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-.nameplate_bio_edit_textbox { 
-  display: none; 
+.nameplate_bio_edit_textbox {
+  display: none;
   margin-top: 5px;
   border-radius: 5px;
   resize: none;
@@ -239,14 +238,14 @@
 }
 
 .nameplate_bio_cancel {
-  display: none; 
+  display: none;
   font-size: 18px;
   font-weight: normal;
   font-family: 'Noto Sans JP', sans-serif;
 }
 
 .nameplate_bio_save {
-  display: none; 
+  display: none;
   font-size: 18px;
   font-weight: normal;
   font-family: 'Noto Sans JP', sans-serif;
@@ -303,7 +302,7 @@
 }
 
 .image-form_input {
-  display: block; 
+  display: block;
   font-size: 18px;
   font-weight: normal;
   font-family: 'Noto Sans JP', sans-serif;
@@ -311,7 +310,7 @@
 }
 
 .image-form_upload {
-  display: block; 
+  display: block;
   font-size: 18px;
   font-weight: normal;
   font-family: 'Noto Sans JP', sans-serif;

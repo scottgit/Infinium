@@ -22,7 +22,10 @@ html
           h3(class="recentStory_subtitle")= subtitle
           a(href=`/users/${userId}`)
             .author_info
-              img(src="/images/ET.jpg" alt="dogs" class="author_info_icon")
+              if (authorAvatar)
+                img(src=`${authorAvatar}` alt="Author pic" class="author_info_icon")
+              else
+                img(src="/images/ET.jpg" alt="Default author pic" class="author_info_icon")
               a(href=`/users/${userId}` class="author_info_name")= author
               p(class="author_info_date")= date
         if (story.imageLink)
