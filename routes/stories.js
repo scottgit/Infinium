@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 
 const { storyDraftValidators, storyPublishValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');
@@ -125,7 +127,13 @@ router.get(/\/([0-9a-f]+)$/, csrfProtection, asyncHandler(async (req, res, next)
 
   const author = story.User.username;
   const description = story.User.description;
-  const avatar = story.User.avatar;
+  let avatar = story.User.avatar;
+
+  //check too see if folder is empty or not. If empty, return default image file path
+  const files = fs.readdirSync(path.resolve(__dirname,'../public/images/user_image'));
+  if (!files.length) {
+    avatar = "/images/ET.jpg"; 
+  };
 
   const findAllFollowers = await Follower.findAll({
     where: {
