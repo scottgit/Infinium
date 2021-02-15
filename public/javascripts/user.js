@@ -119,18 +119,6 @@ window.addEventListener("DOMContentLoaded", (event) => {
     //check to see actual file has been chosen
     const imageData = new FormData(form).get('avatar');
     if (!imageData.name) return;
-    //check to see if folder is empty or not. If not empty, replace current file with new file
-    // readFile('./public/images/user_image', (err, files) => {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     if (!files.length) {
-    //       console.log("Hello");
-    //     } else {
-    //       console.log("FILES", files);
-    //     }
-    //   }
-    // });
     try {
       const res = await fetch('/users/image', {
         method: 'PUT',

@@ -22,7 +22,12 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
     include: Story
   })
   const description = user.description;
-  const avatar = user.avatar;
+  let avatar = user.avatar;
+  //check too see if folder is empty or not. If empty, return default image file path
+  const files = fs.readdirSync(path.resolve(__dirname,'../public/images/user_image'));
+  if (!files.length) {
+    avatar = "/images/infinity.jpg"; 
+  }
   const findAllFollowers = await Follower.findAll({
     where: {
       userId: userId
