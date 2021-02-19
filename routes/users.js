@@ -1,5 +1,7 @@
 const express = require('express');
 const multer = require('multer');
+const aws = require('aws-sdk');
+const multerS3 = require('multer-s3'); 
 const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
 const { validationResult } = require('express-validator');
@@ -90,16 +92,30 @@ router.put('/:userId(\\d+)/description', requireAuth, asyncHandler(async (req, r
 
 /*PUT user image*/
 // define multer middleware for use specifically on this image route
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './public/images/user_image/');
-  },
-  filename: (req, file, cb) => {
-    const {originalname} = file;
-    cb(null, originalname);
-  }
+const s3 = new aws.S3({ apiVersion: '2006-03-01' });
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'infinium-user-upload', 
+    metadata: (req, file, cb) => {
+      cb(null, { fieldName: file.fieldName })
+    }, 
+    key: (req, file, cb) => {
+      const {originalname} = file; 
+      cb(null, originalname); 
+    }
+  })
 });
-const upload = multer({ storage })
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, './public/images/user_image/');
+//   },
+//   filename: (req, file, cb) => {
+//     const {originalname} = file;
+//     cb(null, originalname);
+//   }
+// });
+// const upload = multer({ storage })
 
 router.put('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
   const userId = req.body.userId;
