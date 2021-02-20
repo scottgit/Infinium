@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3'); 
+const uuid = require('uuid').v4; 
 const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
 const { validationResult } = require('express-validator');
@@ -24,13 +25,7 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
     include: Story
   })
   const description = user.description;
-
-  let avatar = user.avatar;
-  //check too see if folder is empty or not. If empty, return default image file path
-  const files = fs.readdirSync(path.resolve(__dirname,'../public/images/user_image'));
-  if (!files.length) {
-    avatar = "/images/ET.jpg"; 
-  };
+  const avatar = user.avatar;
 
   const findAllFollowers = await Follower.findAll({
     where: {
@@ -98,11 +93,10 @@ const upload = multer({
     s3: s3,
     bucket: 'infinium-user-upload', 
     metadata: (req, file, cb) => {
-      cb(null, { fieldName: file.fieldName })
+      cb(null, Object.assign({}, req.body.inpFile))
     }, 
-    key: (req, file, cb) => {
-      const {originalname} = file; 
-      cb(null, originalname); 
+    key: (req, file, cb) => { 
+      cb(null, Date.now().toString()); 
     }
   })
 });
@@ -117,7 +111,8 @@ const upload = multer({
 // });
 // const upload = multer({ storage })
 
-router.put('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
+router.post('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
+  console.log('HELLO', req.file); 
   const userId = req.body.userId;
   const user = await User.findByPk(userId);
   const fileName = req.file.originalname;

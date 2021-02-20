@@ -110,9 +110,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const form = document.getElementById("image-form");
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    let imageURL;
     //append file to form data obj to send
-    const inpFile = document.getElementById('avatar');
+    const inpFile = document.getElementById('avatar'); 
     const formData = new FormData();
     formData.append('inpFile', inpFile.files[0]);
     formData.append('userId', userId);
@@ -121,7 +120,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
     if (!imageData.name) return;
     try {
       const res = await fetch('/users/image', {
-        method: 'PUT',
+        method: 'POST',
         body: formData,
       });
       if (!res.ok) {
