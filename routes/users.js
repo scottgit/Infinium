@@ -96,30 +96,25 @@ const upload = multer({
       cb(null, Object.assign({}, req.body.inpFile))
     }, 
     key: (req, file, cb) => { 
-      cb(null, Date.now().toString()); 
-    }
+      cb(null, file.originalname); 
+    },
   })
 });
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, './public/images/user_image/');
-//   },
-//   filename: (req, file, cb) => {
-//     const {originalname} = file;
-//     cb(null, originalname);
-//   }
-// });
-// const upload = multer({ storage })
 
 router.post('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
-  console.log('HELLO', req.file); 
   const userId = req.body.userId;
   const user = await User.findByPk(userId);
   const fileName = req.file.originalname;
-  const imageURL = `/images/user_image/${fileName}`;
-  user.avatar = imageURL;
+  user.avatar = fileName;
   user.save();
-  return res.json({ image: imageURL});
+  const params = {
+    Bucket: "infinium-user-upload", 
+    Key: fileName
+  }
+  s3.getObject(params, function(err, data) {
+    if (err) console.log(err, err.stack);
+    else return res.json({image: data}); 
+  })
 }));
 
 /* GET register form. */
