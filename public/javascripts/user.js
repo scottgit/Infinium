@@ -128,11 +128,11 @@ window.addEventListener("DOMContentLoaded", (event) => {
       }
       const data = await res.json();
       console.log(data.image); 
-      const base64String = data.image.Body.data.toString('base64'); 
-      console.log(base64String); 
-      const dataURI = 'data:image/jpg;base64,' + base64String;
+      // const base64String = data.image.Body.data.toString('base64'); 
+      // console.log(base64String); 
+      // const dataURI = 'data:image/jpg;base64,' + base64String;
       const image = document.querySelector(".profilePic_pic");
-      image.src = dataURI;
+      image.src = `${data.image}`;
     } catch (err) {
         console.log(err);
     }

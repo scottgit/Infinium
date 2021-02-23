@@ -105,16 +105,17 @@ router.post('/image', requireAuth, upload.single('inpFile'), asyncHandler(async 
   const userId = req.body.userId;
   const user = await User.findByPk(userId);
   const fileName = req.file.originalname;
-  user.avatar = fileName;
+  user.avatar = `https://infinium-user-upload.s3.amazonaws.com/${fileName}`;
   user.save();
   const params = {
     Bucket: "infinium-user-upload", 
     Key: fileName
   }
-  s3.getObject(params, function(err, data) {
-    if (err) console.log(err, err.stack);
-    else return res.json({image: data}); 
-  })
+  // s3.getObject(params, function(err, data) {
+  //   if (err) console.log(err, err.stack);
+  //   else return res.json({image: data}); 
+  // })
+  return res.json({image: user.avatar}); 
 }));
 
 /* GET register form. */
