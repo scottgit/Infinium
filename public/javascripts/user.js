@@ -110,30 +110,17 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const form = document.getElementById("image-form");
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    let imageURL;
     //append file to form data obj to send
-    const inpFile = document.getElementById('avatar');
+    const inpFile = document.getElementById('avatar'); 
     const formData = new FormData();
     formData.append('inpFile', inpFile.files[0]);
     formData.append('userId', userId);
     //check to see actual file has been chosen
     const imageData = new FormData(form).get('avatar');
     if (!imageData.name) return;
-    //check to see if folder is empty or not. If not empty, replace current file with new file
-    // readFile('./public/images/user_image', (err, files) => {
-    //   if (err) {
-    //     console.log(err);
-    //   } else {
-    //     if (!files.length) {
-    //       console.log("Hello");
-    //     } else {
-    //       console.log("FILES", files);
-    //     }
-    //   }
-    // });
     try {
       const res = await fetch('/users/image', {
-        method: 'PUT',
+        method: 'POST',
         body: formData,
       });
       if (!res.ok) {
@@ -141,7 +128,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       }
       const data = await res.json();
       const image = document.querySelector(".profilePic_pic");
-      image.src = data.image;
+      image.src = `${data.image}`;
     } catch (err) {
         console.log(err);
     }

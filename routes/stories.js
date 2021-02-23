@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const fs = require('fs');
 
 const { storyDraftValidators, storyPublishValidators } = require('../validations/stories');
 const { validationResult } = require('express-validator');

@@ -1,5 +1,8 @@
 const express = require('express');
 const multer = require('multer');
+const aws = require('aws-sdk');
+const multerS3 = require('multer-s3'); 
+const uuid = require('uuid').v4; 
 const router = express.Router();
 const { userRegValidators, userSignInValidators } = require('../validations/users');
 const { validationResult } = require('express-validator');
@@ -23,6 +26,7 @@ router.get('/:userId(\\d+)', csrfProtection, asyncHandler(async (req, res) => {
   })
   const description = user.description;
   const avatar = user.avatar;
+
   const findAllFollowers = await Follower.findAll({
     where: {
       userId: userId
@@ -83,25 +87,27 @@ router.put('/:userId(\\d+)/description', requireAuth, asyncHandler(async (req, r
 
 /*PUT user image*/
 // define multer middleware for use specifically on this image route
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, './public/images/user_image/');
-  },
-  filename: (req, file, cb) => {
-    const {originalname} = file;
-    cb(null, originalname);
-  }
+const s3 = new aws.S3({ apiVersion: '2006-03-01' });
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: 'infinium-user-upload', 
+    metadata: (req, file, cb) => {
+      cb(null, Object.assign({}, req.body.inpFile))
+    }, 
+    key: (req, file, cb) => { 
+      cb(null, file.originalname); 
+    },
+  })
 });
-const upload = multer({ storage })
 
-router.put('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
+router.post('/image', requireAuth, upload.single('inpFile'), asyncHandler(async (req, res) => {
   const userId = req.body.userId;
   const user = await User.findByPk(userId);
   const fileName = req.file.originalname;
-  const imageURL = `/images/user_image/${fileName}`;
-  user.avatar = imageURL;
+  user.avatar = `https://infinium-user-upload.s3.amazonaws.com/${fileName}`;
   user.save();
-  return res.json({ image: imageURL});
+  return res.json({image: user.avatar}); 
 }));
 
 /* GET register form. */
