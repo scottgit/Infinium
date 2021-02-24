@@ -111,7 +111,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     //append file to form data obj to send
-    const inpFile = document.getElementById('avatar'); 
+    const inpFile = document.getElementById('avatar');
     const formData = new FormData();
     formData.append('inpFile', inpFile.files[0]);
     formData.append('userId', userId);
@@ -129,6 +129,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
       const data = await res.json();
       const image = document.querySelector(".profilePic_pic");
       image.src = `${data.image}`;
+      const headerImages = document.querySelectorAll(".header img.icons_image");
+      headerImages.forEach(img => img.src = `${data.image}`);
     } catch (err) {
         console.log(err);
     }
